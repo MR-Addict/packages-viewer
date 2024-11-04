@@ -1,0 +1,27 @@
+.wrapper {
+  height: 100vh;
+  height: 100dvh;
+
+  @apply flex flex-col sticky top-0 w-60 border-r border-r-neutral-300 dark:border-r-neutral-700;
+}
+
+.logo {
+  @apply font-semibold text-lg py-3 px-4 border-b border-b-neutral-300 dark:border-b-neutral-700;
+}
+
+.links {
+  @apply flex flex-col;
+
+  & .link {
+    @apply border-l-4 border-l-transparent;
+    @apply flex flex-row items-center gap-2 py-2 px-3;
+
+    & h2 {
+      @apply text-lg;
+    }
+
+    &.active {
+      @apply bg-neutral-100 dark:bg-neutral-800 border-l-neutral-500;
+    }
+  }
+}

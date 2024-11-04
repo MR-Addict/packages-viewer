@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  height: 100vh;
+  height: 100dvh;
+
+  @apply font-mono dark:bg-neutral-900 dark:text-neutral-200;
+}
+
+main {
+  @apply flex flex-row;
+}
