@@ -7,8 +7,9 @@ import "./index.css";
 import Layout from "./layout";
 
 import Home from "@/pages/home";
-import Settings from "@/pages/settings";
+import Package from "./pages/package";
 import Packages from "./pages/packages";
+import Settings from "@/pages/settings";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -16,7 +17,10 @@ createRoot(document.getElementById("root")!).render(
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="packages" element={<Packages />} />
+          <Route path="packages">
+            <Route index element={<Packages />} />
+            <Route path=":id" element={<Package />} />
+          </Route>
           <Route path="settings" element={<Settings />} />
         </Route>
       </Routes>

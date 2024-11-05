@@ -4,7 +4,7 @@
 
 .btns {
   @apply flex flex-row items-center;
-  @apply w-fit rounded-xl border border-neutral-300 dark:border-neutral-700 px-2 py-2 mt-2;
+  @apply w-fit rounded-xl c-border px-2 py-2 mt-2;
 
   & .btn {
     @apply capitalize px-4 py-2 rounded-xl;

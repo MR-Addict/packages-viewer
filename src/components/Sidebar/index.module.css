@@ -2,11 +2,11 @@
   height: 100vh;
   height: 100dvh;
 
-  @apply flex flex-col sticky top-0 w-60 border-r border-r-neutral-300 dark:border-r-neutral-700;
+  @apply flex flex-col sticky top-0 w-60 c-border-r;
 }
 
 .logo {
-  @apply font-semibold text-lg py-3 px-4 border-b border-b-neutral-300 dark:border-b-neutral-700;
+  @apply font-semibold text-lg py-3 px-4 c-border-b;
 }
 
 .links {
@@ -21,7 +21,7 @@
     }
 
     &.active {
-      @apply bg-neutral-100 border-l-neutral-500 dark:bg-neutral-800;
+      @apply border-l-blue-600 bg-neutral-100 dark:bg-neutral-800;
     }
   }
 }

@@ -1,10 +1,12 @@
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 import parsePackage from "@/lib/package/parsePackage";
 import { useDatabaseContext } from "@/contexts/database";
 
 export default function ImportButton() {
   const db = useDatabaseContext();
+  const navigate = useNavigate();
 
   async function handleImport(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
@@ -24,11 +26,15 @@ export default function ImportButton() {
 
       // Update or add the package
       if (updateId) {
-        db.packages.update(updateId, parsed.data);
-        toast.success("Package replaced successfully");
+        const res = db.packages.update(updateId, parsed.data);
+        if (res.success) {
+          toast.success("Package replaced successfully");
+          navigate(`/packages/${updateId}`);
+        } else toast.error(res.message);
       } else {
-        db.packages.add(parsed.data);
+        const res = db.packages.add(parsed.data);
         toast.success("Package imported successfully");
+        navigate(`/packages/${res.id}`);
       }
     }
 
