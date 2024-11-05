@@ -6,21 +6,12 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import IDB from "@/lib/idb";
 import { ApiResultType } from "@/types/app";
-import { Collection, CollectionType } from "@/types/collection";
 import { Package, PackageType, RawPackageType } from "@/types/package";
 
 const emptyPackage: PackageType = {
   id: "",
   name: "",
   dependencies: [],
-  collection: null,
-  created: "",
-  updated: ""
-};
-
-const emptyCollection: CollectionType = {
-  id: "",
-  name: "",
   created: "",
   updated: ""
 };
@@ -29,14 +20,8 @@ interface DatabaseContextProps {
   import: (data: any, options?: { packages: boolean; collections: boolean }) => void;
   packages: {
     data: PackageType[];
-    add: (pkg: RawPackageType, collectionName?: string) => PackageType;
+    add: (pkg: RawPackageType) => PackageType;
     update: (id: string, pkg: RawPackageType) => ApiResultType<PackageType>;
-    remove: (id: string) => ApiResultType;
-  };
-  collections: {
-    data: CollectionType[];
-    add: (name: string) => CollectionType;
-    update: (id: string, name: string) => ApiResultType<CollectionType>;
     remove: (id: string) => ApiResultType;
   };
 }
@@ -48,12 +33,6 @@ const DatabaseContext = createContext<DatabaseContextProps>({
     add: () => emptyPackage,
     update: () => ({ success: false, message: "" }),
     remove: () => ({ success: false, message: "" })
-  },
-  collections: {
-    data: [],
-    add: () => emptyCollection,
-    update: () => ({ success: false, message: "" }),
-    remove: () => ({ success: false, message: "" })
   }
 });
 
@@ -63,37 +42,21 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
   const [imported, setImported] = useState(false);
 
   const [packages, setPackages] = useState<PackageType[]>([]);
-  const [collections, setCollections] = useState<CollectionType[]>([]);
 
   /* Import data */
-  function importData(data: any, options = { packages: true, collections: true }) {
+  function importData(data: any, options = { packages: true }) {
     if (options.packages) {
       const parsed = z.array(Package).safeParse(data.packages);
       if (parsed.success) setPackages(parsed.data);
     }
-
-    if (options.collections) {
-      const parsed = z.array(Collection).safeParse(data.collections);
-      if (parsed.success) setCollections(parsed.data);
-    }
   }
 
   /* Packages utils */
-  function addPackage(pkg: RawPackageType, collectionName?: string): PackageType {
-    // Add collection if collectionName is provided and not exists
-    let collectionId = null;
-    if (collectionName) {
-      const found = collections.find((c) => c.name === collectionName);
-      if (found) collectionId = found.id;
-      else collectionId = addCollection(collectionName).id;
-    }
-
-    // Create new package
+  function addPackage(pkg: RawPackageType): PackageType {
     const id = uniqid();
     const date = new Date().toISOString();
-    const newPkg = { ...pkg, id, collection: collectionId, created: date, updated: date };
+    const newPkg = { ...pkg, id, created: date, updated: date };
     setPackages((prev) => [...prev, newPkg]);
-
     return newPkg;
   }
 
@@ -113,37 +76,11 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
     return { success: true };
   }
 
-  /* Collections utils */
-  function addCollection(name: string): CollectionType {
-    const id = uniqid();
-    const date = new Date().toISOString();
-    const newCollection = { id, name, created: date, updated: date };
-    setCollections((prev) => [...prev, newCollection]);
-    return newCollection;
-  }
-
-  function updateCollection(id: string, name: string): ApiResultType<CollectionType> {
-    const found = collections.find((c) => c.id === id);
-    if (!found) return { success: false, message: "Collection not exists" };
-
-    const date = new Date().toISOString();
-    const newCollection = { ...found, name, updated: date };
-    setCollections(collections.map((c) => (c.id === id ? newCollection : c)));
-    return { success: true, data: newCollection };
-  }
-
-  function removeCollection(id: string): ApiResultType {
-    if (packages.find((p) => p.collection === id)) return { success: false, message: "Collection is not empty" };
-    setCollections(collections.filter((c) => c.id !== id));
-    return { success: true };
-  }
-
   /* Load data from IDB */
   useEffect(() => {
     (async () => {
       const packages = await idb.load("packages");
-      const collections = await idb.load("collections");
-      importData({ packages, collections });
+      importData({ packages });
       setTimeout(() => setImported(true), 1000);
     })();
   }, []);
@@ -153,16 +90,11 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
     if (imported) idb.save("packages", packages);
   }, [packages]);
 
-  useEffect(() => {
-    if (imported) idb.save("collections", collections);
-  }, [collections]);
-
   return (
     <DatabaseContext.Provider
       value={{
         import: importData,
-        packages: { data: packages, add: addPackage, update: updatePackage, remove: removePackage },
-        collections: { data: collections, add: addCollection, update: updateCollection, remove: removeCollection }
+        packages: { data: packages, add: addPackage, update: updatePackage, remove: removePackage }
       }}
     >
       {children}

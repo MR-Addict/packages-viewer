@@ -11,9 +11,9 @@ export const sidebar: SidebarItem[] = [
     to: "/"
   },
   {
-    title: "Collection",
+    title: "Packages",
     Icon: HiOutlineCollection,
-    to: "/collection"
+    to: "/packages"
   },
   {
     title: "Settings",

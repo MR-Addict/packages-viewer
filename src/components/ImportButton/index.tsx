@@ -1,0 +1,44 @@
+import toast from "react-hot-toast";
+
+import parsePackage from "@/lib/package/parsePackage";
+import { useDatabaseContext } from "@/contexts/database";
+
+export default function ImportButton() {
+  const db = useDatabaseContext();
+
+  async function handleImport(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    // Read and parse the file content
+    const content = await file.text();
+    const parsed = parsePackage(content);
+
+    if (!parsed.success) toast.error("Failed to import package");
+    else {
+      let updateId: string | null = null;
+
+      // Check if package already exists
+      const found = db.packages.data.find((pkg) => pkg.name === parsed.data.name);
+      if (found && confirm("Package already exists, do you want to replace it?")) updateId = found.id;
+
+      // Update or add the package
+      if (updateId) {
+        db.packages.update(updateId, parsed.data);
+        toast.success("Package replaced successfully");
+      } else {
+        db.packages.add(parsed.data);
+        toast.success("Package imported successfully");
+      }
+    }
+
+    event.target.value = "";
+  }
+
+  return (
+    <label htmlFor="import-package-file" className="cursor-pointer">
+      <span>Import</span>
+      <input id="import-package-file" onChange={handleImport} type="file" accept=".json" className="hidden" />
+    </label>
+  );
+}

@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { Link, useLocation } from "react-router-dom";
 
-import style from "./Sidebar.module.css";
+import style from "./index.module.css";
 import { sidebar } from "@/data/sidebar";
 
 export default function Sidebar() {

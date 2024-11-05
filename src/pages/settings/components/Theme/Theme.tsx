@@ -1,7 +1,7 @@
 import clsx from "clsx";
 
 import style from "./Theme.module.css";
-import pageStyle from "../../settings.module.css";
+import pageStyle from "../../index.module.css";
 
 import setTheme from "@/lib/theme/setTheme";
 import usePersistantState from "@/hooks/usePersistantState";

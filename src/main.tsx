@@ -8,7 +8,7 @@ import Layout from "./layout";
 
 import Home from "@/pages/home";
 import Settings from "@/pages/settings";
-import Collection from "@/pages/collection";
+import Packages from "./pages/packages";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -16,7 +16,7 @@ createRoot(document.getElementById("root")!).render(
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="collection" element={<Collection />} />
+          <Route path="packages" element={<Packages />} />
           <Route path="settings" element={<Settings />} />
         </Route>
       </Routes>

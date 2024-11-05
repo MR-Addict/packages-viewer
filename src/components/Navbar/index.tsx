@@ -1,10 +1,12 @@
 import { LuGithub } from "react-icons/lu";
-import style from "./Navbar.module.css";
+
+import style from "./index.module.css";
+import ImportButton from "@/components/ImportButton";
 
 export default function Navbar() {
   return (
     <nav className={style.wrapper}>
-      <button type="button">Import</button>
+      <ImportButton />
 
       <a
         target="_blank"

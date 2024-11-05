@@ -21,7 +21,7 @@
     }
 
     &.active {
-      @apply bg-neutral-100 dark:bg-neutral-800 border-l-neutral-500;
+      @apply bg-neutral-100 border-l-neutral-500 dark:bg-neutral-800;
     }
   }
 }

@@ -12,17 +12,15 @@ export type DependencyType = z.infer<typeof Dependency>;
 export const Package = z.object({
   id: z.string(),
   name: z.string(),
-  dependencies: z.array(Dependency),
-  collection: z.string().nullable(),
   created: z.string(),
-  updated: z.string()
+  updated: z.string(),
+  dependencies: z.array(Dependency)
 });
 export type PackageType = z.infer<typeof Package>;
 
 /* Raw Package */
 export const RawPackage = Package.omit({
   id: true,
-  collection: true,
   created: true,
   updated: true
 });
