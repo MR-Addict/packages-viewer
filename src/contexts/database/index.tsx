@@ -12,7 +12,7 @@ import { Package, PackageType, RawPackageType } from "@/types/package";
 const emptyPackage: PackageType = {
   id: "",
   name: "",
-  dependencies: {},
+  dependencies: [],
   collection: null,
   created: "",
   updated: ""

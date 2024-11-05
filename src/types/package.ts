@@ -12,7 +12,7 @@ export type DependencyType = z.infer<typeof Dependency>;
 export const Package = z.object({
   id: z.string(),
   name: z.string(),
-  dependencies: z.record(Dependency),
+  dependencies: z.array(Dependency),
   collection: z.string().nullable(),
   created: z.string(),
   updated: z.string()

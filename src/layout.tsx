@@ -3,19 +3,22 @@ import { Outlet } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Sidebar from "./components/Sidebar";
+import { DatabaseProvider } from "./contexts/database";
 
 export default function Layout() {
   return (
-    <main>
-      <Sidebar />
+    <DatabaseProvider>
+      <main>
+        <Sidebar />
 
-      <section className="flex-1 flex flex-col">
-        <Navbar />
-        <div className="flex-1 p-4">
-          <Outlet />
-        </div>
-        <Footer />
-      </section>
-    </main>
+        <section className="flex-1 flex flex-col">
+          <Navbar />
+          <div className="flex-1 p-4">
+            <Outlet />
+          </div>
+          <Footer />
+        </section>
+      </main>
+    </DatabaseProvider>
   );
 }

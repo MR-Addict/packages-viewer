@@ -7,6 +7,6 @@
   @apply bg-neutral-200 dark:bg-neutral-700 p-1.5 rounded-full;
 
   &:hover {
-    @apply bg-neutral-300 hover:bg-neutral-600;
+    @apply bg-neutral-300 dark:bg-neutral-600;
   }
 }
