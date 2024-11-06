@@ -83,7 +83,7 @@ export default function timeInterval(date: string | Date) {
 
   if (interval.key === intervalMap.second) return "just now";
   else if (interval.value === 1) {
-    if (ago) return `last ${interval.key} ago`;
+    if (ago) return `last ${interval.key}`;
     return `next ${interval.key}`;
   } else return `${interval.value} ${interval.key}s ${ago ? "ago" : "later"}`;
 }

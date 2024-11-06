@@ -6,7 +6,7 @@ body {
   height: 100vh;
   height: 100dvh;
 
-  @apply font-mono dark:bg-neutral-900 dark:text-neutral-200;
+  @apply font-mono dark:bg-neutral-900 c-text-900;
 }
 
 main {

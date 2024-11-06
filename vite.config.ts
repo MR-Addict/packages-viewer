@@ -13,8 +13,8 @@ export default defineConfig({
       generateScopedName: (name, _, css) => {
         if (name === "dark") return "dark";
         const i = css.indexOf(`.${name}`);
-        const lineNumber = css.substr(0, i).split(/[\r\n]/).length;
-        const hash = stringHash(css).toString(36).substr(0, 5);
+        const lineNumber = css.slice(0, i).split(/[\r\n]/).length;
+        const hash = stringHash(css).toString(36).slice(0, 5);
 
         return `_${name}_${hash}_${lineNumber}`;
       }

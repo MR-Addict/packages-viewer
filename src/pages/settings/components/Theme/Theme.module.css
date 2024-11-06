@@ -10,7 +10,7 @@
     @apply capitalize px-4 py-2 rounded-xl;
 
     &.active {
-      @apply bg-neutral-200 dark:bg-neutral-800;
+      @apply c-bg-200;
     }
   }
 }

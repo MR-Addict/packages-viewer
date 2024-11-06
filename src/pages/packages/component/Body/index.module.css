@@ -2,10 +2,31 @@
   @apply grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-7;
 }
 
+.container {
+  @apply relative;
+}
+
 .pkg {
   @apply h-full block p-4 rounded-xl space-y-1 shadow-sm c-gradient-100 c-border;
 
   & h2 {
     @apply w-fit text-lg font-semibold border-b-4 border-b-blue-600 rounded-bl-lg px-1;
+  }
+}
+
+.container:hover .btns {
+  @apply flex visible opacity-100;
+}
+
+.btns {
+  @apply hidden opacity-0 invisible;
+  @apply absolute right-3 top-3 flex-row items-center gap-0.5;
+
+  & .btn {
+    @apply p-1 rounded-full;
+
+    &:hover {
+      @apply c-bg-200;
+    }
   }
 }

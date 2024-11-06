@@ -21,7 +21,7 @@ interface DatabaseContextProps {
   packages: {
     data: PackageType[];
     add: (pkg: RawPackageType) => PackageType;
-    update: (id: string, pkg: RawPackageType) => ApiResultType<PackageType>;
+    update: (id: string, pkg: Partial<RawPackageType>) => ApiResultType<PackageType>;
     remove: (id: string) => ApiResultType;
   };
 }
@@ -60,7 +60,7 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
     return newPkg;
   }
 
-  function updatePackage(id: string, pkg: RawPackageType): ApiResultType<PackageType> {
+  function updatePackage(id: string, pkg: Partial<RawPackageType>): ApiResultType<PackageType> {
     const found = packages.find((p) => p.id === id);
     if (!found) return { success: false, message: "Package not exists" };
 

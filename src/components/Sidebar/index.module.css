@@ -6,7 +6,7 @@
   @apply flex flex-col sticky top-0 w-64 c-border-r overflow-hidden;
 
   &.hide {
-    @apply w-0 md:w-64;
+    @apply w-0;
   }
 }
 

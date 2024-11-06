@@ -8,7 +8,7 @@ import { useAppContext } from "@/contexts/app";
 
 export default function Sidebar() {
   const location = useLocation();
-  const { openSidebar, setOpenSidebar } = useAppContext();
+  const { openSidebar } = useAppContext();
 
   const root = useMemo(() => location.pathname.split("/").slice(0, 2).join("/"), [location.pathname]);
 
@@ -19,11 +19,7 @@ export default function Sidebar() {
       <ul className={style.links}>
         {sidebar.map((item) => (
           <li key={item.to}>
-            <Link
-              to={item.to}
-              onClick={() => setOpenSidebar(false)}
-              className={clsx(style.link, { [style.active]: item.to === root })}
-            >
+            <Link to={item.to} className={clsx(style.link, { [style.active]: item.to === root })}>
               <div>
                 <item.Icon size={20} />
               </div>

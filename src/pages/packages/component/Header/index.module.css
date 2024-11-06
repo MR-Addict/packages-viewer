@@ -1,0 +1,15 @@
+.wrapper {
+  @apply flex flex-row items-center;
+}
+
+.btns {
+  @apply ml-auto flex items-center gap-1;
+
+  .select {
+    @apply capitalize dark:bg-neutral-900 outline-none c-text-800 text-right cursor-pointer;
+  }
+
+  & .btn {
+    @apply p-1.5 rounded-full hover:c-bg-200;
+  }
+}

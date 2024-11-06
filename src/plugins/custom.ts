@@ -30,3 +30,35 @@ export const border = plugin(function ({ addComponents }) {
     }
   });
 });
+
+export const background = plugin(function ({ addComponents }) {
+  addComponents({
+    ".c-bg-200": {
+      "@apply bg-neutral-200 dark:bg-neutral-800": {}
+    },
+    ".c-bg-300": {
+      "@apply bg-neutral-300 dark:bg-neutral-700": {}
+    }
+  });
+});
+
+export const text = plugin(function ({ addComponents }) {
+  addComponents({
+    ".c-text-600": {
+      "@apply text-neutral-600 dark:text-neutral-500": {}
+    },
+    ".c-text-700": {
+      "@apply text-neutral-700 dark:text-neutral-400": {}
+    },
+    ".c-text-800": {
+      "@apply text-neutral-800 dark:text-neutral-300": {}
+    },
+    ".c-text-900": {
+      "@apply text-neutral-900 dark:text-neutral-200": {}
+    }
+  });
+});
+
+const custom = [gradient, border, background, text];
+
+export default custom;

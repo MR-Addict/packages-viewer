@@ -2,17 +2,17 @@ import Body from "./component/Body";
 import Empty from "./component/Empty";
 import Header from "./component/Header";
 
-import { useDatabaseContext } from "@/contexts/database";
+import { usePackagesContext } from "@/contexts/packages";
 
 export default function Packages() {
-  const db = useDatabaseContext();
+  const { packages } = usePackagesContext();
 
-  if (db.packages.data.length === 0) return <Empty />;
+  if (packages.length === 0) return <Empty />;
 
   return (
     <div className="space-y-2">
       <Header />
-      <Body packages={db.packages.data} />
+      <Body packages={packages} />
     </div>
   );
 }
