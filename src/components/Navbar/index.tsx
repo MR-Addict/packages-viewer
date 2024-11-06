@@ -1,11 +1,24 @@
 import { LuGithub } from "react-icons/lu";
+import { HiMenuAlt1 } from "react-icons/hi";
 
 import style from "./index.module.css";
+import { useAppContext } from "@/contexts/app";
+
 import ImportButton from "@/components/ImportButton";
 
 export default function Navbar() {
+  const { setOpenSidebar } = useAppContext();
+
+  function handleClick() {
+    setOpenSidebar((prev) => !prev);
+  }
+
   return (
     <nav className={style.wrapper}>
+      <button type="button" className={style.menu} onClick={handleClick} aria-label="toggle sidebar">
+        <HiMenuAlt1 size={20} />
+      </button>
+
       <ImportButton />
 
       <a

@@ -1,12 +1,17 @@
 .wrapper {
   height: 100vh;
   height: 100dvh;
+  transition: width 500ms;
 
-  @apply flex flex-col sticky top-0 w-60 c-border-r;
+  @apply flex flex-col sticky top-0 w-64 c-border-r overflow-hidden;
+
+  &.hide {
+    @apply w-0 md:w-64;
+  }
 }
 
 .logo {
-  @apply font-semibold text-lg py-3 px-4 c-border-b;
+  @apply whitespace-nowrap font-semibold text-lg py-3 px-4 c-border-b;
 }
 
 .links {

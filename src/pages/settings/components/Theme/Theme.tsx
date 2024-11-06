@@ -10,7 +10,7 @@ import { themes } from "@/data/app";
 import { ThemeType } from "@/types/app";
 
 export default function Theme() {
-  const [localTheme, setLocalTheme] = usePersistantState<ThemeType>("theme", "system");
+  const [localTheme, setLocalTheme] = usePersistantState<ThemeType>("theme", "dark");
 
   function handleClick(t: ThemeType) {
     setTheme(t);
