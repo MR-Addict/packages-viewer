@@ -5,6 +5,7 @@
 body {
   height: 100vh;
   height: 100dvh;
+  --sidebar-width: 16rem;
 
   @apply font-mono dark:bg-neutral-900 c-text-900;
 }

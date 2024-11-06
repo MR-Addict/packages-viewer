@@ -1,14 +1,13 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 
-import "./index.css";
+import "./main.css";
 
 import Layout from "./layout";
-
 import Home from "@/pages/home";
-import Package from "./pages/package";
-import Packages from "./pages/packages";
+import Package from "@/pages/package";
+import Packages from "@/pages/packages";
 import Settings from "@/pages/settings";
 
 createRoot(document.getElementById("root")!).render(
@@ -23,6 +22,7 @@ createRoot(document.getElementById("root")!).render(
           </Route>
           <Route path="settings" element={<Settings />} />
         </Route>
+        <Route path="*" element={<Navigate to="/" replace={true} />} />
       </Routes>
     </HashRouter>
   </StrictMode>

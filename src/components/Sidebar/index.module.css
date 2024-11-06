@@ -2,11 +2,14 @@
   height: 100vh;
   height: 100dvh;
   transition: width 500ms;
+  width: var(--sidebar-width);
 
-  @apply flex flex-col sticky top-0 w-64 c-border-r overflow-hidden;
+  @apply flex flex-col sticky lg:top-0 c-border-r overflow-hidden;
 
-  &.hide {
-    @apply w-0;
+  @media (width < 1024px) {
+    &.hide {
+      width: 0;
+    }
   }
 }
 

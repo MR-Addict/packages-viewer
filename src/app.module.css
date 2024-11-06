@@ -1,0 +1,15 @@
+.container {
+  @apply flex-1 flex flex-col;
+
+  & .content {
+    @apply flex-1 p-4 flex flex-col;
+  }
+
+  &.open-sidebar {
+    @apply overflow-x-hidden;
+
+    & .content {
+      width: calc(100vw + var(--sidebar-width));
+    }
+  }
+}

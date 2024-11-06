@@ -1,10 +1,6 @@
 import { Toaster } from "react-hot-toast";
-import { Outlet } from "react-router-dom";
 
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import Sidebar from "./components/Sidebar";
-
+import App from "./app";
 import { AppContextProvider } from "./contexts/app";
 import { DatabaseProvider } from "./contexts/database";
 import { PackageContextProvider } from "@/contexts/package";
@@ -16,19 +12,8 @@ export default function Layout() {
       <DatabaseProvider>
         <PackagesContextProvider>
           <PackageContextProvider>
+            <App />
             <Toaster />
-
-            <main>
-              <Sidebar />
-
-              <section className="flex-1 flex flex-col">
-                <Navbar />
-                <div className="flex-1 p-4 flex flex-col">
-                  <Outlet />
-                </div>
-                <Footer />
-              </section>
-            </main>
           </PackageContextProvider>
         </PackagesContextProvider>
       </DatabaseProvider>

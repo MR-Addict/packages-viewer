@@ -18,7 +18,7 @@ interface AppContextProviderProps {
 }
 
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
-  const [openSidebar, setOpenSidebar] = usePersistantState("open-sidebar", true);
+  const [openSidebar, setOpenSidebar] = usePersistantState("open-sidebar", false);
 
   return (
     <AppContext.Provider
