@@ -5,21 +5,14 @@ import uniqid from "uniqid";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import IDB from "@/lib/idb";
+import { emptyPackage } from "@/data/app";
 import { ApiResultType } from "@/types/app";
 import { Package, PackageType, RawPackageType } from "@/types/package";
-
-const emptyPackage: PackageType = {
-  id: "",
-  name: "",
-  dependencies: [],
-  created: "",
-  updated: ""
-};
 
 interface DatabaseContextProps {
   import: (data: any, options?: { packages: boolean; collections: boolean }) => void;
   packages: {
-    data: PackageType[];
+    data: PackageType[] | null;
     add: (pkg: RawPackageType) => PackageType;
     update: (id: string, pkg: Partial<RawPackageType>) => ApiResultType<PackageType>;
     remove: (id: string) => ApiResultType;
@@ -40,7 +33,6 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
   const idb = useMemo(() => new IDB("packages-viewer"), []);
 
   const [imported, setImported] = useState(false);
-
   const [packages, setPackages] = useState<PackageType[]>([]);
 
   /* Import data */

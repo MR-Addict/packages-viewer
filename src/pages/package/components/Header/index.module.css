@@ -1,0 +1,11 @@
+.wrapper {
+  @apply flex flex-row items-center;
+}
+
+.btns {
+  @apply ml-auto flex items-center gap-1;
+
+  & .btn {
+    @apply p-1.5 rounded-full hover:c-bg-200;
+  }
+}

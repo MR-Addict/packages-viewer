@@ -1,11 +1,11 @@
-import { useParams } from "react-router-dom";
+import Body from "./components/Body";
+import Header from "./components/Header";
 
 export default function Package() {
-  const { id } = useParams();
-
   return (
     <div>
-      <h1>Package {id}</h1>
+      <Header />
+      <Body />
     </div>
   );
 }
