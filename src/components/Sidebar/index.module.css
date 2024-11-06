@@ -4,7 +4,7 @@
   transition: width 500ms;
   width: var(--sidebar-width);
 
-  @apply flex flex-col sticky lg:top-0 c-border-r overflow-hidden;
+  @apply flex flex-col sticky lg:top-0 c-border-r overflow-hidden whitespace-nowrap;
 
   @media (width < 1024px) {
     &.hide {
@@ -14,7 +14,7 @@
 }
 
 .logo {
-  @apply whitespace-nowrap font-semibold text-lg py-3 px-4 c-border-b;
+  @apply font-semibold text-lg py-3 px-4 c-border-b;
 }
 
 .links {
@@ -32,4 +32,8 @@
       @apply border-l-blue-600 bg-neutral-100 dark:bg-neutral-800;
     }
   }
+}
+
+.footer {
+  @apply mt-auto pl-2 pb-1 text-sm;
 }

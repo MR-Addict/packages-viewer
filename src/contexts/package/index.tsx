@@ -2,26 +2,17 @@
 
 import { createContext, useContext, Dispatch, SetStateAction, useState, useMemo } from "react";
 
-import { OrderType } from "@/types/app";
 import { emptyPackage } from "@/data/app";
 import { PackageType } from "@/types/package";
-
-import usePersistantState from "@/hooks/usePersistantState";
 
 interface PackageContextProps {
   pkg: PackageType;
   setPkg: Dispatch<SetStateAction<PackageType>>;
-
-  packageOrder: OrderType;
-  setPackageOrder: Dispatch<SetStateAction<OrderType>>;
 }
 
 const PackageContext = createContext<PackageContextProps>({
   pkg: emptyPackage,
-  setPkg: () => {},
-
-  packageOrder: "asc",
-  setPackageOrder: () => {}
+  setPkg: () => {}
 });
 
 interface PackageContextProviderProps {
@@ -30,25 +21,18 @@ interface PackageContextProviderProps {
 
 export const PackageContextProvider = ({ children }: PackageContextProviderProps) => {
   const [_pkg, setPkg] = useState<PackageType>(emptyPackage);
-  const [packageOrder, setPackageOrder] = usePersistantState<OrderType>("package-order", "asc");
 
   const pkg = useMemo(() => {
     const dependencies = _pkg.dependencies;
-    dependencies.sort((a, b) => a.type.localeCompare(b.type) || a.name.localeCompare(b.name));
-
-    dependencies.sort((a, b) => a.name.localeCompare(b.name));
-    if (packageOrder === "desc") dependencies.reverse();
+    dependencies.sort((a, b) => b.type.localeCompare(a.type) || a.name.localeCompare(b.name));
     return { ..._pkg, dependencies };
-  }, [_pkg, packageOrder]);
+  }, [_pkg]);
 
   return (
     <PackageContext.Provider
       value={{
         pkg,
-        setPkg,
-
-        packageOrder,
-        setPackageOrder
+        setPkg
       }}
     >
       {children}

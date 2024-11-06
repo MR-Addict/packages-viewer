@@ -11,5 +11,11 @@ body {
 }
 
 main {
-  @apply flex flex-row;
+  @apply flex md:flex-row;
+}
+
+@media (min-width: 1024px) {
+  body {
+    --sidebar-width: 20rem;
+  }
 }

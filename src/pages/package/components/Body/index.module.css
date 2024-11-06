@@ -1,3 +1,15 @@
 .wrapper {
-  @apply flex flex-col items-center;
+  @apply w-full text-left overflow-auto;
+}
+
+.table {
+  @apply w-full;
+
+  & :is(th, td) {
+    @apply py-1;
+  }
+
+  & thead {
+    @apply c-border-b;
+  }
 }

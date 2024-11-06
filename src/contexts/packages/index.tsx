@@ -21,7 +21,7 @@ interface PackagesContextProps {
 const PackagesContext = createContext<PackagesContextProps>({
   packages: [],
 
-  packagesOrder: "desc",
+  packagesOrder: "asc",
   setPackagesOrder: () => {},
 
   packagesOrderBy: "updated",
@@ -33,7 +33,7 @@ interface PackagesContextProviderProps {
 }
 
 export const PackagesContextProvider = ({ children }: PackagesContextProviderProps) => {
-  const [packagesOrder, setPackagesOrder] = usePersistantState<OrderType>("packages-order", "desc");
+  const [packagesOrder, setPackagesOrder] = usePersistantState<OrderType>("packages-order", "asc");
   const [packagesOrderBy, setPackagesOrderBy] = usePersistantState<PackagesOrderByType>("packages-order-by", "updated");
 
   const db = useDatabaseContext();

@@ -32,6 +32,13 @@ export default function Sidebar() {
           </li>
         ))}
       </ul>
+
+      <footer className={style.footer}>
+        <span>Created by </span>
+        <a href="https://github.com/MR-Addict" target="_blank" className="underline">
+          MR-Addict
+        </a>
+      </footer>
     </nav>
   );
 }

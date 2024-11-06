@@ -22,7 +22,7 @@ export default function Package() {
   }, [params, db.imported, db.packages.data]);
 
   return (
-    <div>
+    <div className="space-y-2">
       <Header />
       <Body />
     </div>
