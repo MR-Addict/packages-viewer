@@ -14,7 +14,7 @@ export default function Body({ packages }: { packages: PackageType[] }) {
 
   function handleUpdate(pkg: PackageType) {
     const newName = prompt("Enter new name for this package", pkg.name);
-    if (newName) {
+    if (newName && newName.trim() !== pkg.name) {
       const res = db.packages.update(pkg.id, { name: newName });
       if (res.success) toast.success("Package successfully updated");
       else toast.error(res.message);

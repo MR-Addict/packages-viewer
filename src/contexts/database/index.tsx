@@ -11,8 +11,9 @@ import { Package, PackageType, RawPackageType } from "@/types/package";
 
 interface DatabaseContextProps {
   import: (data: any, options?: { packages: boolean; collections: boolean }) => void;
+  imported: boolean;
   packages: {
-    data: PackageType[] | null;
+    data: PackageType[];
     add: (pkg: RawPackageType) => PackageType;
     update: (id: string, pkg: Partial<RawPackageType>) => ApiResultType<PackageType>;
     remove: (id: string) => ApiResultType;
@@ -21,6 +22,7 @@ interface DatabaseContextProps {
 
 const DatabaseContext = createContext<DatabaseContextProps>({
   import: () => {},
+  imported: false,
   packages: {
     data: [],
     add: () => emptyPackage,
@@ -73,7 +75,7 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
     (async () => {
       const packages = await idb.load("packages");
       importData({ packages });
-      setTimeout(() => setImported(true), 1000);
+      setImported(true);
     })();
   }, []);
 
@@ -86,6 +88,7 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
     <DatabaseContext.Provider
       value={{
         import: importData,
+        imported,
         packages: { data: packages, add: addPackage, update: updatePackage, remove: removePackage }
       }}
     >

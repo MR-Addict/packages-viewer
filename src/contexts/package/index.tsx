@@ -1,17 +1,16 @@
 "use client";
 
-import { useParams } from "react-router-dom";
-import { createContext, useContext, Dispatch, SetStateAction, useMemo } from "react";
-
-import usePersistantState from "@/hooks/usePersistantState";
+import { createContext, useContext, Dispatch, SetStateAction, useState, useMemo } from "react";
 
 import { OrderType } from "@/types/app";
 import { emptyPackage } from "@/data/app";
 import { PackageType } from "@/types/package";
-import { useDatabaseContext } from "@/contexts/database";
+
+import usePersistantState from "@/hooks/usePersistantState";
 
 interface PackageContextProps {
-  pkg: PackageType | null;
+  pkg: PackageType;
+  setPkg: Dispatch<SetStateAction<PackageType>>;
 
   packageOrder: OrderType;
   setPackageOrder: Dispatch<SetStateAction<OrderType>>;
@@ -19,6 +18,7 @@ interface PackageContextProps {
 
 const PackageContext = createContext<PackageContextProps>({
   pkg: emptyPackage,
+  setPkg: () => {},
 
   packageOrder: "asc",
   setPackageOrder: () => {}
@@ -29,26 +29,23 @@ interface PackageContextProviderProps {
 }
 
 export const PackageContextProvider = ({ children }: PackageContextProviderProps) => {
+  const [_pkg, setPkg] = useState<PackageType>(emptyPackage);
   const [packageOrder, setPackageOrder] = usePersistantState<OrderType>("package-order", "asc");
 
-  const { id } = useParams();
-  const db = useDatabaseContext();
-
   const pkg = useMemo(() => {
-    const pkg = db.packages.data.find((p) => p.id === id);
-    if (!pkg) return null;
+    const dependencies = _pkg.dependencies;
+    dependencies.sort((a, b) => a.type.localeCompare(b.type) || a.name.localeCompare(b.name));
 
-    const dependencies = pkg.dependencies;
     dependencies.sort((a, b) => a.name.localeCompare(b.name));
     if (packageOrder === "desc") dependencies.reverse();
-    pkg.dependencies = dependencies;
-    return pkg;
-  }, [id, packageOrder, db.packages.data]);
+    return { ..._pkg, dependencies };
+  }, [_pkg, packageOrder]);
 
   return (
     <PackageContext.Provider
       value={{
         pkg,
+        setPkg,
 
         packageOrder,
         setPackageOrder
