@@ -2,20 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+#root {
   height: 100vh;
   height: 100dvh;
-  --sidebar-width: 16rem;
 
-  @apply font-mono dark:bg-neutral-900 c-text-900;
-}
-
-main {
-  @apply flex md:flex-row;
-}
-
-@media (min-width: 1024px) {
-  body {
-    --sidebar-width: 20rem;
-  }
+  @apply flex flex-col font-mono bg-white dark:bg-neutral-900 c-text-900;
 }

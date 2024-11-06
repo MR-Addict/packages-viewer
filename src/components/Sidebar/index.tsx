@@ -1,19 +1,23 @@
 import clsx from "clsx";
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import style from "./index.module.css";
+import useClickOutside from "@/hooks/useClickOutside";
+
 import { sidebar } from "@/data/sidebar";
 import { useAppContext } from "@/contexts/app";
 
 export default function Sidebar() {
   const location = useLocation();
-  const { openSidebar, setOpenSidebar } = useAppContext();
-
+  const sidebarRef = useRef<HTMLDivElement>(null);
+  const { windowSize, openSidebar, setOpenSidebar } = useAppContext();
   const root = useMemo(() => location.pathname.split("/").slice(0, 2).join("/"), [location.pathname]);
 
+  useClickOutside(() => windowSize.width < 1024 && setOpenSidebar(false), sidebarRef, [windowSize.width]);
+
   return (
-    <nav className={clsx(style.wrapper, { [style.hide]: !openSidebar })}>
+    <nav ref={sidebarRef} className={clsx(style.wrapper, { [style.active]: windowSize.width >= 1024 || openSidebar })}>
       <h1 className={style.logo}>Packages Viewer</h1>
 
       <ul className={style.links}>
