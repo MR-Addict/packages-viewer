@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
 import { ImSpinner } from "react-icons/im";
+import { useEffect, useRef, useState } from "react";
 
 import style from "./index.module.css";
 import useSessionState from "@/hooks/useSessionState";
@@ -19,13 +19,22 @@ function DependencyRow({ dep }: { dep: DependencyType }) {
 
   useEffect(() => {
     (async () => {
-      if (remoteDep) return setFetchStatus("idle");
-      const res = await fetchDependency(dep.name);
-      if (res.success) {
-        setFetchStatus("idle");
-        setRemoteDep(res.data);
-        updateDependencies([{ name: dep.name, data: { latest: res.data.version } }]);
-      } else setFetchStatus("error");
+      let cacheDep = remoteDep;
+
+      if (!cacheDep) {
+        const res = await fetchDependency(dep.name);
+        if (res.success) {
+          cacheDep = res.data;
+          setRemoteDep(res.data);
+          setFetchStatus("idle");
+        } else {
+          setRemoteDep(null);
+          setFetchStatus("error");
+          return;
+        }
+      }
+
+      updateDependencies([{ name: dep.name, data: { latest: cacheDep.version } }]);
     })();
   }, [dep.name]);
 

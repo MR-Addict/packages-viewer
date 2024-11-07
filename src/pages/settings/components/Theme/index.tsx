@@ -1,5 +1,6 @@
 import clsx from "clsx";
 
+import style from "./index.module.css";
 import pageStyle from "../../index.module.css";
 
 import setTheme from "@/lib/theme/setTheme";
@@ -22,13 +23,10 @@ export default function Theme() {
 
       <p>Change the appearance of the application</p>
 
-      <ul className={pageStyle.btns}>
+      <ul className={style.btns}>
         {themes.map((t) => (
           <li key={t}>
-            <button
-              onClick={() => handleClick(t)}
-              className={clsx(pageStyle.btn, { [pageStyle.active]: localTheme === t })}
-            >
+            <button onClick={() => handleClick(t)} className={clsx(style.btn, { [style.active]: localTheme === t })}>
               {t}
             </button>
           </li>

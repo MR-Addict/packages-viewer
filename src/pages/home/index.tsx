@@ -2,25 +2,27 @@ import clsx from "clsx";
 import { useState } from "react";
 
 import style from "./index.module.css";
+import { fileInputID } from "@/data/app";
+import { useAppContext } from "@/contexts/app";
 
 export default function Home() {
+  const { fileInputRef } = useAppContext();
   const [isDragging, setIsDragging] = useState(false);
 
   function handleDrop(event: React.DragEvent<HTMLLabelElement>) {
     event.preventDefault();
     setIsDragging(false);
-    const inputElement = document.getElementById("upload-package-file") as HTMLInputElement;
-    if (inputElement) {
+    if (fileInputRef.current) {
       const dataTransfer = new DataTransfer();
       for (const file of event.dataTransfer.files) dataTransfer.items.add(file);
-      inputElement.files = dataTransfer.files;
-      inputElement.dispatchEvent(new Event("change", { bubbles: true }));
+      fileInputRef.current.files = dataTransfer.files;
+      fileInputRef.current.dispatchEvent(new Event("change", { bubbles: true }));
     }
   }
 
   return (
     <label
-      htmlFor="upload-package-file"
+      htmlFor={fileInputID}
       onDrop={handleDrop}
       onDragOver={(event) => event.preventDefault()}
       onDragEnter={() => setIsDragging(true)}

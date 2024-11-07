@@ -1,10 +1,9 @@
 "use client";
 
-import usePersistantState from "@/hooks/usePersistantState";
-import { PackageManagerType } from "@/types/app";
-import { createContext, useContext, Dispatch, SetStateAction, useEffect } from "react";
+import { createContext, useContext, Dispatch, SetStateAction, useEffect, useRef } from "react";
 
-const defaultWindowSize = { width: 1024, height: 0 };
+import { PackageManagerType } from "@/types/app";
+import usePersistantState from "@/hooks/usePersistantState";
 
 interface AppContextProps {
   openSidebar: boolean;
@@ -13,7 +12,8 @@ interface AppContextProps {
   packageManager: PackageManagerType;
   setPackageManager: Dispatch<SetStateAction<PackageManagerType>>;
 
-  windowSize: { width: number; height: number };
+  fileInputRef: React.RefObject<HTMLInputElement>;
+  windowWidth: number;
 }
 
 const AppContext = createContext<AppContextProps>({
@@ -23,7 +23,8 @@ const AppContext = createContext<AppContextProps>({
   packageManager: "npm",
   setPackageManager: () => {},
 
-  windowSize: defaultWindowSize
+  fileInputRef: { current: null },
+  windowWidth: 1024
 });
 
 interface AppContextProviderProps {
@@ -31,20 +32,15 @@ interface AppContextProviderProps {
 }
 
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [openSidebar, setOpenSidebar] = usePersistantState("open-sidebar", false);
-  const [windowSize, setWindowSize] = usePersistantState("window-size", defaultWindowSize);
+  const [windowWidth, setWindowWidth] = usePersistantState("window-size", window.innerWidth);
   const [packageManager, setPackageManager] = usePersistantState<PackageManagerType>("package-manager", "npm");
 
   useEffect(() => {
-    function handleResize() {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight
-      });
-    }
+    const handleResize = () => setWindowWidth(window.innerWidth);
 
     window.addEventListener("resize", handleResize);
-    handleResize();
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -58,7 +54,8 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
         packageManager,
         setPackageManager,
 
-        windowSize
+        fileInputRef,
+        windowWidth
       }}
     >
       {children}

@@ -11,13 +11,13 @@ import { useAppContext } from "@/contexts/app";
 export default function Sidebar() {
   const location = useLocation();
   const sidebarRef = useRef<HTMLDivElement>(null);
-  const { windowSize, openSidebar, setOpenSidebar } = useAppContext();
+  const { windowWidth, openSidebar, setOpenSidebar } = useAppContext();
   const root = useMemo(() => location.pathname.split("/").slice(0, 2).join("/"), [location.pathname]);
 
-  useClickOutside(() => windowSize.width < 1024 && setOpenSidebar(false), sidebarRef, [windowSize.width]);
+  useClickOutside(() => windowWidth < 1024 && setOpenSidebar(false), sidebarRef, [windowWidth]);
 
   return (
-    <nav ref={sidebarRef} className={clsx(style.wrapper, { [style.active]: windowSize.width >= 1024 || openSidebar })}>
+    <nav ref={sidebarRef} className={clsx(style.wrapper, { [style.active]: windowWidth >= 1024 || openSidebar })}>
       <h1 className={style.logo}>Packages Viewer</h1>
 
       <ul className={style.links}>

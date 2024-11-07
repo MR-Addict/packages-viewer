@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import style from "./index.module.css";
 import useClickOutside from "@/hooks/useClickOutside";
 
+import { useAppContext } from "@/contexts/app";
 import { DependencyType } from "@/types/package";
 import { usePackageContext } from "@/contexts/package";
 
@@ -21,7 +22,8 @@ function selectDep(deps: DependencyType[], selector: (d: DependencyType) => bool
 }
 
 export default function Header() {
-  const { pkg, updateDependencies } = usePackageContext();
+  const { fileInputRef } = useAppContext();
+  const { pkg, setOpenDialog, updateDependencies } = usePackageContext();
 
   const menuRef = useRef<HTMLDivElement>(null);
   const [expanded, setExpanded] = useState(false);
@@ -37,13 +39,24 @@ export default function Header() {
     else if (option === "dev") updateDependencies(selectDep(deps, (d) => d.type === "dev"));
   }
 
-  function handleUpload(event: React.ChangeEvent<HTMLInputElement>) {}
+  function handleUpload(event: React.ChangeEvent<HTMLInputElement>) {
+    if (!fileInputRef.current) return;
+    fileInputRef.current.files = event.target.files;
+    fileInputRef.current.setAttribute("data-pkg-id", pkg.id);
+    fileInputRef.current.dispatchEvent(new Event("change", { bubbles: true }));
+    event.target.value = "";
+  }
 
   return (
     <header className={style.wrapper}>
       <h1 className="text-lg font-semibold">{pkg.name}</h1>
 
       <div className={style.btns}>
+        <label className={style.btn}>
+          Upload
+          <input type="file" id="reupload-package-file" className="hidden" onChange={handleUpload} />
+        </label>
+
         <div ref={menuRef} className={style.select}>
           <button type="button" className={style.btn} onClick={() => setExpanded((prev) => !prev)}>
             Select
@@ -58,10 +71,9 @@ export default function Header() {
           </div>
         </div>
 
-        <label className={style.btn}>
-          Upload
-          <input type="file" id="reupload-package-file" className="hidden" onChange={handleUpload} />
-        </label>
+        <button type="button" className={style.btn} data-type="inverse" onClick={() => setOpenDialog(true)}>
+          Install
+        </button>
       </div>
     </header>
   );
