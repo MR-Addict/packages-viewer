@@ -1,5 +1,5 @@
 .wrapper {
-  @apply w-full text-left overflow-auto;
+  @apply w-full text-left overflow-x-auto;
 }
 
 .table {

@@ -5,7 +5,7 @@ import Sidebar from "./components/Sidebar";
 
 export default function App() {
   return (
-    <main className="flex-1 flex flex-col lg:flex-row">
+    <main className="flex-1 flex flex-col lg:flex-row c-bg-100">
       <Sidebar />
 
       <section className="flex-1 flex flex-col">

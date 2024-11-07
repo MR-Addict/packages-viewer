@@ -8,6 +8,14 @@ export const Dependency = z.object({
 });
 export type DependencyType = z.infer<typeof Dependency>;
 
+/* Remote Dependency */
+export const RemoteDependency = z.object({
+  name: z.string(),
+  version: z.string(),
+  description: z.string()
+});
+export type RemoteDependencyType = z.infer<typeof RemoteDependency>;
+
 /* Package */
 export const Package = z.object({
   id: z.string(),

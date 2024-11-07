@@ -6,5 +6,5 @@
   height: 100vh;
   height: 100dvh;
 
-  @apply flex flex-col font-mono bg-white dark:bg-neutral-900 c-text-900;
+  @apply flex flex-col font-mono c-bg-100 c-text-900;
 }

@@ -1,8 +1,24 @@
+import { useEffect } from "react";
+
 import style from "./index.module.css";
-import { DependencyType } from "@/types/package";
+import useSessionState from "@/hooks/useSessionState";
+import fetchDependency from "@/lib/package/fetchDependency";
+
 import { usePackageContext } from "@/contexts/package";
+import { DependencyType, RemoteDependencyType } from "@/types/package";
 
 function DependencyRow({ dep }: { dep: DependencyType }) {
+  const [remoteDep, setRemoteDep] = useSessionState<RemoteDependencyType | null>("dep-" + dep.name, null);
+
+  useEffect(() => {
+    (async () => {
+      if (remoteDep) return;
+      const res = await fetchDependency(dep.name);
+      if (res.success) setRemoteDep(res.data);
+      else setRemoteDep(null);
+    })();
+  }, [dep.name]);
+
   return (
     <tr>
       <td>
@@ -11,7 +27,7 @@ function DependencyRow({ dep }: { dep: DependencyType }) {
       <td>{dep.name}</td>
       <td>{dep.type}</td>
       <td>{dep.version}</td>
-      <td>1.1.1</td>
+      <td>{remoteDep?.version}</td>
     </tr>
   );
 }

@@ -33,6 +33,9 @@ export const border = plugin(function ({ addComponents }) {
 
 export const background = plugin(function ({ addComponents }) {
   addComponents({
+    ".c-bg-100": {
+      "@apply bg-white dark:bg-neutral-900": {}
+    },
     ".c-bg-200": {
       "@apply bg-neutral-200 dark:bg-neutral-800": {}
     },
