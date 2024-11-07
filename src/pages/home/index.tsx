@@ -9,7 +9,7 @@ export default function Home() {
   function handleDrop(event: React.DragEvent<HTMLLabelElement>) {
     event.preventDefault();
     setIsDragging(false);
-    const inputElement = document.getElementById("import-package-file") as HTMLInputElement;
+    const inputElement = document.getElementById("upload-package-file") as HTMLInputElement;
     if (inputElement) {
       const dataTransfer = new DataTransfer();
       for (const file of event.dataTransfer.files) dataTransfer.items.add(file);
@@ -20,7 +20,7 @@ export default function Home() {
 
   return (
     <label
-      htmlFor="import-package-file"
+      htmlFor="upload-package-file"
       onDrop={handleDrop}
       onDragOver={(event) => event.preventDefault()}
       onDragEnter={() => setIsDragging(true)}

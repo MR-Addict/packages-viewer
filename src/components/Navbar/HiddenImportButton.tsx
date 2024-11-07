@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import parsePackage from "@/lib/package/parsePackage";
 import { useDatabaseContext } from "@/contexts/database";
 
-export default function ImportButton() {
+export default function HiddenImportButton() {
   const db = useDatabaseContext();
   const navigate = useNavigate();
 
@@ -41,10 +41,5 @@ export default function ImportButton() {
     event.target.value = "";
   }
 
-  return (
-    <label htmlFor="import-package-file" className="cursor-pointer">
-      <span>Import</span>
-      <input id="import-package-file" onChange={handleImport} type="file" accept=".json" className="hidden" />
-    </label>
-  );
+  return <input id="upload-package-file" onChange={handleImport} type="file" accept=".json" className="hidden" />;
 }

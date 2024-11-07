@@ -37,13 +37,15 @@ export default function Header() {
     else if (option === "dev") updateDependencies(selectDep(deps, (d) => d.type === "dev"));
   }
 
+  function handleUpload(event: React.ChangeEvent<HTMLInputElement>) {}
+
   return (
     <header className={style.wrapper}>
       <h1 className="text-lg font-semibold">{pkg.name}</h1>
 
       <div className={style.btns}>
         <div ref={menuRef} className={style.select}>
-          <button type="button" className={style["toggle-menu"]} onClick={() => setExpanded((prev) => !prev)}>
+          <button type="button" className={style.btn} onClick={() => setExpanded((prev) => !prev)}>
             Select
           </button>
 
@@ -55,6 +57,11 @@ export default function Header() {
             ))}
           </div>
         </div>
+
+        <label className={style.btn}>
+          Upload
+          <input type="file" id="reupload-package-file" className="hidden" onChange={handleUpload} />
+        </label>
       </div>
     </header>
   );

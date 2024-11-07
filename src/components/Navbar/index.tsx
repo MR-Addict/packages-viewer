@@ -4,7 +4,7 @@ import { HiMenuAlt1 } from "react-icons/hi";
 import style from "./index.module.css";
 import { useAppContext } from "@/contexts/app";
 
-import ImportButton from "@/components/ImportButton";
+import HiddenImportButton from "./HiddenImportButton";
 
 export default function Navbar() {
   const { setOpenSidebar } = useAppContext();
@@ -19,7 +19,7 @@ export default function Navbar() {
         <HiMenuAlt1 size={20} />
       </button>
 
-      <ImportButton />
+      <HiddenImportButton />
 
       <a
         target="_blank"

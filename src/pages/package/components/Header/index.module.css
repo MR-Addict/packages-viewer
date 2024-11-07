@@ -3,19 +3,11 @@
 }
 
 .btns {
-  @apply ml-auto flex items-center gap-1;
+  @apply ml-auto flex items-center gap-3;
 }
 
 .select {
   @apply relative;
-
-  & .toggle-menu {
-    @apply c-border c-bg-200 px-3 py-1.5 text-sm rounded-md;
-
-    &[data-type="inverse"] {
-      @apply c-bg-900 c-text-100;
-    }
-  }
 
   & .select-menu {
     @apply flex flex-col origin-top invisible opacity-0 scale-y-95 duration-100;
@@ -32,5 +24,13 @@
         @apply c-bg-200 duration-300;
       }
     }
+  }
+}
+
+.btn {
+  @apply cursor-pointer c-border c-bg-200 px-3 py-1.5 text-sm rounded-md;
+
+  &[data-type="inverse"] {
+    @apply c-bg-900 c-text-100;
   }
 }
