@@ -5,7 +5,7 @@ export const Dependency = z.object({
   name: z.string(),
   version: z.string(),
   selected: z.boolean(),
-  latest: z.string().nullable().optional(),
+  latest: z.string().nullable(),
   type: z.enum(["prod", "dev"])
 });
 export type DependencyType = z.infer<typeof Dependency>;

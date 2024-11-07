@@ -8,7 +8,6 @@ import { useDatabaseContext } from "@/contexts/database";
 import { DependencyType, PackageType } from "@/types/package";
 
 interface PackageContextProps {
-  found: boolean;
   pkg: PackageType;
 
   openDialog: boolean;
@@ -18,7 +17,6 @@ interface PackageContextProps {
 }
 
 const PackageContext = createContext<PackageContextProps>({
-  found: true,
   pkg: emptyPackage,
 
   openDialog: false,
@@ -35,7 +33,6 @@ export const PackageContextProvider = ({ children }: PackageContextProviderProps
   const { id } = useParams();
   const db = useDatabaseContext();
 
-  const [found, setFound] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
   const [pkg, setPkg] = useState<PackageType>(emptyPackage);
 
@@ -55,20 +52,14 @@ export const PackageContextProvider = ({ children }: PackageContextProviderProps
     const pkg = db.packages.data.find((p) => p.id === id);
 
     // set package
-    if (pkg) {
-      setPkg(pkg);
-      setFound(true);
-    } else {
-      setFound(false);
-      setPkg(emptyPackage);
-    }
+    if (pkg) setPkg(pkg);
+    else setPkg(emptyPackage);
   }, [id, db.ready, db.packages.data]);
 
   return (
     <PackageContext.Provider
       value={{
         pkg,
-        found,
 
         openDialog,
         setOpenDialog,

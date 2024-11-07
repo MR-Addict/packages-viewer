@@ -23,7 +23,7 @@ export default function parsePackage(file: string): ApiResultType<RawPackageType
   if (!parsed.success) return { success: false, message: "Unable to parse your package" };
 
   const dependencies: DependencyType[] = [];
-  const commonOptions = { selected: false, latest: undefined };
+  const commonOptions = { selected: false, latest: null };
 
   const prodDependencies = parsed.data.dependencies;
   if (prodDependencies) {

@@ -1,8 +1,10 @@
 import clsx from "clsx";
+import toast from "react-hot-toast";
 import { useRef, useState } from "react";
 
 import style from "./index.module.css";
 import useClickOutside from "@/hooks/useClickOutside";
+import copyToClipboard from "@/lib/utils/copyToClipboard";
 
 import { useAppContext } from "@/contexts/app";
 import { DependencyType } from "@/types/package";
@@ -22,8 +24,8 @@ function selectDep(deps: DependencyType[], selector: (d: DependencyType) => bool
 }
 
 export default function Header() {
-  const { fileInputRef } = useAppContext();
-  const { pkg, setOpenDialog, updateDependencies } = usePackageContext();
+  const { pkg, updateDependencies } = usePackageContext();
+  const { packageManager, fileInputRef } = useAppContext();
 
   const menuRef = useRef<HTMLDivElement>(null);
   const [expanded, setExpanded] = useState(false);
@@ -45,6 +47,19 @@ export default function Header() {
     fileInputRef.current.setAttribute("data-pkg-id", pkg.id);
     fileInputRef.current.dispatchEvent(new Event("change", { bubbles: true }));
     event.target.value = "";
+  }
+
+  function handleCopy() {
+    const dependencies = pkg.dependencies.filter((d) => d.selected);
+    const text = dependencies.map((d) => `${d.name}@${d.latest || d.version}`).join(" ");
+
+    let command = "";
+    if (packageManager === "npm") command = `npm install ${text}`;
+    else if (packageManager === "yarn") command = `yarn add ${text}`;
+    else if (packageManager === "pnpm") command = `pnpm add ${text}`;
+    const res = copyToClipboard(command);
+    if (!res.success) toast.error(res.message);
+    else toast.success("Copied to clipboard");
   }
 
   return (
@@ -71,8 +86,8 @@ export default function Header() {
           </div>
         </div>
 
-        <button type="button" className={style.btn} data-type="inverse" onClick={() => setOpenDialog(true)}>
-          Install
+        <button type="button" className={style.btn} data-type="inverse" onClick={handleCopy}>
+          Copy
         </button>
       </div>
     </header>

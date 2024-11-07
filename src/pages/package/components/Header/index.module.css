@@ -11,7 +11,7 @@
 
   & .select-menu {
     @apply flex flex-col origin-top invisible opacity-0 scale-y-95 duration-100;
-    @apply absolute top-full translate-y-2 right-0 z-10 c-bg-100 c-border rounded-md overflow-hidden;
+    @apply absolute top-full translate-y-2 right-0 c-bg-100 c-border rounded-md overflow-hidden;
 
     &.expanded {
       @apply visible scale-y-100 opacity-100;

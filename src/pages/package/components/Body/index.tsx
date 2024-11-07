@@ -21,22 +21,24 @@ function DependencyRow({ dep }: { dep: DependencyType }) {
     (async () => {
       let cacheDep = remoteDep;
 
+      // Fetch dependency if not cached
       if (!cacheDep) {
         const res = await fetchDependency(dep.name);
-        if (res.success) {
-          cacheDep = res.data;
-          setRemoteDep(res.data);
-          setFetchStatus("idle");
-        } else {
-          setRemoteDep(null);
-          setFetchStatus("error");
-          return;
-        }
+        if (res.success) cacheDep = res.data;
+        else cacheDep = null;
       }
 
-      updateDependencies([{ name: dep.name, data: { latest: cacheDep.version } }]);
+      if (cacheDep) {
+        setRemoteDep(cacheDep);
+        setFetchStatus("idle");
+        updateDependencies([{ name: dep.name, data: { latest: cacheDep.version } }]);
+      } else {
+        setRemoteDep(null);
+        setFetchStatus("error");
+        updateDependencies([{ name: dep.name, data: { latest: null } }]);
+      }
     })();
-  }, [dep.name]);
+  }, [dep]);
 
   return (
     <tr>
@@ -53,9 +55,9 @@ function DependencyRow({ dep }: { dep: DependencyType }) {
             Error
           </p>
         )}
-        {fetchStatus === "idle" && remoteDep && (
-          <p data-status={remoteDep.version !== dep.version && "success"} className={style.chip}>
-            {remoteDep.version}
+        {fetchStatus === "idle" && dep.latest && (
+          <p data-status={dep.latest !== dep.version && "success"} className={style.chip}>
+            {dep.latest}
           </p>
         )}
       </td>
