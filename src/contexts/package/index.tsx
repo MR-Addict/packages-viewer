@@ -1,18 +1,22 @@
 "use client";
 
-import { createContext, useContext, Dispatch, SetStateAction, useState, useMemo } from "react";
+import { createContext, useContext, Dispatch, SetStateAction, useState } from "react";
 
 import { emptyPackage } from "@/data/app";
-import { PackageType } from "@/types/package";
+import { DependencyType, PackageType } from "@/types/package";
+import { useDatabaseContext } from "@/contexts/database";
 
 interface PackageContextProps {
   pkg: PackageType;
   setPkg: Dispatch<SetStateAction<PackageType>>;
+  updateDependencies: (data: { name: string; data: Partial<DependencyType> }[]) => void;
 }
 
 const PackageContext = createContext<PackageContextProps>({
   pkg: emptyPackage,
-  setPkg: () => {}
+  setPkg: () => {},
+
+  updateDependencies: () => {}
 });
 
 interface PackageContextProviderProps {
@@ -20,19 +24,25 @@ interface PackageContextProviderProps {
 }
 
 export const PackageContextProvider = ({ children }: PackageContextProviderProps) => {
-  const [_pkg, setPkg] = useState<PackageType>(emptyPackage);
+  const db = useDatabaseContext();
+  const [pkg, setPkg] = useState<PackageType>(emptyPackage);
 
-  const pkg = useMemo(() => {
-    const dependencies = _pkg.dependencies;
-    dependencies.sort((a, b) => b.type.localeCompare(a.type) || a.name.localeCompare(b.name));
-    return { ..._pkg, dependencies };
-  }, [_pkg]);
+  function updateDependencies(data: { name: string; data: Partial<DependencyType> }[]) {
+    for (const d of data) {
+      const found = pkg.dependencies.find((dep) => dep.name === d.name);
+      if (found) Object.assign(found, d.data);
+    }
+    db.packages.update(pkg.id, pkg);
+    setPkg(pkg);
+  }
 
   return (
     <PackageContext.Provider
       value={{
         pkg,
-        setPkg
+        setPkg,
+
+        updateDependencies
       }}
     >
       {children}

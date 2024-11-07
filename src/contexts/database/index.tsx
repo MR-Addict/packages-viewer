@@ -11,7 +11,7 @@ import { Package, PackageType, RawPackageType } from "@/types/package";
 
 interface DatabaseContextProps {
   import: (data: any, options?: { packages: boolean; collections: boolean }) => void;
-  imported: boolean;
+  ready: boolean;
   packages: {
     data: PackageType[];
     add: (pkg: RawPackageType) => PackageType;
@@ -22,7 +22,7 @@ interface DatabaseContextProps {
 
 const DatabaseContext = createContext<DatabaseContextProps>({
   import: () => {},
-  imported: false,
+  ready: false,
   packages: {
     data: [],
     add: () => emptyPackage,
@@ -34,7 +34,7 @@ const DatabaseContext = createContext<DatabaseContextProps>({
 export const DatabaseProvider = ({ children }: { children: React.ReactNode }) => {
   const idb = useMemo(() => new IDB("packages-viewer"), []);
 
-  const [imported, setImported] = useState(false);
+  const [ready, setReady] = useState(false);
   const [packages, setPackages] = useState<PackageType[]>([]);
 
   /* Import data */
@@ -75,20 +75,20 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
     (async () => {
       const packages = await idb.load("packages");
       importData({ packages });
-      setImported(true);
+      setReady(true);
     })();
   }, []);
 
   /* Save data to IDB */
   useEffect(() => {
-    if (imported) idb.save("packages", packages);
+    if (ready) idb.save("packages", packages);
   }, [packages]);
 
   return (
     <DatabaseContext.Provider
       value={{
         import: importData,
-        imported,
+        ready,
         packages: { data: packages, add: addPackage, update: updatePackage, remove: removePackage }
       }}
     >

@@ -1,6 +1,7 @@
 "use client";
 
 import usePersistantState from "@/hooks/usePersistantState";
+import { PackageManagerType } from "@/types/app";
 import { createContext, useContext, Dispatch, SetStateAction, useEffect } from "react";
 
 const defaultWindowSize = { width: 1024, height: 0 };
@@ -9,12 +10,18 @@ interface AppContextProps {
   openSidebar: boolean;
   setOpenSidebar: Dispatch<SetStateAction<boolean>>;
 
+  packageManager: PackageManagerType;
+  setPackageManager: Dispatch<SetStateAction<PackageManagerType>>;
+
   windowSize: { width: number; height: number };
 }
 
 const AppContext = createContext<AppContextProps>({
   openSidebar: false,
   setOpenSidebar: () => {},
+
+  packageManager: "npm",
+  setPackageManager: () => {},
 
   windowSize: defaultWindowSize
 });
@@ -26,6 +33,7 @@ interface AppContextProviderProps {
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
   const [openSidebar, setOpenSidebar] = usePersistantState("open-sidebar", false);
   const [windowSize, setWindowSize] = usePersistantState("window-size", defaultWindowSize);
+  const [packageManager, setPackageManager] = usePersistantState<PackageManagerType>("package-manager", "npm");
 
   useEffect(() => {
     function handleResize() {
@@ -46,6 +54,9 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
       value={{
         openSidebar,
         setOpenSidebar,
+
+        packageManager,
+        setPackageManager,
 
         windowSize
       }}

@@ -23,22 +23,25 @@ export default function parsePackage(file: string): ApiResultType<RawPackageType
   if (!parsed.success) return { success: false, message: "Unable to parse your package" };
 
   const dependencies: DependencyType[] = [];
+  const commonOptions = { selected: false, latest: undefined };
 
   const prodDependencies = parsed.data.dependencies;
   if (prodDependencies) {
     Object.keys(prodDependencies).forEach((name) => {
-      dependencies.push({ name, type: "prod", version: parseVersion(prodDependencies[name]) });
+      dependencies.push({ name, type: "prod", version: parseVersion(prodDependencies[name]), ...commonOptions });
     });
   }
 
   const devDependencies = parsed.data.devDependencies;
   if (devDependencies) {
     Object.keys(devDependencies).forEach((name) => {
-      dependencies.push({ name, type: "dev", version: parseVersion(devDependencies[name]) });
+      dependencies.push({ name, type: "dev", version: parseVersion(devDependencies[name]), ...commonOptions });
     });
   }
 
   if (!dependencies.length) return { success: false, message: "There is no dependencies in your package" };
+
+  dependencies.sort((a, b) => b.type.localeCompare(a.type) || a.name.localeCompare(b.name));
 
   return { success: true, data: { name: parsed.data.name, dependencies } };
 }

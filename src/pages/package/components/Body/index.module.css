@@ -12,6 +12,10 @@
   & thead {
     @apply c-border-b;
   }
+
+  & input[type="checkbox"] {
+    @apply aspect-square w-3 accent-blue-700;
+  }
 }
 
 .chip {

@@ -4,6 +4,8 @@ import z from "zod";
 export const Dependency = z.object({
   name: z.string(),
   version: z.string(),
+  selected: z.boolean(),
+  latest: z.string().nullable().optional(),
   type: z.enum(["prod", "dev"])
 });
 export type DependencyType = z.infer<typeof Dependency>;
@@ -11,8 +13,7 @@ export type DependencyType = z.infer<typeof Dependency>;
 /* Remote Dependency */
 export const RemoteDependency = z.object({
   name: z.string(),
-  version: z.string(),
-  description: z.string()
+  version: z.string()
 });
 export type RemoteDependencyType = z.infer<typeof RemoteDependency>;
 

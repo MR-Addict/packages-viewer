@@ -1,5 +1,5 @@
 .wrapper {
-  @apply flex flex-row items-center justify-end gap-3 py-3 px-3 c-border-b;
+  @apply c-bg-100 sticky top-0 flex flex-row items-center justify-end gap-3 py-3 px-3 c-border-b;
 }
 
 .menu {

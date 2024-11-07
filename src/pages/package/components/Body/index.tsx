@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ImSpinner } from "react-icons/im";
 
 import style from "./index.module.css";
@@ -9,8 +9,13 @@ import { usePackageContext } from "@/contexts/package";
 import { DependencyType, RemoteDependencyType } from "@/types/package";
 
 function DependencyRow({ dep }: { dep: DependencyType }) {
+  const { updateDependencies } = usePackageContext();
+  const [fetchStatus, setFetchStatus] = useState<"loading" | "error" | "idle">("loading");
   const [remoteDep, setRemoteDep] = useSessionState<RemoteDependencyType | null>("dep-" + dep.name, null);
-  const [fetchStatus, setFetchStatus] = useSessionState<"loading" | "error" | "idle">("fetch-" + dep.name, "loading");
+
+  function handleToggleSelect(event: React.ChangeEvent<HTMLInputElement>) {
+    updateDependencies([{ name: dep.name, data: { selected: event.target.checked } }]);
+  }
 
   useEffect(() => {
     (async () => {
@@ -19,6 +24,7 @@ function DependencyRow({ dep }: { dep: DependencyType }) {
       if (res.success) {
         setFetchStatus("idle");
         setRemoteDep(res.data);
+        updateDependencies([{ name: dep.name, data: { latest: res.data.version } }]);
       } else setFetchStatus("error");
     })();
   }, [dep.name]);
@@ -26,7 +32,7 @@ function DependencyRow({ dep }: { dep: DependencyType }) {
   return (
     <tr>
       <td>
-        <input type="checkbox" />
+        <input type="checkbox" checked={dep.selected} onChange={handleToggleSelect} />
       </td>
       <td>{dep.name}</td>
       <td>{dep.type}</td>
@@ -49,7 +55,27 @@ function DependencyRow({ dep }: { dep: DependencyType }) {
 }
 
 export default function Body() {
-  const { pkg } = usePackageContext();
+  const { pkg, updateDependencies } = usePackageContext();
+  const checkboxRef = useRef<HTMLInputElement>(null);
+
+  function handleClickCheckbox() {
+    const selected = checkboxRef.current?.checked;
+    if (selected !== undefined) updateDependencies(pkg.dependencies.map((d) => ({ name: d.name, data: { selected } })));
+  }
+
+  useEffect(() => {
+    if (!checkboxRef.current) return;
+    if (pkg.dependencies.every((dep) => dep.selected)) {
+      checkboxRef.current.checked = true;
+      checkboxRef.current.indeterminate = false;
+    } else if (pkg.dependencies.every((dep) => !dep.selected)) {
+      checkboxRef.current.checked = false;
+      checkboxRef.current.indeterminate = false;
+    } else if (pkg.dependencies.some((dep) => dep.selected)) {
+      checkboxRef.current.checked = false;
+      checkboxRef.current.indeterminate = true;
+    }
+  }, [pkg]);
 
   if (!pkg.dependencies.length) return null;
 
@@ -59,7 +85,7 @@ export default function Body() {
         <thead>
           <tr>
             <th>
-              <input type="checkbox" />
+              <input ref={checkboxRef} type="checkbox" onClick={handleClickCheckbox} />
             </th>
             <th>Package</th>
             <th>Type</th>

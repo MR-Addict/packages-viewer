@@ -41,12 +41,18 @@ export const background = plugin(function ({ addComponents }) {
     },
     ".c-bg-300": {
       "@apply bg-neutral-300 dark:bg-neutral-700": {}
+    },
+    ".c-bg-900": {
+      "@apply bg-neutral-900 dark:bg-neutral-100": {}
     }
   });
 });
 
 export const text = plugin(function ({ addComponents }) {
   addComponents({
+    ".c-text-100": {
+      "@apply text-neutral-100 dark:text-neutral-900": {}
+    },
     ".c-text-600": {
       "@apply text-neutral-600 dark:text-neutral-500": {}
     },
