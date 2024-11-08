@@ -7,7 +7,7 @@
   @apply z-10 w-0 flex flex-col fixed lg:sticky top-0 c-bg-100;
 
   &.active {
-    @apply w-64 c-border-r c-border-t;
+    @apply w-64 c-border-r;
   }
 }
 

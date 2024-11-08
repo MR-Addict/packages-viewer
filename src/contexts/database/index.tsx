@@ -7,8 +7,8 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import IDB from "@/lib/idb";
 import mergeDependencies from "@/lib/package/mergeDependencies";
 
-import { emptyPackage } from "@/data/app";
 import { ApiResultType } from "@/types/app";
+import { app, emptyPackage } from "@/data/app";
 import { Package, PackageType, RawPackageType } from "@/types/package";
 
 interface DatabaseContextProps {
@@ -36,7 +36,7 @@ const DatabaseContext = createContext<DatabaseContextProps>({
 });
 
 export const DatabaseProvider = ({ children }: { children: React.ReactNode }) => {
-  const idb = useMemo(() => new IDB("packages-viewer"), []);
+  const idb = useMemo(() => new IDB(app.id), []);
 
   const [ready, setReady] = useState(false);
   const [packages, setPackages] = useState<PackageType[]>([]);

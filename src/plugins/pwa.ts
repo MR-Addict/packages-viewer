@@ -1,10 +1,11 @@
+import { app } from "../data/app";
 import { VitePWA } from "vite-plugin-pwa";
 
 const pwa = VitePWA({
   registerType: "autoUpdate",
   manifest: {
-    name: "Packages Viewer",
-    short_name: "Packages Viewer",
+    name: app.name,
+    short_name: app.name,
     theme_color: "#171717",
     background_color: "#171717",
     display: "standalone",

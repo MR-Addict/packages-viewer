@@ -42,6 +42,9 @@ const background = plugin(function ({ addComponents }) {
     ".c-bg-300": {
       "@apply bg-neutral-300 dark:bg-neutral-700": {}
     },
+    ".c-bg-800": {
+      "@apply bg-neutral-800 dark:bg-neutral-200": {}
+    },
     ".c-bg-900": {
       "@apply bg-neutral-900 dark:bg-neutral-100": {}
     }
@@ -63,7 +66,7 @@ const text = plugin(function ({ addComponents }) {
       "@apply text-neutral-800 dark:text-neutral-300": {}
     },
     ".c-text-900": {
-      "@apply text-neutral-900 dark:text-neutral-200": {}
+      "@apply text-neutral-900 dark:text-neutral-100": {}
     }
   });
 });
