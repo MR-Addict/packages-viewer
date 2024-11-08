@@ -6,7 +6,7 @@
   @apply w-full;
 
   & :is(th, td) {
-    @apply py-1;
+    @apply py-1 px-2;
   }
 
   & thead {
@@ -15,6 +15,10 @@
 
   & input[type="checkbox"] {
     @apply aspect-square w-3 accent-blue-700;
+  }
+
+  & tbody tr:hover {
+    @apply c-bg-200;
   }
 }
 

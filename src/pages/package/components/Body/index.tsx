@@ -13,8 +13,8 @@ function DependencyRow({ dep }: { dep: DependencyType }) {
   const [fetchStatus, setFetchStatus] = useState<"loading" | "error" | "idle">("loading");
   const [remoteDep, setRemoteDep] = useSessionState<RemoteDependencyType | null>("dep-" + dep.name, null);
 
-  function handleToggleSelect(event: React.ChangeEvent<HTMLInputElement>) {
-    updateDependencies([{ name: dep.name, data: { selected: event.target.checked } }]);
+  function handleToggleSelect() {
+    updateDependencies([{ name: dep.name, data: { selected: !dep.selected } }]);
   }
 
   useEffect(() => {
@@ -38,12 +38,12 @@ function DependencyRow({ dep }: { dep: DependencyType }) {
         updateDependencies([{ name: dep.name, data: { latest: null } }]);
       }
     })();
-  }, [dep]);
+  }, [dep.name, dep.latest]);
 
   return (
-    <tr>
+    <tr onClick={handleToggleSelect}>
       <td>
-        <input type="checkbox" checked={dep.selected} onChange={handleToggleSelect} />
+        <input type="checkbox" checked={dep.selected} onChange={() => {}} />
       </td>
       <td>{dep.name}</td>
       <td>{dep.type}</td>

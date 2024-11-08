@@ -5,6 +5,8 @@ import uniqid from "uniqid";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import IDB from "@/lib/idb";
+import mergeDependencies from "@/lib/package/mergeDependencies";
+
 import { emptyPackage } from "@/data/app";
 import { ApiResultType } from "@/types/app";
 import { Package, PackageType, RawPackageType } from "@/types/package";
@@ -14,8 +16,9 @@ interface DatabaseContextProps {
   ready: boolean;
   packages: {
     data: PackageType[];
+    get: (id: string) => PackageType | null;
     add: (pkg: RawPackageType) => PackageType;
-    update: (id: string, pkg: Partial<RawPackageType>) => ApiResultType<PackageType>;
+    update: (id: string, data: Partial<RawPackageType>) => ApiResultType<PackageType>;
     remove: (id: string) => ApiResultType;
   };
 }
@@ -25,6 +28,7 @@ const DatabaseContext = createContext<DatabaseContextProps>({
   ready: false,
   packages: {
     data: [],
+    get: () => null,
     add: () => emptyPackage,
     update: () => ({ success: false, message: "" }),
     remove: () => ({ success: false, message: "" })
@@ -46,6 +50,10 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
   }
 
   /* Packages utils */
+  function getPackage(id: string): PackageType | null {
+    return packages.find((p) => p.id === id) || null;
+  }
+
   function addPackage(pkg: RawPackageType): PackageType {
     const id = uniqid();
     const uploaded = new Date().toISOString();
@@ -54,11 +62,14 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
     return newPkg;
   }
 
-  function updatePackage(id: string, pkg: Partial<RawPackageType>): ApiResultType<PackageType> {
+  function updatePackage(id: string, data: Partial<RawPackageType>): ApiResultType<PackageType> {
     const found = packages.find((p) => p.id === id);
     if (!found) return { success: false, message: "Package not exists" };
 
-    const newPkg = { ...found, ...pkg };
+    let newPkg = { ...found, ...data };
+    // Merge dependencies
+    if (data.dependencies) newPkg.dependencies = mergeDependencies(found.dependencies, data.dependencies);
+
     setPackages((prev) => prev.map((p) => (p.id === id ? newPkg : p)));
     return { success: true, data: newPkg };
   }
@@ -88,7 +99,7 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
       value={{
         import: importData,
         ready,
-        packages: { data: packages, add: addPackage, update: updatePackage, remove: removePackage }
+        packages: { data: packages, get: getPackage, add: addPackage, update: updatePackage, remove: removePackage }
       }}
     >
       {children}
