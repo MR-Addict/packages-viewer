@@ -2,14 +2,13 @@ import path from "path";
 import stringHash from "string-hash";
 import react from "@vitejs/plugin-react";
 
+import pwa from "./src/plugins/pwa";
 import { defineConfig } from "vite";
-
-import vitePWA from "./src/plugins/vitePWA";
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "./",
-  plugins: [vitePWA, react()],
+  base: process.env.GITHUB_REPOSITORY?.split("/").pop() || "/",
+  plugins: [pwa, react()],
   resolve: { alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }] },
   css: {
     modules: {
