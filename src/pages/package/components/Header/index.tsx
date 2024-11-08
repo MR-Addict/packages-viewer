@@ -51,9 +51,11 @@ export default function Header() {
 
   function handleCopy() {
     const dependencies = pkg.dependencies.filter((d) => d.selected);
-    const text = dependencies.map((d) => `${d.name}@${d.latest || d.version}`).join(" ");
+    if (dependencies.length === 0) return toast.error("No dependencies selected");
 
     let command = "";
+    const text = dependencies.map((d) => `${d.name}@${d.latest || d.version}`).join(" ");
+
     if (packageManager === "npm") command = `npm install ${text}`;
     else if (packageManager === "yarn") command = `yarn add ${text}`;
     else if (packageManager === "pnpm") command = `pnpm add ${text}`;

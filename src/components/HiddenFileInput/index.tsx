@@ -27,7 +27,7 @@ export default function HiddenFileInput() {
       if (!pkgId) {
         const found = db.packages.data.find((pkg) => pkg.name === parsed.data.name);
         if (found && confirm("Package already exists, do you want to replace it?")) pkgId = found.id;
-      } else fileInputRef.current?.removeAttribute("data-pkg-id");
+      }
 
       // Update or add the package
       if (pkgId) {
@@ -43,6 +43,7 @@ export default function HiddenFileInput() {
       }
     }
 
+    fileInputRef.current?.removeAttribute("data-pkg-id");
     event.target.value = "";
   }
 
