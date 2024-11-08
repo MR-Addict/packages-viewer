@@ -1,6 +1,6 @@
 import plugin from "tailwindcss/plugin";
 
-export const gradient = plugin(function ({ addComponents }) {
+const gradient = plugin(function ({ addComponents }) {
   addComponents({
     ".c-gradient-100": {
       "@apply bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-800 dark:to-neutral-900": {}
@@ -11,7 +11,7 @@ export const gradient = plugin(function ({ addComponents }) {
   });
 });
 
-export const border = plugin(function ({ addComponents }) {
+const border = plugin(function ({ addComponents }) {
   addComponents({
     ".c-border": {
       "@apply border border-neutral-300 dark:border-neutral-700": {}
@@ -31,7 +31,7 @@ export const border = plugin(function ({ addComponents }) {
   });
 });
 
-export const background = plugin(function ({ addComponents }) {
+const background = plugin(function ({ addComponents }) {
   addComponents({
     ".c-bg-100": {
       "@apply bg-white dark:bg-neutral-900": {}
@@ -48,7 +48,7 @@ export const background = plugin(function ({ addComponents }) {
   });
 });
 
-export const text = plugin(function ({ addComponents }) {
+const text = plugin(function ({ addComponents }) {
   addComponents({
     ".c-text-100": {
       "@apply text-neutral-100 dark:text-neutral-900": {}
@@ -68,6 +68,6 @@ export const text = plugin(function ({ addComponents }) {
   });
 });
 
-const custom = [gradient, border, background, text];
+const tw = [gradient, border, background, text];
 
-export default custom;
+export default tw;

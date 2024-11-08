@@ -1,9 +1,9 @@
 import resolveConfig from "tailwindcss/resolveConfig";
 
-import custom from "./src/plugins/custom";
+import tw from "./src/plugins/tw";
 
 export default resolveConfig({
   darkMode: "selector",
   content: ["./src/**/*.{css,tsx}"],
-  plugins: custom
+  plugins: tw
 });

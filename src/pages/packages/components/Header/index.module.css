@@ -10,10 +10,10 @@
   }
 
   & .searchbox {
-    @apply border border-transparent c-bg-100 outline-none px-3 py-0.5 rounded-sm w-fit;
+    @apply border-b border-b-transparent c-bg-100 outline-none px-2 py-0.5 rounded-sm w-fit;
 
     &:focus {
-      @apply dark:bg-neutral-800 c-border;
+      @apply c-border-b;
     }
   }
 

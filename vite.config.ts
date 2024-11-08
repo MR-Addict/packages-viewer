@@ -1,12 +1,15 @@
 import path from "path";
-import { defineConfig } from "vite";
 import stringHash from "string-hash";
 import react from "@vitejs/plugin-react";
+
+import { defineConfig } from "vite";
+
+import vitePWA from "./src/plugins/vitePWA";
 
 // https://vite.dev/config/
 export default defineConfig({
   base: "./",
-  plugins: [react()],
+  plugins: [vitePWA, react()],
   resolve: { alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }] },
   css: {
     modules: {
