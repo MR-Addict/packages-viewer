@@ -16,7 +16,7 @@ export default function Package() {
   }, [id, db.ready, db.packages.data]);
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-4">
       <Header />
       <Body />
     </div>

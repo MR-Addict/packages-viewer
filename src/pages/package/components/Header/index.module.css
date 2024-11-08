@@ -6,31 +6,6 @@
   @apply ml-auto flex items-center gap-3;
 }
 
-.select {
-  @apply relative;
-
-  & .select-menu {
-    @apply flex flex-col origin-top invisible opacity-0 scale-y-95 duration-100;
-    @apply absolute top-full translate-y-2 right-0 c-bg-100 c-border rounded-md overflow-hidden;
-
-    &.expanded {
-      @apply visible scale-y-100 opacity-100;
-    }
-
-    & button {
-      @apply px-4 py-1.5 w-full text-right;
-
-      &:hover {
-        @apply c-bg-200 duration-300;
-      }
-    }
-  }
-}
-
 .btn {
   @apply cursor-pointer c-border dark:bg-neutral-800 px-3 py-1.5 text-xs font-semibold rounded-md;
-
-  &[data-type="inverse"] {
-    @apply c-bg-900 c-text-100;
-  }
 }

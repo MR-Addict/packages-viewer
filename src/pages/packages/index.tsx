@@ -10,7 +10,7 @@ export default function Packages() {
   if (packages.length === 0) return <Empty />;
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-4">
       <Header />
       <Body packages={packages.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()))} />
     </div>
