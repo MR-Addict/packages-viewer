@@ -13,7 +13,7 @@ export default function usePersistantState<T>(key: string, defaultValue: T): [T,
     const callback = () => localStorage.setItem(key, JSON.stringify(state));
     const timer = setTimeout(callback, 100);
     return () => clearTimeout(timer);
-  }, [state, key]);
+  }, [state]);
 
   return [state, setState];
 }

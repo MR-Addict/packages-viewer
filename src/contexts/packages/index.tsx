@@ -11,6 +11,9 @@ import { OrderType, PackagesOrderByType } from "@/types/app";
 interface PackagesContextProps {
   packages: PackageType[];
 
+  search: string;
+  setSearch: Dispatch<SetStateAction<string>>;
+
   order: OrderType;
   SetOrder: Dispatch<SetStateAction<OrderType>>;
 
@@ -20,6 +23,9 @@ interface PackagesContextProps {
 
 const PackagesContext = createContext<PackagesContextProps>({
   packages: [],
+
+  search: "",
+  setSearch: () => {},
 
   order: "asc",
   SetOrder: () => {},
@@ -33,6 +39,7 @@ interface PackagesContextProviderProps {
 }
 
 export const PackagesContextProvider = ({ children }: PackagesContextProviderProps) => {
+  const [search, setSearch] = usePersistantState<string>("packages-search", "");
   const [order, SetOrder] = usePersistantState<OrderType>("packages-order", "asc");
   const [orderBy, setOrderBy] = usePersistantState<PackagesOrderByType>("packages-order-by", "uploaded");
 
@@ -44,12 +51,15 @@ export const PackagesContextProvider = ({ children }: PackagesContextProviderPro
     else data.sort((a, b) => new Date(b[orderBy]).getTime() - new Date(a[orderBy]).getTime());
     if (order === "desc") data.reverse();
     return data;
-  }, [db.packages.data, order, orderBy]);
+  }, [search, order, orderBy, db.packages.data]);
 
   return (
     <PackagesContext.Provider
       value={{
         packages,
+
+        search,
+        setSearch,
 
         order,
         SetOrder,

@@ -9,6 +9,14 @@
     @apply p-1.5 rounded-full hover:c-bg-200;
   }
 
+  & .searchbox {
+    @apply border border-transparent c-bg-100 outline-none px-3 py-0.5 rounded-sm w-fit;
+
+    &:focus {
+      @apply dark:bg-neutral-800 c-border;
+    }
+  }
+
   & .select {
     @apply dark:bg-neutral-900 outline-none c-text-800 text-right cursor-pointer;
   }

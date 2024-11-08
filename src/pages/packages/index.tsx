@@ -1,18 +1,18 @@
-import Body from "./component/Body";
-import Empty from "./component/Empty";
-import Header from "./component/Header";
+import Body from "./components/Body";
+import Empty from "./components/Empty";
+import Header from "./components/Header";
 
 import { usePackagesContext } from "@/contexts/packages";
 
 export default function Packages() {
-  const { packages } = usePackagesContext();
+  const { search, packages } = usePackagesContext();
 
   if (packages.length === 0) return <Empty />;
 
   return (
     <div className="space-y-2">
       <Header />
-      <Body packages={packages} />
+      <Body packages={packages.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()))} />
     </div>
   );
 }

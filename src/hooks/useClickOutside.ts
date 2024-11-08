@@ -1,21 +1,19 @@
 import { DependencyList, useEffect } from "react";
 
 export default function useClickOutside<T extends Element = HTMLDivElement>(
-  handler: (event: MouseEvent | TouchEvent) => void,
+  handler: (event: MouseEvent) => void,
   ref: React.RefObject<T>,
   deps?: DependencyList
 ) {
   useEffect(() => {
-    const listener = (event: MouseEvent | TouchEvent) => {
-      if (!ref.current || (ref.current && !ref.current.contains(event.target as Node))) handler(event);
+    const listener = (event: MouseEvent) => {
+      const target = event.target as Node;
+      if (!target || !target.isConnected) return;
+      if (ref.current && !ref.current.contains(target)) handler(event);
     };
 
     document.addEventListener("mousedown", listener);
-    document.addEventListener("touchstart", listener);
 
-    return () => {
-      document.removeEventListener("mousedown", listener);
-      document.removeEventListener("touchstart", listener);
-    };
-  }, [ref, handler, deps]);
+    return () => document.removeEventListener("mousedown", listener);
+  }, [deps]);
 }

@@ -13,7 +13,7 @@ export default function useSessionState<T>(key: string, defaultValue: T): [T, Di
     const callback = () => sessionStorage.setItem(key, JSON.stringify(state));
     const timer = setTimeout(callback, 100);
     return () => clearTimeout(timer);
-  }, [state, key]);
+  }, [state]);
 
   return [state, setState];
 }
