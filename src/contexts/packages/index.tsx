@@ -11,21 +11,21 @@ import { OrderType, PackagesOrderByType } from "@/types/app";
 interface PackagesContextProps {
   packages: PackageType[];
 
-  packagesOrder: OrderType;
-  setPackagesOrder: Dispatch<SetStateAction<OrderType>>;
+  order: OrderType;
+  SetOrder: Dispatch<SetStateAction<OrderType>>;
 
-  packagesOrderBy: PackagesOrderByType;
-  setPackagesOrderBy: Dispatch<SetStateAction<PackagesOrderByType>>;
+  orderBy: PackagesOrderByType;
+  setOrderBy: Dispatch<SetStateAction<PackagesOrderByType>>;
 }
 
 const PackagesContext = createContext<PackagesContextProps>({
   packages: [],
 
-  packagesOrder: "asc",
-  setPackagesOrder: () => {},
+  order: "asc",
+  SetOrder: () => {},
 
-  packagesOrderBy: "updated",
-  setPackagesOrderBy: () => {}
+  orderBy: "uploaded",
+  setOrderBy: () => {}
 });
 
 interface PackagesContextProviderProps {
@@ -33,29 +33,29 @@ interface PackagesContextProviderProps {
 }
 
 export const PackagesContextProvider = ({ children }: PackagesContextProviderProps) => {
-  const [packagesOrder, setPackagesOrder] = usePersistantState<OrderType>("packages-order", "asc");
-  const [packagesOrderBy, setPackagesOrderBy] = usePersistantState<PackagesOrderByType>("packages-order-by", "updated");
+  const [order, SetOrder] = usePersistantState<OrderType>("packages-order", "asc");
+  const [orderBy, setOrderBy] = usePersistantState<PackagesOrderByType>("packages-order-by", "uploaded");
 
   const db = useDatabaseContext();
   const packages = useMemo(() => {
     const data = db.packages.data;
-    if (packagesOrderBy === "name") data.sort((a, b) => a.name.localeCompare(b.name));
-    else if (packagesOrderBy === "dependencies") data.sort((a, b) => a.dependencies.length - b.dependencies.length);
-    else data.sort((a, b) => new Date(b[packagesOrderBy]).getTime() - new Date(a[packagesOrderBy]).getTime());
-    if (packagesOrder === "desc") data.reverse();
+    if (orderBy === "name") data.sort((a, b) => a.name.localeCompare(b.name));
+    else if (orderBy === "dependencies") data.sort((a, b) => a.dependencies.length - b.dependencies.length);
+    else data.sort((a, b) => new Date(b[orderBy]).getTime() - new Date(a[orderBy]).getTime());
+    if (order === "desc") data.reverse();
     return data;
-  }, [db.packages.data, packagesOrder, packagesOrderBy]);
+  }, [db.packages.data, order, orderBy]);
 
   return (
     <PackagesContext.Provider
       value={{
         packages,
 
-        packagesOrder,
-        setPackagesOrder,
+        order,
+        SetOrder,
 
-        packagesOrderBy,
-        setPackagesOrderBy
+        orderBy,
+        setOrderBy
       }}
     >
       {children}

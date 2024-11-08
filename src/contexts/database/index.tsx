@@ -48,8 +48,8 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
   /* Packages utils */
   function addPackage(pkg: RawPackageType): PackageType {
     const id = uniqid();
-    const date = new Date().toISOString();
-    const newPkg = { ...pkg, id, created: date, updated: date };
+    const uploaded = new Date().toISOString();
+    const newPkg = { ...pkg, id, uploaded };
     setPackages((prev) => [...prev, newPkg]);
     return newPkg;
   }
@@ -58,8 +58,7 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
     const found = packages.find((p) => p.id === id);
     if (!found) return { success: false, message: "Package not exists" };
 
-    const date = new Date().toISOString();
-    const newPkg = { ...found, ...pkg, updated: date };
+    const newPkg = { ...found, ...pkg };
     setPackages((prev) => prev.map((p) => (p.id === id ? newPkg : p)));
     return { success: true, data: newPkg };
   }

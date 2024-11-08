@@ -40,7 +40,7 @@ export default function Body({ packages }: { packages: PackageType[] }) {
               <strong>{pkg.dependencies.length}</strong>
               <span> dependencies</span>
             </p>
-            <p className="text-sm c-text-600">{`${timeInterval(pkg.updated)}`}</p>
+            <p className="text-sm c-text-600">{`${timeInterval(pkg.uploaded)}`}</p>
           </Link>
 
           <div className={style.btns}>

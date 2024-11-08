@@ -21,8 +21,7 @@ export type RemoteDependencyType = z.infer<typeof RemoteDependency>;
 export const Package = z.object({
   id: z.string(),
   name: z.string(),
-  created: z.string(),
-  updated: z.string(),
+  uploaded: z.string(),
   dependencies: z.array(Dependency)
 });
 export type PackageType = z.infer<typeof Package>;
@@ -30,7 +29,6 @@ export type PackageType = z.infer<typeof Package>;
 /* Raw Package */
 export const RawPackage = Package.omit({
   id: true,
-  created: true,
-  updated: true
+  uploaded: true
 });
 export type RawPackageType = z.infer<typeof RawPackage>;
