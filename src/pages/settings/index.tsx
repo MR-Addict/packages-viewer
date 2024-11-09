@@ -1,12 +1,14 @@
 import Theme from "./components/Theme";
-import PackageManager from "./components/PackageManager";
+import AppVersion from "./components/AppVersion";
 import ClearStorage from "./components/ClearStorage";
+import PackageManager from "./components/PackageManager";
 
 export default function Settings() {
   return (
-    <div className="space-y-4">
-      <Theme />
+    <div className="space-y-6">
+      <AppVersion />
       <PackageManager />
+      <Theme />
       <ClearStorage />
     </div>
   );

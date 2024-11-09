@@ -7,6 +7,7 @@ import { defineConfig } from "vite";
 
 // https://vite.dev/config/
 export default defineConfig({
+  define: { APP_VERSION: JSON.stringify(require("./package.json").version) },
   base: process.env.GITHUB_REPOSITORY?.split("/").pop() || "/",
   plugins: [pwa, react()],
   resolve: { alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }] },

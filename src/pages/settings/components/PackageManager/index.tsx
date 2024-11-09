@@ -10,7 +10,7 @@ export default function PackageManager() {
     <section className={pageStyle.container}>
       <h1>Package Manager</h1>
 
-      <p>Choose the package manager you want to use</p>
+      <p>Choose the package manager you use</p>
 
       <Tabs
         value={packageManager}

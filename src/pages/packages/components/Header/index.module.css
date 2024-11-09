@@ -3,13 +3,13 @@
 }
 
 .btns {
-  @apply ml-auto flex items-center gap-3;
+  @apply ml-auto flex items-center gap-2;
 
   & .searchbox {
-    @apply border-b border-b-transparent c-bg-100 outline-none p-0.5 text-right;
+    @apply border-b border-b-transparent c-bg-100 outline-none p-0.5 mr-1;
 
     &:focus {
-      @apply c-border-b text-left;
+      @apply c-border-b;
     }
   }
 }
