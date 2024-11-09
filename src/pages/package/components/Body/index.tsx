@@ -43,7 +43,7 @@ function DependencyRow({ dep }: { dep: DependencyType }) {
   return (
     <tr onClick={handleToggleSelect}>
       <td>
-        <input type="checkbox" checked={dep.selected} onChange={() => {}} />
+        <input type="checkbox" checked={dep.selected} onChange={() => {}} aria-label="select dependency" />
       </td>
       <td>{dep.name}</td>
       <td>{dep.type}</td>
@@ -96,7 +96,7 @@ export default function Body() {
         <thead>
           <tr>
             <th>
-              <input ref={checkboxRef} type="checkbox" onClick={handleClickCheckbox} />
+              <input ref={checkboxRef} type="checkbox" onClick={handleClickCheckbox} aria-label="toggle selections" />
             </th>
             <th>Package</th>
             <th>Type</th>

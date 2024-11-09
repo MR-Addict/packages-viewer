@@ -42,6 +42,15 @@ export default function HiddenFileInput() {
   }
 
   return (
-    <input ref={fileInputRef} id={fileInputID} onChange={handleImport} type="file" accept=".json" className="hidden" />
+    <label htmlFor={fileInputID}>
+      <input
+        ref={fileInputRef}
+        id={fileInputID}
+        onChange={handleImport}
+        type="file"
+        accept="application/json"
+        className="hidden"
+      />
+    </label>
   );
 }
