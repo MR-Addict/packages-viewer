@@ -6,7 +6,7 @@
   @apply w-full;
 
   & :is(th, td) {
-    @apply py-1 px-2;
+    @apply py-1 px-2 truncate max-w-prose;
   }
 
   & thead {

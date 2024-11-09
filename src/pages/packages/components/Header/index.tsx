@@ -31,6 +31,7 @@ export default function Header() {
 
       <div className={style.btns}>
         <input
+          size={10}
           type="text"
           placeholder="Search..."
           className={style.searchbox}

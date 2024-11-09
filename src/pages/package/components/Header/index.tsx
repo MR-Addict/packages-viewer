@@ -65,7 +65,7 @@ export default function Header() {
 
   return (
     <header className={style.wrapper}>
-      <h1 className="text-lg font-semibold">{pkg.name}</h1>
+      <h1 className="text-lg font-semibold truncate">{pkg.name}</h1>
 
       <div className={style.btns}>
         <label className={style.btn}>
