@@ -1,0 +1,18 @@
+.tabs {
+  @apply flex flex-row items-center;
+  @apply w-fit rounded-xl c-border px-2 py-2 mt-1;
+
+  & .tab {
+    @apply px-4 py-2 relative;
+
+    &::before {
+      content: "";
+      @apply absolute inset-0 rounded-xl -z-10 mix-blend-darken dark:mix-blend-lighten;
+    }
+
+    &.active::before {
+      @apply c-bg-200;
+      view-transition-name: var(--id);
+    }
+  }
+}

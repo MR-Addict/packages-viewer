@@ -15,7 +15,7 @@ interface PackagesContextProps {
   setSearch: Dispatch<SetStateAction<string>>;
 
   order: OrderType;
-  SetOrder: Dispatch<SetStateAction<OrderType>>;
+  setOrder: Dispatch<SetStateAction<OrderType>>;
 
   orderBy: PackagesOrderByType;
   setOrderBy: Dispatch<SetStateAction<PackagesOrderByType>>;
@@ -28,7 +28,7 @@ const PackagesContext = createContext<PackagesContextProps>({
   setSearch: () => {},
 
   order: "asc",
-  SetOrder: () => {},
+  setOrder: () => {},
 
   orderBy: "uploaded",
   setOrderBy: () => {}
@@ -40,7 +40,7 @@ interface PackagesContextProviderProps {
 
 export const PackagesContextProvider = ({ children }: PackagesContextProviderProps) => {
   const [search, setSearch] = usePersistantState<string>("packages-search", "");
-  const [order, SetOrder] = usePersistantState<OrderType>("packages-order", "asc");
+  const [order, setOrder] = usePersistantState<OrderType>("packages-order", "asc");
   const [orderBy, setOrderBy] = usePersistantState<PackagesOrderByType>("packages-order-by", "uploaded");
 
   const db = useDatabaseContext();
@@ -62,7 +62,7 @@ export const PackagesContextProvider = ({ children }: PackagesContextProviderPro
         setSearch,
 
         order,
-        SetOrder,
+        setOrder,
 
         orderBy,
         setOrderBy

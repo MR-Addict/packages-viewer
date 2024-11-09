@@ -21,13 +21,7 @@ export default function HiddenFileInput() {
 
     if (!parsed.success) toast.error("Failed to import package");
     else {
-      let pkgId: string | null = fileInputRef.current?.getAttribute("data-pkg-id") || null;
-
-      // Check if package already exists
-      if (!pkgId) {
-        const found = db.packages.data.find((pkg) => pkg.name === parsed.data.name);
-        if (found && confirm("Package already exists, do you want to replace it?")) pkgId = found.id;
-      }
+      let pkgId = fileInputRef.current?.getAttribute("data-pkg-id");
 
       // Update or add the package
       if (pkgId) {

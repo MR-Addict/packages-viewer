@@ -9,16 +9,3 @@
     @apply c-text-700;
   }
 }
-
-.btns {
-  @apply flex flex-row items-center;
-  @apply w-fit rounded-xl c-border px-2 py-2 mt-1;
-
-  & .btn {
-    @apply px-4 py-2 rounded-xl;
-
-    &.active {
-      @apply c-bg-200;
-    }
-  }
-}

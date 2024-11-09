@@ -5,12 +5,13 @@ import { FaSortAmountDownAlt, FaSortAmountUpAlt } from "react-icons/fa";
 
 import style from "./index.module.css";
 import Select from "@/components/Select";
+import startViewTransition from "@/lib/utils/startViewTransition";
 
 import { packagesOrderBys } from "@/data/app";
 import { usePackagesContext } from "@/contexts/packages";
 
 export default function Header() {
-  const { search, setSearch, order, SetOrder, orderBy, setOrderBy } = usePackagesContext();
+  const { search, setSearch, order, setOrder, orderBy, setOrderBy } = usePackagesContext();
 
   const intervalRef = useRef<NodeJS.Timeout>();
   const [localSearch, setLocalSearch] = useState(search);
@@ -18,11 +19,11 @@ export default function Header() {
   function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
     setLocalSearch(event.target.value);
     if (intervalRef.current) clearTimeout(intervalRef.current);
-    intervalRef.current = setTimeout(() => setSearch(event.target.value), 500);
+    intervalRef.current = setTimeout(() => startViewTransition(() => setSearch(event.target.value)), 500);
   }
 
   function handleOrder() {
-    SetOrder((prev) => (prev === "asc" ? "desc" : "asc"));
+    startViewTransition(() => setOrder((prev) => (prev === "asc" ? "desc" : "asc")));
   }
 
   return (

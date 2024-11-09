@@ -25,6 +25,7 @@ export default function Sidebar() {
           <li key={item.to}>
             <Link
               to={item.to}
+              viewTransition
               onClick={() => setOpenSidebar(false)}
               className={clsx(style.link, { [style.active]: item.to === root })}
             >

@@ -5,6 +5,7 @@ import { CgTrashEmpty } from "react-icons/cg";
 
 import style from "./index.module.css";
 import timeInterval from "@/lib/utils/timeInterval";
+import startViewTransition from "@/lib/utils/startViewTransition";
 
 import { PackageType } from "@/types/package";
 import { useDatabaseContext } from "@/contexts/database";
@@ -12,29 +13,27 @@ import { useDatabaseContext } from "@/contexts/database";
 export default function Body({ packages }: { packages: PackageType[] }) {
   const db = useDatabaseContext();
 
-  function handleUpdate(pkg: PackageType) {
+  async function handleUpdate(pkg: PackageType) {
     const newName = prompt("Enter new name for this package", pkg.name);
     if (newName && newName.trim() !== pkg.name) {
-      const res = db.packages.update(pkg.id, { name: newName });
-      if (res.success) toast.success("Package successfully updated");
-      else toast.error(res.message);
+      const res = await startViewTransition(() => db.packages.update(pkg.id, { name: newName }));
+      if (!res.success) toast.error(res.message);
     }
   }
 
-  function handleDelete(id: string) {
+  async function handleDelete(id: string) {
     if (confirm("Are you sure you want to delete this package?")) {
-      const res = db.packages.remove(id);
-      if (res.success) toast.success("Package successfully deleted");
-      else toast.error(res.message);
+      const res = await startViewTransition(() => db.packages.remove(id));
+      if (!res.success) toast.error(res.message);
     }
   }
 
   return (
     <ul className={style.wrapper}>
       {packages.map((pkg) => (
-        <li key={pkg.id} className={style.container}>
-          <Link to={`/packages/${pkg.id}`} className={style.pkg}>
-            <h2>{pkg.name}</h2>
+        <li key={pkg.id} className={style.container} style={{ "--card-id": "card-" + pkg.id } as React.CSSProperties}>
+          <Link viewTransition to={`/packages/${pkg.id}`} className={style.pkg}>
+            <h2 style={{ viewTransitionName: "pkg-name-" + pkg.id }}>{pkg.name}</h2>
             <p className="c-text-800">
               <span>There're total </span>
               <strong>{pkg.dependencies.length}</strong>

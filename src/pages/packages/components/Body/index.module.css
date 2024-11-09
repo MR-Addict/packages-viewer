@@ -4,6 +4,7 @@
 
 .container {
   @apply relative;
+  view-transition-name: var(--card-id);
 }
 
 .pkg {

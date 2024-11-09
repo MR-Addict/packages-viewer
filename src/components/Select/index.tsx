@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 
 import style from "./index.module.css";
 import useClickOutside from "@/hooks/useClickOutside";
+import startViewTransition from "@/lib/utils/startViewTransition";
 
 export default function Select<T>(props: {
   label: string;
@@ -34,7 +35,11 @@ export default function Select<T>(props: {
       <ul className={clsx(style["select-menu"], { [style.expanded]: expanded })}>
         {props.options.map((option) => (
           <li key={option.label}>
-            <button type="button" className={style["option-btn"]} onClick={() => handleClick(option.value)}>
+            <button
+              type="button"
+              className={style["option-btn"]}
+              onClick={() => startViewTransition(() => handleClick(option.value))}
+            >
               {option.label}
             </button>
           </li>
