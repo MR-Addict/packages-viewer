@@ -11,8 +11,9 @@ import { useAppContext } from "@/contexts/app";
 export default function Sidebar() {
   const location = useLocation();
   const sidebarRef = useRef<HTMLDivElement>(null);
-  const { windowWidth, openSidebar, setOpenSidebar } = useAppContext();
   const root = useMemo(() => location.pathname.split("/").slice(0, 2).join("/"), [location.pathname]);
+
+  const { windowWidth, openSidebar, setOpenSidebar } = useAppContext();
 
   useClickOutside(() => windowWidth < 1024 && setOpenSidebar(false), sidebarRef, [windowWidth]);
 
@@ -25,7 +26,7 @@ export default function Sidebar() {
           <li key={item.to}>
             <Link
               to={item.to}
-              viewTransition
+              viewTransition={windowWidth >= 1024}
               onClick={() => setOpenSidebar(false)}
               className={clsx(style.link, { [style.active]: item.to === root })}
             >
