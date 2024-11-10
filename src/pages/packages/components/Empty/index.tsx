@@ -1,5 +1,9 @@
-import t from "@/hooks/useLocaleTranslation";
+import { useLocaleContext } from "@/contexts/locale";
 
 export default function Empty() {
-  return <p className="flex-1 w-full grid place-content-center">{t("You haven't upload any packages yet!")}</p>;
+  const { t } = useLocaleContext();
+
+  return (
+    <p className="flex-1 w-full grid place-content-center">{t("You haven't upload any packages yet!", "package")}</p>
+  );
 }

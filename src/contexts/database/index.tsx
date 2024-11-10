@@ -9,7 +9,7 @@ import IDB from "@/lib/idb";
 import mergeDependencies from "@/lib/package/mergeDependencies";
 
 import { ApiResultType } from "@/types/app";
-import { app, emptyPackage } from "@/data/app";
+import { appName, emptyPackage } from "@/data/app";
 import { Package, PackageType, RawPackageType } from "@/types/package";
 
 interface DatabaseContextProps {
@@ -37,7 +37,7 @@ const DatabaseContext = createContext<DatabaseContextProps>({
 });
 
 export const DatabaseProvider = ({ children }: { children: React.ReactNode }) => {
-  const idb = useMemo(() => new IDB(app.id), []);
+  const idb = useMemo(() => new IDB(appName.id), []);
 
   const [ready, setReady] = useState(false);
   const [packages, setPackages] = useState<PackageType[]>([]);

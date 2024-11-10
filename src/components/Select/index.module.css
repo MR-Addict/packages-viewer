@@ -10,7 +10,7 @@
   }
 
   & .select-menu {
-    @apply flex flex-col origin-top invisible opacity-0 scale-y-90 duration-100;
+    @apply flex flex-col origin-top invisible opacity-0 scale-y-90 duration-100 py-1;
     @apply absolute z-10 top-full translate-y-2 right-0 bg-neutral-100 dark:bg-neutral-800 c-border rounded-md;
 
     &.expanded {
@@ -18,7 +18,7 @@
     }
 
     & .option-btn {
-      @apply px-4 py-1 w-full text-right whitespace-nowrap;
+      @apply px-7 py-1.5 w-full text-right whitespace-nowrap;
 
       &:hover {
         @apply bg-neutral-200 dark:bg-neutral-700 duration-300;

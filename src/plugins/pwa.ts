@@ -1,4 +1,4 @@
-import { app } from "../data/app";
+import { appName } from "../data/app";
 import { VitePWA } from "vite-plugin-pwa";
 
 import colors from "tailwindcss/colors";
@@ -8,8 +8,8 @@ const themeColor = colors.neutral[900];
 const pwa = VitePWA({
   registerType: "autoUpdate",
   manifest: {
-    name: app.name,
-    short_name: app.name,
+    name: appName.name,
+    short_name: appName.name,
     theme_color: themeColor,
     background_color: themeColor,
     display: "standalone",

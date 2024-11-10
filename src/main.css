@@ -2,9 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+html[lang="en"] {
+  @apply font-mono;
+}
+
 #root {
   height: 100vh;
   height: 100dvh;
 
-  @apply flex flex-col font-mono c-bg-100 c-text-900;
+  @apply flex flex-col c-bg-100 c-text-900;
 }

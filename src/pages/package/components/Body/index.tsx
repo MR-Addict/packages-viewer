@@ -5,6 +5,7 @@ import style from "./index.module.css";
 import useSessionState from "@/hooks/useSessionState";
 import fetchDependency from "@/lib/package/fetchDependency";
 
+import { useLocaleContext } from "@/contexts/locale";
 import { usePackageContext } from "@/contexts/package";
 import { DependencyType, RemoteDependencyType } from "@/types/package";
 
@@ -66,6 +67,7 @@ function DependencyRow({ dep }: { dep: DependencyType }) {
 }
 
 export default function Body() {
+  const { t } = useLocaleContext();
   const { pkg, updateDependencies } = usePackageContext();
   const checkboxRef = useRef<HTMLInputElement>(null);
 
@@ -98,10 +100,10 @@ export default function Body() {
             <th>
               <input ref={checkboxRef} type="checkbox" onClick={handleClickCheckbox} aria-label="toggle selections" />
             </th>
-            <th>Package</th>
-            <th>Type</th>
-            <th>Version</th>
-            <th>Latest</th>
+            <th>{t("Name", "packageDetail")}</th>
+            <th>{t("Type", "packageDetail")}</th>
+            <th>{t("Version", "packageDetail")}</th>
+            <th>{t("Latest Version", "packageDetail")}</th>
           </tr>
         </thead>
         <tbody>

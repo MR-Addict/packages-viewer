@@ -1,3 +1,5 @@
+import { useLocaleContext } from "@/contexts/locale";
+
 const intervalMap = {
   year: "year",
   month: "month",
@@ -81,9 +83,12 @@ export default function timeInterval(date: string | Date) {
     isNeedCheck = false;
   }
 
-  if (interval.key === intervalMap.second) return "just now";
-  else if (interval.value === 1) {
-    if (ago) return `last ${interval.key}`;
-    return `next ${interval.key}`;
-  } else return `${interval.value} ${interval.key}s ${ago ? "ago" : "later"}`;
+  const { t } = useLocaleContext();
+
+  if (interval.key === intervalMap.second) return t("just now", "time");
+
+  if (interval.value === 1) {
+    if (ago) return t(`last ${interval.key}`, "time");
+    return t(`next ${interval.key}`, "time");
+  } else return t(`${interval.value} ${interval.key}s ${ago ? "ago" : "later"}`.split(" "), "time", { join: "" });
 }

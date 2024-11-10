@@ -3,20 +3,22 @@ import { useNavigate } from "react-router-dom";
 
 import { fileInputID } from "@/data/app";
 import { useAppContext } from "@/contexts/app";
+import { useLocaleContext } from "@/contexts/locale";
 import { useDatabaseContext } from "@/contexts/database";
 
-import t from "@/hooks/useLocaleTranslation";
 import parsePackage from "@/lib/package/parsePackage";
 
 export default function HiddenFileInput() {
   const navigate = useNavigate();
   const db = useDatabaseContext();
+
+  const { t } = useLocaleContext();
   const { fileInputRef } = useAppContext();
 
   const messages = {
-    failure: t("Failed to import package"),
-    updated: t("Package updated successfully"),
-    success: t("Package imported successfully")
+    failure: t("Failed to import package", "home"),
+    updated: t("Package updated successfully", "home"),
+    success: t("Package imported successfully", "home")
   };
 
   async function handleImport(event: React.ChangeEvent<HTMLInputElement>) {

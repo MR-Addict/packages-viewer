@@ -4,13 +4,9 @@ import { createContext, useContext, Dispatch, SetStateAction, useEffect, useRef 
 
 import setTheme from "@/lib/theme/setTheme";
 import usePersistantState from "@/hooks/usePersistantState";
-import { LocaleContextProvider } from "@/hooks/useLocaleTranslation";
-import { Locale, PackageManagerType, ThemeType } from "@/types/app";
+import { PackageManagerType, ThemeType } from "@/types/app";
 
 interface AppContextProps {
-  locale: Locale;
-  setLocale: Dispatch<SetStateAction<Locale>>;
-
   theme: ThemeType;
   setTheme: Dispatch<SetStateAction<ThemeType>>;
 
@@ -25,9 +21,6 @@ interface AppContextProps {
 }
 
 const AppContext = createContext<AppContextProps>({
-  locale: "zh",
-  setLocale: () => {},
-
   theme: "dark",
   setTheme: () => {},
 
@@ -48,15 +41,10 @@ interface AppContextProviderProps {
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [locale, setLocale] = usePersistantState<Locale>("locale", "zh");
   const [theme, _setTheme] = usePersistantState<ThemeType>("theme", "dark");
   const [openSidebar, setOpenSidebar] = usePersistantState("open-sidebar", false);
   const [windowWidth, setWindowWidth] = usePersistantState("window-size", window.innerWidth);
   const [packageManager, setPackageManager] = usePersistantState<PackageManagerType>("package-manager", "npm");
-
-  useEffect(() => {
-    document.documentElement.lang = locale;
-  }, [locale]);
 
   useEffect(() => {
     // listen manually local theme change
@@ -83,9 +71,6 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
   return (
     <AppContext.Provider
       value={{
-        locale,
-        setLocale,
-
         theme,
         setTheme: _setTheme,
 
@@ -99,7 +84,7 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
         windowWidth
       }}
     >
-      <LocaleContextProvider value={locale}>{children}</LocaleContextProvider>
+      {children}
     </AppContext.Provider>
   );
 };

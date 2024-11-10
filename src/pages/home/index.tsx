@@ -2,13 +2,15 @@ import clsx from "clsx";
 import { useState } from "react";
 
 import style from "./index.module.css";
-import t from "@/hooks/useLocaleTranslation";
 
 import { fileInputID } from "@/data/app";
 import { useAppContext } from "@/contexts/app";
+import { useLocaleContext } from "@/contexts/locale";
 
 export default function Home() {
+  const { t } = useLocaleContext();
   const { fileInputRef } = useAppContext();
+
   const [isDragging, setIsDragging] = useState(false);
 
   function handleDrop(event: React.DragEvent<HTMLLabelElement>) {
@@ -32,7 +34,7 @@ export default function Home() {
       className={clsx(style.wrapper, { [style.dragging]: isDragging })}
     >
       <p>
-        {t("Click or drag your")} <strong>package.json</strong> {t("here")}
+        {t("Click or drag your", "home")} <strong>package.json</strong> {t("here", "home")}
       </p>
     </label>
   );

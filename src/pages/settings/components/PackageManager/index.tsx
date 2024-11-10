@@ -1,18 +1,19 @@
 import Tabs from "@/components/Tabs";
-import t from "@/hooks/useLocaleTranslation";
 import pageStyle from "../../index.module.css";
 
 import { packageManagers } from "@/data/app";
 import { useAppContext } from "@/contexts/app";
+import { useLocaleContext } from "@/contexts/locale";
 
 export default function PackageManager() {
+  const { t } = useLocaleContext();
   const { packageManager, setPackageManager } = useAppContext();
 
   return (
     <section className={pageStyle.container}>
-      <h1>{t("Package Manager")}</h1>
+      <h1>{t("Package Manager", "settings")}</h1>
 
-      <p>{t("Choose the package manager you use")}</p>
+      <p>{t("Choose the package manager you use", "settings")}</p>
 
       <Tabs
         value={packageManager}
