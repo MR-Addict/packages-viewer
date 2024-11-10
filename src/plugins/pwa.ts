@@ -1,13 +1,17 @@
 import { app } from "../data/app";
 import { VitePWA } from "vite-plugin-pwa";
 
+import colors from "tailwindcss/colors";
+
+const themeColor = colors.neutral[900];
+
 const pwa = VitePWA({
   registerType: "autoUpdate",
   manifest: {
     name: app.name,
     short_name: app.name,
-    theme_color: "#171717",
-    background_color: "#171717",
+    theme_color: themeColor,
+    background_color: themeColor,
     display: "standalone",
     icons: [
       {
@@ -37,18 +41,32 @@ const pwa = VitePWA({
     ],
     screenshots: [
       {
-        src: "images/screenshot-wide.jpeg",
-        sizes: "2656x1436",
-        type: "image/jpeg",
+        src: "images/screenshot-wide-dark.png",
+        sizes: "1686x1370",
+        type: "image/png",
         form_factor: "wide",
-        label: "wide scrrenshot of the home page"
+        label: "dark mode of the home page wide screenshot"
       },
       {
-        src: "images/screenshot-narrow.jpeg",
-        sizes: "970x1570",
-        type: "image/jpeg",
+        src: "images/screenshot-narrow-dark.png",
+        sizes: "745x1369",
+        type: "image/png",
         form_factor: "narrow",
-        label: "narrow scrrenshot of the home page"
+        label: "dark mode of the home page narrow screenshot"
+      },
+      {
+        src: "images/screenshot-wide-light.png",
+        sizes: "1690x1362",
+        type: "image/png",
+        form_factor: "wide",
+        label: "light mode of the home page wide screenshot"
+      },
+      {
+        src: "images/screenshot-narrow-light.png",
+        sizes: "746x1364",
+        type: "image/png",
+        form_factor: "narrow",
+        label: "light mode of the home page narrow screenshot"
       }
     ]
   }

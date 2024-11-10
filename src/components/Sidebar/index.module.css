@@ -33,11 +33,13 @@
     &.active::before {
       view-transition-name: none;
       @apply border-l-blue-600 bg-neutral-100 dark:bg-neutral-800 mix-blend-darken dark:mix-blend-lighten;
-
-      @media (min-width: 1024px) {
-        view-transition-name: active-sidebar-link;
-      }
     }
+  }
+}
+
+@media (min-width: 1024px) {
+  .links .link.active::before {
+    view-transition-name: active-sidebar-link;
   }
 }
 
