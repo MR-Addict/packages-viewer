@@ -42,28 +42,28 @@ const pwa = VitePWA({
     screenshots: [
       {
         src: "images/screenshot-wide-dark.png",
-        sizes: "1686x1370",
+        sizes: "1680x1360",
         type: "image/png",
         form_factor: "wide",
         label: "dark mode of the home page wide screenshot"
       },
       {
         src: "images/screenshot-narrow-dark.png",
-        sizes: "745x1369",
+        sizes: "745x1360",
         type: "image/png",
         form_factor: "narrow",
         label: "dark mode of the home page narrow screenshot"
       },
       {
         src: "images/screenshot-wide-light.png",
-        sizes: "1690x1362",
+        sizes: "1680x1360",
         type: "image/png",
         form_factor: "wide",
         label: "light mode of the home page wide screenshot"
       },
       {
         src: "images/screenshot-narrow-light.png",
-        sizes: "746x1364",
+        sizes: "745x1360",
         type: "image/png",
         form_factor: "narrow",
         label: "light mode of the home page narrow screenshot"
