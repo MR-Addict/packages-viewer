@@ -1,5 +1,6 @@
 import { PackageType } from "../types/package";
 
+export const locales = ["zh", "en"] as const;
 export const fileInputID = "package-file-input";
 export const themes = ["dark", "system", "light"] as const;
 export const packageManagers = ["npm", "yarn", "pnpm"] as const;

@@ -4,12 +4,20 @@ import { useNavigate } from "react-router-dom";
 import { fileInputID } from "@/data/app";
 import { useAppContext } from "@/contexts/app";
 import { useDatabaseContext } from "@/contexts/database";
+
+import t from "@/hooks/useLocaleTranslation";
 import parsePackage from "@/lib/package/parsePackage";
 
 export default function HiddenFileInput() {
-  const db = useDatabaseContext();
   const navigate = useNavigate();
+  const db = useDatabaseContext();
   const { fileInputRef } = useAppContext();
+
+  const messages = {
+    failure: t("Failed to import package"),
+    updated: t("Package updated successfully"),
+    success: t("Package imported successfully")
+  };
 
   async function handleImport(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
@@ -19,7 +27,7 @@ export default function HiddenFileInput() {
     const content = await file.text();
     const parsed = parsePackage(content);
 
-    if (!parsed.success) toast.error("Failed to import package");
+    if (!parsed.success) toast.error(messages.failure);
     else {
       let pkgId = fileInputRef.current?.getAttribute("data-pkg-id");
 
@@ -27,12 +35,12 @@ export default function HiddenFileInput() {
       if (pkgId) {
         const res = db.packages.update(pkgId, parsed.data);
         if (res.success) {
-          toast.success("Package replaced successfully");
+          toast.success(messages.updated);
           navigate(`/packages/${pkgId}`);
         } else toast.error(res.message);
       } else {
         const res = db.packages.add(parsed.data);
-        toast.success("Package imported successfully");
+        toast.success(messages.success);
         navigate(`/packages/${res.id}`);
       }
     }

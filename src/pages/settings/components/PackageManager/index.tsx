@@ -1,5 +1,7 @@
 import Tabs from "@/components/Tabs";
+import t from "@/hooks/useLocaleTranslation";
 import pageStyle from "../../index.module.css";
+
 import { packageManagers } from "@/data/app";
 import { useAppContext } from "@/contexts/app";
 
@@ -8,9 +10,9 @@ export default function PackageManager() {
 
   return (
     <section className={pageStyle.container}>
-      <h1>Package Manager</h1>
+      <h1>{t("Package Manager")}</h1>
 
-      <p>Choose the package manager you use</p>
+      <p>{t("Choose the package manager you use")}</p>
 
       <Tabs
         value={packageManager}

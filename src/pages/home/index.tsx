@@ -2,6 +2,8 @@ import clsx from "clsx";
 import { useState } from "react";
 
 import style from "./index.module.css";
+import t from "@/hooks/useLocaleTranslation";
+
 import { fileInputID } from "@/data/app";
 import { useAppContext } from "@/contexts/app";
 
@@ -30,7 +32,7 @@ export default function Home() {
       className={clsx(style.wrapper, { [style.dragging]: isDragging })}
     >
       <p>
-        Click or drag your <strong>package.json</strong> here to view its dependencies
+        {t("Click or drag your")} <strong>package.json</strong> {t("here")}
       </p>
     </label>
   );

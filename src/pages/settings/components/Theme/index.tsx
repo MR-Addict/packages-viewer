@@ -1,4 +1,5 @@
 import Tabs from "@/components/Tabs";
+import t from "@/hooks/useLocaleTranslation";
 import pageStyle from "../../index.module.css";
 
 import { themes } from "@/data/app";
@@ -7,13 +8,15 @@ import { useAppContext } from "@/contexts/app";
 export default function Theme() {
   const { theme, setTheme } = useAppContext();
 
+  const options = themes.map((theme) => ({ label: t(theme), value: theme }));
+
   return (
     <section className={pageStyle.container}>
-      <h1>Theme</h1>
+      <h1>{t("Theme")}</h1>
 
-      <p>Change the appearance of the app</p>
+      <p>{t("Change the appearance of the app")}</p>
 
-      <Tabs value={theme} onChange={setTheme} options={themes.map((t) => ({ label: t, value: t }))} />
+      <Tabs value={theme} onChange={setTheme} options={options} />
     </section>
   );
 }

@@ -5,6 +5,7 @@ import { FaSortAmountDownAlt, FaSortAmountUpAlt } from "react-icons/fa";
 
 import style from "./index.module.css";
 import Select from "@/components/Select";
+import t from "@/hooks/useLocaleTranslation";
 import startViewTransition from "@/lib/utils/startViewTransition";
 
 import { packagesOrderBys } from "@/data/app";
@@ -28,21 +29,21 @@ export default function Header() {
 
   return (
     <header className={style.wrapper}>
-      <h1 className="text-lg font-semibold">Packages</h1>
+      <h1 className="text-lg font-semibold">{t("Packages")}</h1>
 
       <div className={style.btns}>
         <input
           size={10}
           type="text"
-          placeholder="Search..."
+          placeholder={`${t("Search")}...`}
           className={style.searchbox}
           value={localSearch}
           onChange={handleSearch}
         />
 
         <Select
-          label={orderBy}
-          options={packagesOrderBys.map((o) => ({ label: o, value: o }))}
+          label={t(orderBy)}
+          options={packagesOrderBys.map((o) => ({ label: t(o), value: o }))}
           onChange={(value) => setOrderBy(value)}
         />
 

@@ -3,6 +3,7 @@ import { useMemo, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import style from "./index.module.css";
+import t from "@/hooks/useLocaleTranslation";
 import useClickOutside from "@/hooks/useClickOutside";
 
 import { sidebar } from "@/data/sidebar";
@@ -19,28 +20,28 @@ export default function Sidebar() {
 
   return (
     <nav ref={sidebarRef} className={clsx(style.wrapper, { [style.active]: windowWidth >= 1024 || openSidebar })}>
-      <h1 className={style.logo}>Packages Viewer</h1>
+      <h1 className={style.logo}>{t("Packages Viewer")}</h1>
 
       <ul className={style.links}>
-        {sidebar.map((item) => (
-          <li key={item.to}>
+        {sidebar.map((link) => (
+          <li key={link.to}>
             <Link
-              to={item.to}
+              to={link.to}
               viewTransition
               onClick={() => setOpenSidebar(false)}
-              className={clsx(style.link, { [style.active]: item.to === root })}
+              className={clsx(style.link, { [style.active]: link.to === root })}
             >
               <div>
-                <item.Icon size={20} />
+                <link.Icon size={20} />
               </div>
-              <h2>{item.title}</h2>
+              <h2>{t(link.title)}</h2>
             </Link>
           </li>
         ))}
       </ul>
 
       <footer className={style.footer}>
-        <span>Created by </span>
+        <span>{t("Created by")}: </span>
         <a href="https://github.com/MR-Addict" target="_blank" className="underline">
           MR-Addict
         </a>

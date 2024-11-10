@@ -2,25 +2,15 @@ import toast from "react-hot-toast";
 
 import style from "./index.module.css";
 import Select from "@/components/Select";
+import t from "@/hooks/useLocaleTranslation";
 import copyToClipboard from "@/lib/utils/copyToClipboard";
 
 import { useAppContext } from "@/contexts/app";
 import { DependencyType } from "@/types/package";
 import { usePackageContext } from "@/contexts/package";
 
-type SelectOption = "clear" | "updatable" | "dev" | "prod";
-const selectOptions: { label: string; value: SelectOption }[] = [
-  { label: "Clear", value: "clear" },
-  { label: "Updatable", value: "updatable" },
-  { label: "Production", value: "prod" },
-  { label: "Developemnt", value: "dev" }
-];
-
 type CopyOption = "latest" | "original";
-const copyOptions: { label: string; value: CopyOption }[] = [
-  { label: "Latest", value: "latest" },
-  { label: "Original", value: "original" }
-];
+type SelectOption = "clear" | "updatable" | "dev" | "prod";
 
 function selectDep(deps: DependencyType[], selector: (d: DependencyType) => boolean) {
   return deps.map((d) => ({ name: d.name, data: { selected: selector(d) } }));
@@ -29,6 +19,23 @@ function selectDep(deps: DependencyType[], selector: (d: DependencyType) => bool
 export default function Header() {
   const { pkg, updateDependencies } = usePackageContext();
   const { packageManager, fileInputRef } = useAppContext();
+
+  const messages = {
+    noDependencies: t("No dependencies selected"),
+    copid: t("Copied to clipboard")
+  };
+
+  const copyOptions: { label: string; value: CopyOption }[] = [
+    { label: t("Latest"), value: "latest" },
+    { label: t("Original"), value: "original" }
+  ];
+
+  const selectOptions: { label: string; value: SelectOption }[] = [
+    { label: t("Clear"), value: "clear" },
+    { label: t("Updatable"), value: "updatable" },
+    { label: t("Production"), value: "prod" },
+    { label: t("Development"), value: "dev" }
+  ];
 
   function handleUpload(event: React.ChangeEvent<HTMLInputElement>) {
     if (!fileInputRef.current) return;
@@ -48,7 +55,7 @@ export default function Header() {
 
   function handleCopy(option: CopyOption) {
     const dependencies = pkg.dependencies.filter((d) => d.selected);
-    if (dependencies.length === 0) return toast.error("No dependencies selected");
+    if (dependencies.length === 0) return toast.error(messages.noDependencies);
 
     const mapVersion = (d: DependencyType) => (option === "latest" ? d.latest || d.version : d.version);
     const text = dependencies.map((d) => `${d.name}@${mapVersion(d)}`).join(" ");
@@ -60,7 +67,7 @@ export default function Header() {
 
     const res = copyToClipboard(command);
     if (!res.success) toast.error(res.message);
-    else toast.success("Copied to clipboard");
+    else toast.success(messages.copid);
   }
 
   return (
@@ -71,12 +78,12 @@ export default function Header() {
 
       <div className={style.btns}>
         <label className={style.btn}>
-          Upload
+          {t("Upload")}
           <input type="file" id="reupload-package-file" className="hidden" onChange={handleUpload} />
         </label>
 
-        <Select label="Select" options={selectOptions} onChange={(value) => handleSelect(value)} />
-        <Select label="Copy" options={copyOptions} onChange={(value) => handleCopy(value)} inverseLabelStyle />
+        <Select label={t("Select")} options={selectOptions} onChange={(value) => handleSelect(value)} />
+        <Select label={t("Copy")} options={copyOptions} onChange={(value) => handleCopy(value)} inverseLabelStyle />
       </div>
     </header>
   );
