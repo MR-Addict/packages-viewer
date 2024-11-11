@@ -4,14 +4,22 @@ import pageStyle from "../../index.module.css";
 import { locales } from "@/data/app";
 import { useLocaleContext } from "@/contexts/locale";
 
+function localeMap(locale: string): string {
+  switch (locale) {
+    case "zh":
+      return "Chinese";
+    case "ja":
+      return "Japanese";
+    default:
+      return "English";
+  }
+}
+
 export default function Language() {
   const { translate, locale, setLocale } = useLocaleContext();
   const ts = (label: string) => translate(label, "settings");
 
-  const options = locales.map((locale) => ({
-    label: ts(locale === "en" ? "English" : "Chinese"),
-    value: locale
-  }));
+  const options = locales.map((locale) => ({ label: ts(localeMap(locale)), value: locale }));
 
   return (
     <section className={pageStyle.container}>
