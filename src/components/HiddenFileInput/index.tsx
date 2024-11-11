@@ -6,6 +6,7 @@ import { useAppContext } from "@/contexts/app";
 import { useLocaleContext } from "@/contexts/locale";
 import { useDatabaseContext } from "@/contexts/database";
 
+import useCookieState from "@/hooks/useCookieState";
 import parsePackage from "@/lib/package/parsePackage";
 
 export default function HiddenFileInput() {
@@ -27,7 +28,7 @@ export default function HiddenFileInput() {
 
     if (!parsed.success) toast.error(ta(parsed.message));
     else {
-      let pkgId = fileInputRef.current?.getAttribute("data-pkg-id");
+      let pkgId = useCookieState.get("update-package");
 
       // Check if package already exists
       if (!pkgId) {
@@ -49,7 +50,6 @@ export default function HiddenFileInput() {
       }
     }
 
-    fileInputRef.current?.removeAttribute("data-pkg-id");
     event.target.value = "";
   }
 

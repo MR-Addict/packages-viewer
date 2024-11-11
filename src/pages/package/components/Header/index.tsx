@@ -1,7 +1,9 @@
 import toast from "react-hot-toast";
+import { useEffect } from "react";
 
 import style from "./index.module.css";
 import Select from "@/components/Select";
+import useCookieState from "@/hooks/useCookieState";
 import copyToClipboard from "@/lib/utils/copyToClipboard";
 
 import { useAppContext } from "@/contexts/app";
@@ -38,8 +40,8 @@ export default function Header() {
   function handleUpload(event: React.ChangeEvent<HTMLInputElement>) {
     if (!fileInputRef.current) return;
     fileInputRef.current.files = event.target.files;
-    fileInputRef.current.setAttribute("data-pkg-id", pkg.id);
     fileInputRef.current.dispatchEvent(new Event("change", { bubbles: true }));
+    useCookieState.set("update-package", pkg.id);
     event.target.value = "";
   }
 
@@ -70,6 +72,17 @@ export default function Header() {
       updateDependencies(selectDep(pkg.dependencies, () => false));
     }
   }
+
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key.toLocaleLowerCase() === "c" && event.ctrlKey) {
+        event.preventDefault();
+        handleCopy("latest");
+      }
+    }
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [pkg]);
 
   return (
     <header className={style.wrapper}>
