@@ -12,7 +12,9 @@ import { useLocaleContext } from "@/contexts/locale";
 import { usePackagesContext } from "@/contexts/packages";
 
 export default function Header() {
-  const { t } = useLocaleContext();
+  const { translate } = useLocaleContext();
+  const tps = (label: string) => translate(label, "packages");
+
   const { search, setSearch, order, setOrder, orderBy, setOrderBy } = usePackagesContext();
 
   const intervalRef = useRef<NodeJS.Timeout>();
@@ -30,21 +32,21 @@ export default function Header() {
 
   return (
     <header className={style.wrapper}>
-      <h1 className="text-lg font-semibold">{t("Packages", "sidebar")}</h1>
+      <h1 className="text-lg font-semibold">{translate("Packages", "app")}</h1>
 
       <div className={style.btns}>
         <input
           size={10}
           type="text"
-          placeholder={`${t("Search", "package")}...`}
+          placeholder={`${tps("Search")}...`}
           className={style.searchbox}
           value={localSearch}
           onChange={handleSearch}
         />
 
         <Select
-          label={t(orderBy, "package")}
-          options={packagesOrderBys.map((o) => ({ label: t(o, "package"), value: o }))}
+          label={tps(orderBy)}
+          options={packagesOrderBys.map((o) => ({ label: tps(o), value: o }))}
           onChange={(value) => setOrderBy(value)}
         />
 

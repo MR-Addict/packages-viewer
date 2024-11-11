@@ -83,12 +83,13 @@ export default function timeInterval(date: string | Date) {
     isNeedCheck = false;
   }
 
-  const { t } = useLocaleContext();
+  const { translate } = useLocaleContext();
+  const tt = (label: string | string[]) => translate(label, "time");
 
-  if (interval.key === intervalMap.second) return t("just now", "time");
+  if (interval.key === intervalMap.second) return tt("just now");
 
   if (interval.value === 1) {
-    if (ago) return t(`last ${interval.key}`, "time");
-    return t(`next ${interval.key}`, "time");
-  } else return t(`${interval.value} ${interval.key}s ${ago ? "ago" : "later"}`.split(" "), "time");
+    if (ago) return tt(`last ${interval.key}`);
+    return tt(`next ${interval.key}`);
+  } else return tt(`${interval.value} ${interval.key}s ${ago ? "ago" : "later"}`.split(" "));
 }

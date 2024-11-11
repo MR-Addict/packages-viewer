@@ -8,5 +8,26 @@ export const appTranslations: TranslationType[] = [
       en: appName.name,
       zh: appName.nameZh
     }
+  },
+  {
+    label: "Home",
+    data: {
+      en: "Home",
+      zh: "首页"
+    }
+  },
+  {
+    label: "Packages",
+    data: {
+      en: "Packages",
+      zh: "依赖"
+    }
+  },
+  {
+    label: "Settings",
+    data: {
+      en: "Settings",
+      zh: "设置"
+    }
   }
 ];

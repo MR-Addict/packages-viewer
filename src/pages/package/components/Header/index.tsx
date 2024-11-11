@@ -17,20 +17,22 @@ function selectDep(deps: DependencyType[], selector: (d: DependencyType) => bool
 }
 
 export default function Header() {
-  const { t } = useLocaleContext();
+  const { translate } = useLocaleContext();
+  const tp = (label: string) => translate(label, "package");
+
   const { pkg, updateDependencies } = usePackageContext();
   const { packageManager, fileInputRef } = useAppContext();
 
   const copyOptions: { label: string; value: CopyOption }[] = [
-    { label: t("Latest", "packageDetail"), value: "latest" },
-    { label: t("Original", "packageDetail"), value: "original" }
+    { label: tp("Latest"), value: "latest" },
+    { label: tp("Original"), value: "original" }
   ];
 
   const selectOptions: { label: string; value: SelectOption }[] = [
-    { label: t("Clear", "packageDetail"), value: "clear" },
-    { label: t("Updatable", "packageDetail"), value: "updatable" },
-    { label: t("Production", "packageDetail"), value: "prod" },
-    { label: t("Development", "packageDetail"), value: "dev" }
+    { label: tp("Clear"), value: "clear" },
+    { label: tp("Updatable"), value: "updatable" },
+    { label: tp("Production"), value: "prod" },
+    { label: tp("Development"), value: "dev" }
   ];
 
   function handleUpload(event: React.ChangeEvent<HTMLInputElement>) {
@@ -51,7 +53,7 @@ export default function Header() {
 
   function handleCopy(option: CopyOption) {
     const dependencies = pkg.dependencies.filter((d) => d.selected);
-    if (dependencies.length === 0) return toast.error(t("No dependencies selected", "packageDetail"));
+    if (dependencies.length === 0) return toast.error(tp("No dependencies selected"));
 
     const mapVersion = (d: DependencyType) => (option === "latest" ? d.latest || d.version : d.version);
     const text = dependencies.map((d) => `${d.name}@${mapVersion(d)}`).join(" ");
@@ -62,8 +64,8 @@ export default function Header() {
     else if (packageManager === "pnpm") command = `pnpm add ${text}`;
 
     const res = copyToClipboard(command);
-    if (!res.success) toast.error(res.message);
-    else toast.success(t("Copied to clipboard", "packageDetail"));
+    if (!res.success) toast.error(translate(res.message, "api"));
+    else toast.success(tp("Copied to clipboard"));
   }
 
   return (
@@ -74,7 +76,7 @@ export default function Header() {
 
       <div className={style.btns}>
         <label className={style.btn}>
-          {t("Upload", "packageDetail")}
+          {tp("Upload")}
           <input
             type="file"
             accept="application/json"
@@ -84,18 +86,9 @@ export default function Header() {
           />
         </label>
 
-        <Select
-          label={t("Select", "packageDetail")}
-          options={selectOptions}
-          onChange={(value) => handleSelect(value)}
-        />
+        <Select label={tp("Select")} options={selectOptions} onChange={(value) => handleSelect(value)} />
 
-        <Select
-          label={t("Copy", "packageDetail")}
-          options={copyOptions}
-          onChange={(value) => handleCopy(value)}
-          inverseLabelStyle
-        />
+        <Select label={tp("Copy")} options={copyOptions} onChange={(value) => handleCopy(value)} inverseLabelStyle />
       </div>
     </header>
   );

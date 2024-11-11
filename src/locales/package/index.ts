@@ -2,66 +2,122 @@ import { TranslationType } from "@/types/locale";
 
 export const packageTranslations: TranslationType[] = [
   {
-    label: "Search",
+    label: "Upload",
     data: {
-      en: "Search",
-      zh: "搜索依赖"
+      en: "Upload",
+      zh: "上传"
     }
   },
   {
-    label: "You haven't upload any packages yet!",
+    label: "Select",
     data: {
-      en: "You haven't upload any packages yet!",
-      zh: "您还没有上传任何包！"
+      en: "Select",
+      zh: "选择"
     }
   },
   {
-    label: "name",
+    label: "Clear",
     data: {
-      en: "name",
+      en: "Clear",
+      zh: "清除"
+    }
+  },
+  {
+    label: "Updatable",
+    data: {
+      en: "Updatable",
+      zh: "可更新"
+    }
+  },
+  {
+    label: "Production",
+    data: {
+      en: "Production",
+      zh: "生产依赖"
+    }
+  },
+  {
+    label: "prod",
+    data: {
+      en: "prod",
+      zh: "生产依赖"
+    }
+  },
+  {
+    label: "Development",
+    data: {
+      en: "Development",
+      zh: "开发依赖"
+    }
+  },
+  {
+    label: "dev",
+    data: {
+      en: "dev",
+      zh: "开发依赖"
+    }
+  },
+  {
+    label: "Copy",
+    data: {
+      en: "Copy",
+      zh: "复制"
+    }
+  },
+  {
+    label: "Latest",
+    data: {
+      en: "Latest",
+      zh: "最新版本"
+    }
+  },
+  {
+    label: "Original",
+    data: {
+      en: "Original",
+      zh: "当前版本"
+    }
+  },
+  {
+    label: "Name",
+    data: {
+      en: "Name",
       zh: "名称"
     }
   },
   {
-    label: "uploaded",
+    label: "Type",
     data: {
-      en: "uploaded",
-      zh: "上传时间"
+      en: "Type",
+      zh: "类型"
     }
   },
   {
-    label: "dependencies",
+    label: "Error",
     data: {
-      en: "dependencies",
-      zh: "依赖个数"
+      en: "Error",
+      zh: "错误"
     }
   },
   {
-    label: "There're total",
+    label: "Version",
     data: {
-      en: "here're total",
-      zh: "共"
+      en: "Version",
+      zh: "当前版本"
     }
   },
   {
-    label: " dependencies",
+    label: "No dependencies selected",
     data: {
-      en: " dependencies",
-      zh: "个依赖"
+      en: "No dependencies selected",
+      zh: "未选择任何依赖"
     }
   },
   {
-    label: "Are you sure you want to delete this package?",
+    label: "Copied to clipboard",
     data: {
-      en: "Are you sure you want to delete this package?",
-      zh: "确认删除该依赖"
-    }
-  },
-  {
-    label: "Enter new name for this package",
-    data: {
-      en: "Enter new name for this package",
-      zh: "输入新的名称"
+      en: "Copied to clipboard",
+      zh: "已复制到剪贴板"
     }
   }
 ];

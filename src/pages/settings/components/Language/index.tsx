@@ -5,18 +5,19 @@ import { locales } from "@/data/app";
 import { useLocaleContext } from "@/contexts/locale";
 
 export default function Language() {
-  const { t, locale, setLocale } = useLocaleContext();
+  const { translate, locale, setLocale } = useLocaleContext();
+  const ts = (label: string) => translate(label, "settings");
 
   const options = locales.map((locale) => ({
-    label: t(locale === "en" ? "English" : "Chinese", "settings"),
+    label: ts(locale === "en" ? "English" : "Chinese"),
     value: locale
   }));
 
   return (
     <section className={pageStyle.container}>
-      <h1>{t("Language", "settings")}</h1>
+      <h1>{ts("Language")}</h1>
 
-      <p>{t("Change the language of the app", "settings")}</p>
+      <p>{ts("Change the language of the app")}</p>
 
       <Tabs value={locale} onChange={setLocale} options={options} />
     </section>

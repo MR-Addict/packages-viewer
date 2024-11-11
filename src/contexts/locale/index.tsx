@@ -21,14 +21,14 @@ interface LocaleContextProps {
   locale: Locale;
   setLocale: Dispatch<SetStateAction<Locale>>;
 
-  t: (labels: string | string[], scope: LocaleScopeType, options?: Options) => string;
+  translate: (labels: string | string[], scope: LocaleScopeType, options?: Options) => string;
 }
 
 const LocaleContext = createContext<LocaleContextProps>({
   locale: "en",
   setLocale: () => {},
 
-  t: () => ""
+  translate: () => ""
 });
 
 interface LocaleContextProviderProps {
@@ -38,7 +38,7 @@ interface LocaleContextProviderProps {
 export const LocaleContextProvider = ({ children }: LocaleContextProviderProps) => {
   const [locale, setLocale] = usePersistantState<Locale>("locale", "en");
 
-  function t(labels: string | string[], scope: LocaleScopeType, options = defaultOptions): string {
+  function translate(labels: string | string[], scope: LocaleScopeType, options = defaultOptions): string {
     const join = locale === "en" ? " " : "";
 
     options = Object.assign(defaultOptions, options);
@@ -56,7 +56,7 @@ export const LocaleContextProvider = ({ children }: LocaleContextProviderProps) 
 
   useEffect(() => {
     document.documentElement.lang = locale;
-    document.title = t(appName.name, "app");
+    document.title = translate(appName.name, "app");
   }, [locale]);
 
   return (
@@ -65,7 +65,7 @@ export const LocaleContextProvider = ({ children }: LocaleContextProviderProps) 
         locale,
         setLocale,
 
-        t
+        translate
       }}
     >
       {children}

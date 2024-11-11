@@ -6,14 +6,16 @@ import { useAppContext } from "@/contexts/app";
 import { useLocaleContext } from "@/contexts/locale";
 
 export default function PackageManager() {
-  const { t } = useLocaleContext();
+  const { translate } = useLocaleContext();
+  const ts = (label: string) => translate(label, "settings");
+
   const { packageManager, setPackageManager } = useAppContext();
 
   return (
     <section className={pageStyle.container}>
-      <h1>{t("Package Manager", "settings")}</h1>
+      <h1>{ts("Package Manager")}</h1>
 
-      <p>{t("Choose the package manager you use", "settings")}</p>
+      <p>{ts("Choose the package manager you use")}</p>
 
       <Tabs
         value={packageManager}

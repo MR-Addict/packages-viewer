@@ -10,7 +10,9 @@ import { usePackageContext } from "@/contexts/package";
 import { DependencyType, RemoteDependencyType } from "@/types/package";
 
 function DependencyRow({ dep }: { dep: DependencyType }) {
-  const { t } = useLocaleContext();
+  const { translate } = useLocaleContext();
+  const tp = (label: string) => translate(label, "package");
+
   const { updateDependencies } = usePackageContext();
   const [fetchStatus, setFetchStatus] = useState<"loading" | "error" | "idle">("loading");
   const [remoteDep, setRemoteDep] = useSessionState<RemoteDependencyType | null>("dep-" + dep.name, null);
@@ -48,13 +50,13 @@ function DependencyRow({ dep }: { dep: DependencyType }) {
         <input type="checkbox" checked={dep.selected} onChange={() => {}} aria-label="select dependency" />
       </td>
       <td>{dep.name}</td>
-      <td>{t(dep.type, "packageDetail")}</td>
+      <td>{tp(dep.type)}</td>
       <td>{dep.version}</td>
       <td>
         {fetchStatus === "loading" && <ImSpinner className="animate-spin" />}
         {fetchStatus === "error" && (
           <p data-status="error" className={style.chip}>
-            Error
+            {tp("Error")}
           </p>
         )}
         {fetchStatus === "idle" && dep.latest && (
@@ -68,7 +70,9 @@ function DependencyRow({ dep }: { dep: DependencyType }) {
 }
 
 export default function Body() {
-  const { t } = useLocaleContext();
+  const { translate } = useLocaleContext();
+  const tp = (label: string) => translate(label, "package");
+
   const { pkg, updateDependencies } = usePackageContext();
   const checkboxRef = useRef<HTMLInputElement>(null);
 
@@ -101,10 +105,10 @@ export default function Body() {
             <th>
               <input ref={checkboxRef} type="checkbox" onClick={handleClickCheckbox} aria-label="toggle selections" />
             </th>
-            <th>{t("Name", "packageDetail")}</th>
-            <th>{t("Type", "packageDetail")}</th>
-            <th>{t("Version", "packageDetail")}</th>
-            <th>{t("Latest", "packageDetail")}</th>
+            <th>{tp("Name")}</th>
+            <th>{tp("Type")}</th>
+            <th>{tp("Version")}</th>
+            <th>{tp("Latest")}</th>
           </tr>
         </thead>
         <tbody>

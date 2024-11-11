@@ -13,20 +13,22 @@ import { useDatabaseContext } from "@/contexts/database";
 
 export default function Body({ packages }: { packages: PackageType[] }) {
   const db = useDatabaseContext();
-  const { t } = useLocaleContext();
+  const { translate } = useLocaleContext();
+  const ta = (label: string) => translate(label, "api");
+  const tps = (label: string) => translate(label, "packages");
 
   async function handleUpdate(pkg: PackageType) {
-    const newName = prompt(t("Enter new name for this package", "package"), pkg.name);
+    const newName = prompt(tps("Enter new name for this package"), pkg.name);
     if (newName && newName.trim() !== pkg.name) {
       const res = await startViewTransition(() => db.packages.update(pkg.id, { name: newName }));
-      if (!res.success) toast.error(res.message);
+      if (!res.success) toast.error(ta(res.message));
     }
   }
 
   async function handleDelete(id: string) {
-    if (confirm(t("Are you sure you want to delete this package?", "package"))) {
+    if (confirm(tps("Are you sure you want to delete this package?"))) {
       const res = await startViewTransition(() => db.packages.remove(id));
-      if (!res.success) toast.error(res.message);
+      if (!res.success) toast.error(ta(res.message));
     }
   }
 
@@ -37,19 +39,19 @@ export default function Body({ packages }: { packages: PackageType[] }) {
           <Link viewTransition to={`/packages/${pkg.id}`} className={style.pkg}>
             <h2 style={{ viewTransitionName: "pkg-name-" + pkg.id }}>{pkg.name}</h2>
             <p className="c-text-800">
-              <span>{t("There're total", "package")} </span>
+              <span>{tps("There're total")} </span>
               <strong>{pkg.dependencies.length}</strong>
-              <span> {t(" dependencies", "package")}</span>
+              <span> {tps(" dependencies")}</span>
             </p>
             <p className="text-sm c-text-600">{timeInterval(pkg.uploaded)}</p>
           </Link>
 
           <div className={style.btns}>
-            <button type="button" className={style.btn} title="edit" onClick={() => handleUpdate(pkg)}>
+            <button type="button" className={style.btn} title={tps("edit")} onClick={() => handleUpdate(pkg)}>
               <TbEdit />
             </button>
 
-            <button type="button" className={style.btn} title="delete" onClick={() => handleDelete(pkg.id)}>
+            <button type="button" className={style.btn} title={tps("delete")} onClick={() => handleDelete(pkg.id)}>
               <CgTrashEmpty />
             </button>
           </div>

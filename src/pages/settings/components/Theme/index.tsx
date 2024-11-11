@@ -6,16 +6,18 @@ import { useAppContext } from "@/contexts/app";
 import { useLocaleContext } from "@/contexts/locale";
 
 export default function Theme() {
-  const { t } = useLocaleContext();
+  const { translate } = useLocaleContext();
+  const ts = (label: string) => translate(label, "settings");
+
   const { theme, setTheme } = useAppContext();
 
-  const options = themes.map((theme) => ({ label: t(theme, "settings"), value: theme }));
+  const options = themes.map((theme) => ({ label: ts(theme), value: theme }));
 
   return (
     <section className={pageStyle.container}>
-      <h1>{t("Theme", "settings")}</h1>
+      <h1>{ts("Theme")}</h1>
 
-      <p>{t("Change the appearance of the app", "settings")}</p>
+      <p>{ts("Change the appearance of the app")}</p>
 
       <Tabs value={theme} onChange={setTheme} options={options} />
     </section>

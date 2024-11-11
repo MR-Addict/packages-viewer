@@ -14,14 +14,14 @@ export default function Sidebar() {
   const sidebarRef = useRef<HTMLDivElement>(null);
   const root = useMemo(() => location.pathname.split("/").slice(0, 2).join("/"), [location.pathname]);
 
-  const { t } = useLocaleContext();
+  const { translate } = useLocaleContext();
   const { windowWidth, openSidebar, setOpenSidebar } = useAppContext();
 
   useClickOutside(() => windowWidth < 1024 && setOpenSidebar(false), sidebarRef, [windowWidth]);
 
   return (
     <nav ref={sidebarRef} className={clsx(style.wrapper, { [style.active]: windowWidth >= 1024 || openSidebar })}>
-      <h1 className={style.logo}>{t("Packages Viewer", "app")}</h1>
+      <h1 className={style.logo}>{translate("Packages Viewer", "app")}</h1>
 
       <ul className={style.links}>
         {sidebar.map((link) => (
@@ -35,7 +35,7 @@ export default function Sidebar() {
               <div>
                 <link.Icon size={20} />
               </div>
-              <h2>{t(link.title, "sidebar")}</h2>
+              <h2>{translate(link.title, "app")}</h2>
             </Link>
           </li>
         ))}

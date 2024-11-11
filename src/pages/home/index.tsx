@@ -8,7 +8,9 @@ import { useAppContext } from "@/contexts/app";
 import { useLocaleContext } from "@/contexts/locale";
 
 export default function Home() {
-  const { t } = useLocaleContext();
+  const { translate } = useLocaleContext();
+  const th = (label: string) => translate(label, "home");
+
   const { fileInputRef } = useAppContext();
 
   const [isDragging, setIsDragging] = useState(false);
@@ -34,7 +36,7 @@ export default function Home() {
       className={clsx(style.wrapper, { [style.dragging]: isDragging })}
     >
       <p>
-        {t("Click or drag your", "home")} <strong>package.json</strong> {t("here", "home")}
+        {th("Click or drag your")} <strong>package.json</strong> {th("here")}
       </p>
     </label>
   );
