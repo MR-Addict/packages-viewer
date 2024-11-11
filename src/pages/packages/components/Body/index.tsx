@@ -1,21 +1,30 @@
+import clsx from "clsx";
 import toast from "react-hot-toast";
+
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { TbEdit } from "react-icons/tb";
 import { CgTrashEmpty } from "react-icons/cg";
 
 import style from "./index.module.css";
+import handleDrop from "@/lib/package/handleDrop";
 import timeInterval from "@/lib/utils/timeInterval";
 import startViewTransition from "@/lib/utils/startViewTransition";
 
+import { fileInputID } from "@/data/app";
 import { PackageType } from "@/types/package";
+import { useAppContext } from "@/contexts/app";
 import { useLocaleContext } from "@/contexts/locale";
 import { useDatabaseContext } from "@/contexts/database";
 
 export default function Body({ packages }: { packages: PackageType[] }) {
   const db = useDatabaseContext();
+  const { fileInputRef } = useAppContext();
   const { translate } = useLocaleContext();
   const ta = (label: string) => translate(label, "api");
   const tps = (label: string) => translate(label, "packages");
+
+  const [isDragging, setIsDragging] = useState(false);
 
   async function handleUpdate(pkg: PackageType) {
     const newName = prompt(tps("Enter new name for this package"), pkg.name);
@@ -57,6 +66,19 @@ export default function Body({ packages }: { packages: PackageType[] }) {
           </div>
         </li>
       ))}
+
+      <li className={style.container}>
+        <label
+          htmlFor={fileInputID}
+          className={clsx(style.pkg, style.new, { [style.dragging]: isDragging })}
+          onDragOver={(event) => event.preventDefault()}
+          onDragEnter={() => setIsDragging(true)}
+          onDragLeave={() => setIsDragging(false)}
+          onDrop={(event) => handleDrop(event, fileInputRef)}
+        >
+          <p title={tps("add")}>+</p>
+        </label>
+      </li>
     </ul>
   );
 }

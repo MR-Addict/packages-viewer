@@ -74,6 +74,14 @@ export const packagesTranslations: TranslationType[] = [
     }
   },
   {
+    label: "add",
+    data: {
+      en: "add",
+      zh: "添加",
+      ja: "追加"
+    }
+  },
+  {
     label: "Are you sure you want to delete this package?",
     data: {
       en: "Are you sure you want to delete this package?",

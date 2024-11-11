@@ -13,6 +13,24 @@
   & h2 {
     @apply w-fit text-lg font-semibold border-b-4 border-b-blue-600 rounded-bl-lg px-1;
   }
+
+  &.new {
+    @apply min-h-28 cursor-pointer flex items-center justify-center;
+
+    &.dragging,
+    &:hover {
+      @apply c-gradient-200;
+
+      & p {
+        @apply c-bg-300;
+      }
+    }
+
+    & p {
+      @apply flex items-center justify-center;
+      @apply aspect-square w-10 pb-1.5 text-3xl rounded-full c-bg-200;
+    }
+  }
 }
 
 .container:hover .btns {

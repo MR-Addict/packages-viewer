@@ -36,7 +36,7 @@ export default function Header() {
 
       <div className={style.btns}>
         <input
-          size={10}
+          size={8}
           type="text"
           placeholder={`${tps("Search")}...`}
           className={style.searchbox}
