@@ -1,7 +1,7 @@
 {
   "name": "packages-viewer",
   "private": true,
-  "version": "2.0.1",
+  "version": "2.0.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -29,7 +29,7 @@
     "tailwindcss": "^3.4.14",
     "typescript": "^5.6.3",
     "uniqid": "^5.4.0",
-    "vite": "^5.4.10",
+    "vite": "^5.4.11",
     "vite-plugin-pwa": "^0.20.5",
     "zod": "^3.23.8"
   },
