@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, Dispatch, SetStateAction, useMemo } from "react";
+import { createContext, useContext, Dispatch, SetStateAction, useMemo, useState } from "react";
 
 import usePersistantState from "@/hooks/usePersistantState";
 
@@ -39,7 +39,7 @@ interface PackagesContextProviderProps {
 }
 
 export const PackagesContextProvider = ({ children }: PackagesContextProviderProps) => {
-  const [search, setSearch] = usePersistantState<string>("packages-search", "");
+  const [search, setSearch] = useState("");
   const [order, setOrder] = usePersistantState<OrderType>("packages-order", "asc");
   const [orderBy, setOrderBy] = usePersistantState<PackagesOrderByType>("packages-order-by", "uploaded");
 
@@ -51,7 +51,7 @@ export const PackagesContextProvider = ({ children }: PackagesContextProviderPro
     else data.sort((a, b) => new Date(b[orderBy]).getTime() - new Date(a[orderBy]).getTime());
     if (order === "desc") data.reverse();
     return data;
-  }, [search, order, orderBy, db.packages.data]);
+  }, [order, orderBy, db.packages.data]);
 
   return (
     <PackagesContext.Provider

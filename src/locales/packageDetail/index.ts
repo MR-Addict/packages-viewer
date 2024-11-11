@@ -37,9 +37,23 @@ export const packageDetailTranslations: TranslationType[] = [
     }
   },
   {
+    label: "prod",
+    data: {
+      en: "prod",
+      zh: "生产依赖"
+    }
+  },
+  {
     label: "Development",
     data: {
       en: "Development",
+      zh: "开发依赖"
+    }
+  },
+  {
+    label: "dev",
+    data: {
+      en: "dev",
       zh: "开发依赖"
     }
   },
@@ -54,14 +68,14 @@ export const packageDetailTranslations: TranslationType[] = [
     label: "Latest",
     data: {
       en: "Latest",
-      zh: "最新"
+      zh: "最新版本"
     }
   },
   {
     label: "Original",
     data: {
       en: "Original",
-      zh: "原始"
+      zh: "当前版本"
     }
   },
   {
@@ -82,14 +96,7 @@ export const packageDetailTranslations: TranslationType[] = [
     label: "Version",
     data: {
       en: "Version",
-      zh: "版本"
-    }
-  },
-  {
-    label: "Latest Version",
-    data: {
-      en: "Latest",
-      zh: "最新版本"
+      zh: "当前版本"
     }
   },
   {

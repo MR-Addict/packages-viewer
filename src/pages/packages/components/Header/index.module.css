@@ -6,7 +6,7 @@
   @apply ml-auto flex items-center gap-2;
 
   & .searchbox {
-    @apply border-b border-b-transparent c-bg-100 outline-none p-0.5 mr-1;
+    @apply border-b border-b-transparent c-bg-100 outline-none p-0.5 mr-1 rounded-none;
 
     &:focus {
       @apply c-border-b;

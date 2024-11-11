@@ -10,6 +10,7 @@ import { usePackageContext } from "@/contexts/package";
 import { DependencyType, RemoteDependencyType } from "@/types/package";
 
 function DependencyRow({ dep }: { dep: DependencyType }) {
+  const { t } = useLocaleContext();
   const { updateDependencies } = usePackageContext();
   const [fetchStatus, setFetchStatus] = useState<"loading" | "error" | "idle">("loading");
   const [remoteDep, setRemoteDep] = useSessionState<RemoteDependencyType | null>("dep-" + dep.name, null);
@@ -47,7 +48,7 @@ function DependencyRow({ dep }: { dep: DependencyType }) {
         <input type="checkbox" checked={dep.selected} onChange={() => {}} aria-label="select dependency" />
       </td>
       <td>{dep.name}</td>
-      <td>{dep.type}</td>
+      <td>{t(dep.type, "packageDetail")}</td>
       <td>{dep.version}</td>
       <td>
         {fetchStatus === "loading" && <ImSpinner className="animate-spin" />}
@@ -103,7 +104,7 @@ export default function Body() {
             <th>{t("Name", "packageDetail")}</th>
             <th>{t("Type", "packageDetail")}</th>
             <th>{t("Version", "packageDetail")}</th>
-            <th>{t("Latest Version", "packageDetail")}</th>
+            <th>{t("Latest", "packageDetail")}</th>
           </tr>
         </thead>
         <tbody>

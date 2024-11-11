@@ -75,7 +75,13 @@ export default function Header() {
       <div className={style.btns}>
         <label className={style.btn}>
           {t("Upload", "packageDetail")}
-          <input type="file" id="reupload-package-file" className="hidden" onChange={handleUpload} />
+          <input
+            type="file"
+            accept="application/json"
+            id="reupload-package-file"
+            className="hidden"
+            onChange={handleUpload}
+          />
         </label>
 
         <Select

@@ -90,5 +90,5 @@ export default function timeInterval(date: string | Date) {
   if (interval.value === 1) {
     if (ago) return t(`last ${interval.key}`, "time");
     return t(`next ${interval.key}`, "time");
-  } else return t(`${interval.value} ${interval.key}s ${ago ? "ago" : "later"}`.split(" "), "time", { join: "" });
+  } else return t(`${interval.value} ${interval.key}s ${ago ? "ago" : "later"}`.split(" "), "time");
 }

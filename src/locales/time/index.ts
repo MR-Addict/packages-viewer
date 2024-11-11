@@ -137,7 +137,7 @@ export const timeTranslations: TranslationType[] = [
   {
     label: "last day",
     data: {
-      en: "last day",
+      en: "yesterday",
       zh: "昨天"
     }
   },
@@ -179,7 +179,7 @@ export const timeTranslations: TranslationType[] = [
   {
     label: "next day",
     data: {
-      en: "next day",
+      en: "tomorrow",
       zh: "明天"
     }
   },

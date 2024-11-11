@@ -10,12 +10,10 @@ import { LocaleScopeType } from "@/types/locale";
 import usePersistantState from "@/hooks/usePersistantState";
 
 interface Options {
-  join?: string;
   truncate?: boolean;
 }
 
 const defaultOptions: Options = {
-  join: " ",
   truncate: false
 };
 
@@ -41,6 +39,8 @@ export const LocaleContextProvider = ({ children }: LocaleContextProviderProps) 
   const [locale, setLocale] = usePersistantState<Locale>("locale", "en");
 
   function t(labels: string | string[], scope: LocaleScopeType, options = defaultOptions): string {
+    const join = locale === "en" ? " " : "";
+
     options = Object.assign(defaultOptions, options);
     labels = Array.isArray(labels) ? labels : [labels];
 
@@ -51,7 +51,7 @@ export const LocaleContextProvider = ({ children }: LocaleContextProviderProps) 
         else if (options.truncate) return "";
         else return translation || label;
       })
-      .join(options.join);
+      .join(join);
   }
 
   useEffect(() => {
