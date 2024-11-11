@@ -1,5 +1,5 @@
 .select {
-  @apply relative;
+  @apply relative whitespace-nowrap;
 
   & .label-btn {
     @apply cursor-pointer c-border dark:bg-neutral-800 px-3 py-1.5 text-xs font-semibold rounded-md;
@@ -18,7 +18,7 @@
     }
 
     & .option-btn {
-      @apply px-7 py-1.5 w-full text-right whitespace-nowrap;
+      @apply px-7 py-1.5 w-full text-right;
 
       &:hover {
         @apply bg-neutral-200 dark:bg-neutral-700 duration-300;

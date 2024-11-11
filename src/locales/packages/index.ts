@@ -6,7 +6,7 @@ export const packagesTranslations: TranslationType[] = [
     data: {
       en: "Search",
       zh: "搜索依赖",
-      ja: "検索"
+      ja: "検索依存"
     }
   },
   {
