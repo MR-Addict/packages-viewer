@@ -90,6 +90,14 @@ export const packageTranslations: TranslationType[] = [
     }
   },
   {
+    label: "Uninstall",
+    data: {
+      en: "Uninstall",
+      zh: "卸载依赖",
+      ja: "アンインストール"
+    }
+  },
+  {
     label: "Name",
     data: {
       en: "Name",

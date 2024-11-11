@@ -11,7 +11,7 @@ import { DependencyType } from "@/types/package";
 import { useLocaleContext } from "@/contexts/locale";
 import { usePackageContext } from "@/contexts/package";
 
-type CopyOption = "latest" | "original";
+type CopyOption = "latest" | "original" | "uninstall";
 type SelectOption = "clear" | "updatable" | "dev" | "prod";
 
 function selectDep(deps: DependencyType[], selector: (d: DependencyType) => boolean) {
@@ -27,7 +27,8 @@ export default function Header() {
 
   const copyOptions: { label: string; value: CopyOption }[] = [
     { label: tp("Latest"), value: "latest" },
-    { label: tp("Original"), value: "original" }
+    { label: tp("Original"), value: "original" },
+    { label: tp("Uninstall"), value: "uninstall" }
   ];
 
   const selectOptions: { label: string; value: SelectOption }[] = [
@@ -54,23 +55,31 @@ export default function Header() {
   }
 
   function handleCopy(option: CopyOption) {
-    const dependencies = pkg.dependencies.filter((d) => d.selected);
-    if (dependencies.length === 0) return toast.error(tp("No dependencies selected"));
+    // Filter selected dependencies
+    const selected = pkg.dependencies.filter((d) => d.selected);
+    if (selected.length === 0) return toast.error(tp("No dependencies selected"));
 
+    // Generate dependencies string
     const mapVersion = (d: DependencyType) => (option === "latest" ? d.latest || d.version : d.version);
-    const text = dependencies.map((d) => `${d.name}@${mapVersion(d)}`).join(" ");
+    let dependencies = selected.map((d) => d.name).join(" ");
+    if (option !== "uninstall") dependencies = selected.map((d) => `${d.name}@${mapVersion(d)}`).join(" ");
 
-    let command = "";
-    if (packageManager === "npm") command = `npm install ${text}`;
-    else if (packageManager === "yarn") command = `yarn add ${text}`;
-    else if (packageManager === "pnpm") command = `pnpm add ${text}`;
+    // Generate sub command
+    let subCommand = "";
+    const isUninstall = option === "uninstall";
+    if (packageManager === "npm") subCommand = isUninstall ? "uninstall" : "install";
+    else if (packageManager === "yarn") subCommand = isUninstall ? "remove" : "add";
+    else if (packageManager === "pnpm") subCommand = isUninstall ? "remove" : "add";
 
+    // Generate command
+    const command = `${packageManager} ${subCommand} ${dependencies}`;
+
+    // Copy to clipboard
     const res = copyToClipboard(command);
-    if (!res.success) toast.error(translate(res.message, "api"));
-    else {
+    if (res.success) {
       toast.success(tp("Copied to clipboard"));
       updateDependencies(selectDep(pkg.dependencies, () => false));
-    }
+    } else toast.error(translate(res.message, "api"));
   }
 
   useEffect(() => {
