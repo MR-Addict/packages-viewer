@@ -6,8 +6,8 @@ import copyToClipboard from "@/lib/utils/copyToClipboard";
 
 import { useAppContext } from "@/contexts/app";
 import { DependencyType } from "@/types/package";
-import { usePackageContext } from "@/contexts/package";
 import { useLocaleContext } from "@/contexts/locale";
+import { usePackageContext } from "@/contexts/package";
 
 type CopyOption = "latest" | "original";
 type SelectOption = "clear" | "updatable" | "dev" | "prod";
@@ -65,7 +65,10 @@ export default function Header() {
 
     const res = copyToClipboard(command);
     if (!res.success) toast.error(translate(res.message, "api"));
-    else toast.success(tp("Copied to clipboard"));
+    else {
+      toast.success(tp("Copied to clipboard"));
+      updateDependencies(selectDep(pkg.dependencies, () => false));
+    }
   }
 
   return (

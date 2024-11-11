@@ -29,6 +29,12 @@ export default function HiddenFileInput() {
     else {
       let pkgId = fileInputRef.current?.getAttribute("data-pkg-id");
 
+      // Check if package already exists
+      if (!pkgId) {
+        const found = db.packages.data.find((pkg) => pkg.name === parsed.data.name);
+        if (found && confirm(ta("Package with same name already exists, do you want to replace it?"))) pkgId = found.id;
+      }
+
       // Update or add the package
       if (pkgId) {
         const res = db.packages.update(pkgId, parsed.data);

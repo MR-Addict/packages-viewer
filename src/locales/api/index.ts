@@ -10,6 +10,14 @@ export const apiTranslations: TranslationType[] = [
     }
   },
   {
+    label: "Package with same name already exists, do you want to replace it?",
+    data: {
+      en: "Package with same name already exists, do you want to replace it?",
+      zh: "同名依赖已存在，是否替换？",
+      ja: "同じ名前のパッケージがすでに存在します。置き換えますか？"
+    }
+  },
+  {
     label: "Failed to fetch package",
     data: {
       en: "Failed to fetch package",
