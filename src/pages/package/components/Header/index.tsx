@@ -1,5 +1,5 @@
 import toast from "react-hot-toast";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import style from "./index.module.css";
 import Select from "@/components/Select";
@@ -105,8 +105,6 @@ export default function Header() {
     },
     [pkg]
   );
-
-  useEffect(() => setSearch(""), []);
 
   return (
     <header className={style.wrapper}>

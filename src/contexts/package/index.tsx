@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { createContext, useContext, Dispatch, SetStateAction, useState, useEffect } from "react";
 
 import { emptyPackage } from "@/data/app";
@@ -10,7 +10,6 @@ import { DependencyType, PackageType } from "@/types/package";
 interface PackageContextProps {
   pkg: PackageType;
 
-  search: string;
   setSearch: Dispatch<SetStateAction<string>>;
 
   updateDependencies: (data: { name: string; data: Partial<DependencyType> }[]) => void;
@@ -19,7 +18,6 @@ interface PackageContextProps {
 const PackageContext = createContext<PackageContextProps>({
   pkg: emptyPackage,
 
-  search: "",
   setSearch: () => {},
 
   updateDependencies: () => {}
@@ -31,6 +29,7 @@ interface PackageContextProviderProps {
 
 export const PackageContextProvider = ({ children }: PackageContextProviderProps) => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const db = useDatabaseContext();
 
   const [search, setSearch] = useState<string>("");
@@ -57,7 +56,7 @@ export const PackageContextProvider = ({ children }: PackageContextProviderProps
       dependencies = dependencies.filter((d) => d.name.toLowerCase().includes(search.toLowerCase()));
       dependencies = dependencies.sort((a, b) => b.type.localeCompare(a.type) || a.name.localeCompare(b.name));
       setPkg({ ...pkg, dependencies });
-    } else setPkg(emptyPackage);
+    } else navigate("/packages");
   }, [id, search, db.ready, db.packages.data]);
 
   return (
@@ -65,7 +64,6 @@ export const PackageContextProvider = ({ children }: PackageContextProviderProps
       value={{
         pkg,
 
-        search,
         setSearch,
 
         updateDependencies

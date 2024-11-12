@@ -5,9 +5,8 @@ import HiddenFileInput from "./components/HiddenFileInput";
 
 import { AppContextProvider } from "./contexts/app";
 import { DatabaseProvider } from "./contexts/database";
-import { PackageContextProvider } from "@/contexts/package";
-import { PackagesContextProvider } from "./contexts/packages";
 import { LocaleContextProvider } from "./contexts/locale";
+import { PackagesContextProvider } from "./contexts/packages";
 
 export default function Layout() {
   return (
@@ -15,11 +14,9 @@ export default function Layout() {
       <AppContextProvider>
         <DatabaseProvider>
           <PackagesContextProvider>
-            <PackageContextProvider>
-              <App />
-              <Toaster />
-              <HiddenFileInput />
-            </PackageContextProvider>
+            <App />
+            <Toaster />
+            <HiddenFileInput />
           </PackagesContextProvider>
         </DatabaseProvider>
       </AppContextProvider>
