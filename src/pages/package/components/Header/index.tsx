@@ -111,7 +111,7 @@ export default function Header() {
 
   return (
     <header className={style.wrapper}>
-      <h1 style={{ viewTransitionName: "pkg-name-" + pkg.id }} className="text-lg font-semibold truncate">
+      <h1 style={{ viewTransitionName: "pkg-" + pkg.id }} className="text-lg font-semibold truncate">
         {pkg.name}
       </h1>
 

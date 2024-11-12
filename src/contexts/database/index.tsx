@@ -1,5 +1,3 @@
-"use client";
-
 import uniqid from "uniqid";
 
 import { z } from "zod";
@@ -46,7 +44,10 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
   function importData(data: any, options = { packages: true }) {
     if (options.packages) {
       const parsed = z.array(Package).safeParse(data.packages);
-      if (parsed.success) setPackages(parsed.data);
+      if (parsed.success) {
+        parsed.data.forEach((pkg) => pkg.dependencies.forEach((dep) => (dep.latest = null)));
+        setPackages(parsed.data);
+      }
     }
   }
 

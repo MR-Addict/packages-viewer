@@ -1,5 +1,3 @@
-"use client";
-
 import { useNavigate, useParams } from "react-router-dom";
 import { createContext, useContext, Dispatch, SetStateAction, useState, useEffect } from "react";
 
@@ -38,10 +36,12 @@ export const PackageContextProvider = ({ children }: PackageContextProviderProps
   function updateDependencies(data: { name: string; data: Partial<DependencyType> }[]) {
     const dbPkg = db.packages.data.find((p) => p.id === id);
     if (!dbPkg) return;
+
     for (const d of data) {
       const found = dbPkg.dependencies.find((dep) => dep.name === d.name);
       if (found) Object.assign(found, d.data);
     }
+
     db.packages.update(dbPkg.id, dbPkg);
   }
 

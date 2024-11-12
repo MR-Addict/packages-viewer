@@ -1,5 +1,3 @@
-"use client";
-
 import { createContext, useContext, Dispatch, SetStateAction, useEffect, useRef } from "react";
 
 import setTheme from "@/lib/theme/setTheme";

@@ -21,14 +21,17 @@
     &:hover {
       @apply c-gradient-200;
 
-      & p {
+      & .plus {
         @apply c-bg-300;
       }
     }
 
-    & p {
-      @apply flex items-center justify-center;
-      @apply aspect-square w-10 pb-1.5 text-3xl rounded-full c-bg-200;
+    & .plus {
+      --size: 2.5rem;
+      width: var(--size);
+      height: var(--size);
+
+      @apply text-lg rounded-full c-bg-200 flex items-center justify-center;
     }
   }
 }

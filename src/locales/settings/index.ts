@@ -53,7 +53,7 @@ export const settingsTranslations: TranslationType[] = [
     label: "English",
     data: {
       en: "English",
-      zh: "英文",
+      zh: "英语",
       ja: "英語"
     }
   },
@@ -69,7 +69,7 @@ export const settingsTranslations: TranslationType[] = [
     label: "Japanese",
     data: {
       en: "Japanese",
-      zh: "日文",
+      zh: "日语",
       ja: "日本語"
     }
   },

@@ -1,5 +1,3 @@
-"use client";
-
 import locales from "@/locales";
 import { createContext, useContext, Dispatch, SetStateAction, useEffect } from "react";
 

@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { TbEdit } from "react-icons/tb";
+import { PiPlusBold } from "react-icons/pi";
 import { CgTrashEmpty } from "react-icons/cg";
 
 import style from "./index.module.css";
@@ -46,7 +47,7 @@ export default function Body({ packages }: { packages: PackageType[] }) {
       {packages.map((pkg) => (
         <li key={pkg.id} className={style.container} style={{ "--card-id": "card-" + pkg.id } as React.CSSProperties}>
           <Link viewTransition to={`/packages/${pkg.id}`} className={style.pkg}>
-            <h2 style={{ viewTransitionName: "pkg-name-" + pkg.id }}>{pkg.name}</h2>
+            <h2 style={{ viewTransitionName: "pkg-" + pkg.id }}>{pkg.name}</h2>
             <p className="c-text-800">
               <span>{tps("There're total")} </span>
               <strong>{pkg.dependencies.length}</strong>
@@ -76,7 +77,9 @@ export default function Body({ packages }: { packages: PackageType[] }) {
           onDragLeave={() => setIsDragging(false)}
           onDrop={(event) => handleDrop(event, fileInputRef)}
         >
-          <p title={tps("add")}>+</p>
+          <div className={style.plus}>
+            <PiPlusBold title={tps("add")} />
+          </div>
         </label>
       </li>
     </ul>

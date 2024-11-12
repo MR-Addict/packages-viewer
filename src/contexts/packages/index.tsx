@@ -1,5 +1,3 @@
-"use client";
-
 import { createContext, useContext, Dispatch, SetStateAction, useMemo, useState } from "react";
 
 import usePersistantState from "@/hooks/usePersistantState";

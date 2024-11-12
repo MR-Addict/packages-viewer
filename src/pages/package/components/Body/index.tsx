@@ -1,21 +1,23 @@
 import { ImSpinner } from "react-icons/im";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import style from "./index.module.css";
-import useSessionState from "@/hooks/useSessionState";
+import SessionState from "@/lib/utils/SessionState";
 import fetchDependency from "@/lib/package/fetchDependency";
 
+import { DependencyType } from "@/types/package";
 import { useLocaleContext } from "@/contexts/locale";
 import { usePackageContext } from "@/contexts/package";
-import { DependencyType, RemoteDependencyType } from "@/types/package";
+
+type FetchStatus = "loading" | "error" | "idle";
 
 function DependencyRow({ dep }: { dep: DependencyType }) {
   const { translate } = useLocaleContext();
   const tp = (label: string) => translate(label, "package");
+  const sessionState = useMemo(() => new SessionState<string>(`dep-${dep.name}`), []);
 
   const { updateDependencies } = usePackageContext();
-  const [fetchStatus, setFetchStatus] = useState<"loading" | "error" | "idle">("loading");
-  const [remoteDep, setRemoteDep] = useSessionState<RemoteDependencyType | null>("dep-" + dep.name, null);
+  const [fetchStatus, setFetchStatus] = useState<FetchStatus>(dep.latest ? "idle" : "loading");
 
   function handleToggleSelect() {
     updateDependencies([{ name: dep.name, data: { selected: !dep.selected } }]);
@@ -23,26 +25,27 @@ function DependencyRow({ dep }: { dep: DependencyType }) {
 
   useEffect(() => {
     (async () => {
-      let cacheDep = remoteDep;
+      // If the latest version is already fetched, return
+      if (dep.latest) return;
+      let cached = sessionState.get();
 
-      // Fetch dependency if not cached
-      if (!cacheDep) {
-        const res = await fetchDependency(dep.name);
-        if (res.success) cacheDep = res.data;
-        else cacheDep = null;
+      // If the latest version is cached, update the state and return
+      if (cached) {
+        setFetchStatus("idle");
+        updateDependencies([{ name: dep.name, data: { latest: cached } }]);
+        return;
       }
 
-      if (cacheDep) {
-        setRemoteDep(cacheDep);
+      // Fetch the latest version of the dependency
+      const res = await fetchDependency(dep.name);
+      if (!res.success) setFetchStatus("error");
+      else {
         setFetchStatus("idle");
-        updateDependencies([{ name: dep.name, data: { latest: cacheDep.version } }]);
-      } else {
-        setRemoteDep(null);
-        setFetchStatus("error");
-        updateDependencies([{ name: dep.name, data: { latest: null } }]);
+        sessionState.set(res.data.version);
+        updateDependencies([{ name: dep.name, data: { latest: res.data.version } }]);
       }
     })();
-  }, [dep.name, dep.latest]);
+  }, []);
 
   return (
     <tr onClick={handleToggleSelect} style={{ viewTransitionName: "dep-" + dep.name }}>
@@ -73,8 +76,8 @@ export default function Body() {
   const { translate } = useLocaleContext();
   const tp = (label: string) => translate(label, "package");
 
-  const { pkg, updateDependencies } = usePackageContext();
   const checkboxRef = useRef<HTMLInputElement>(null);
+  const { pkg, updateDependencies } = usePackageContext();
 
   function handleClickCheckbox() {
     const selected = checkboxRef.current?.checked;
@@ -93,7 +96,7 @@ export default function Body() {
       checkboxRef.current.checked = false;
       checkboxRef.current.indeterminate = true;
     }
-  }, [pkg]);
+  }, [pkg.dependencies]);
 
   if (!pkg.dependencies.length) return null;
 
