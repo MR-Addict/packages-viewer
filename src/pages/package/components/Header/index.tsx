@@ -1,9 +1,10 @@
 import toast from "react-hot-toast";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import style from "./index.module.css";
 import Select from "@/components/Select";
 import useCookieState from "@/hooks/useCookieState";
+import useListenKeyDown from "@/hooks/useListenKeyDown";
 import copyToClipboard from "@/lib/utils/copyToClipboard";
 
 import { useAppContext } from "@/contexts/app";
@@ -22,8 +23,12 @@ export default function Header() {
   const { translate } = useLocaleContext();
   const tp = (label: string) => translate(label, "package");
 
-  const { pkg, updateDependencies } = usePackageContext();
+  const inputRef = useRef<HTMLInputElement>(null);
   const { packageManager, fileInputRef } = useAppContext();
+  const { pkg, setSearch, updateDependencies } = usePackageContext();
+
+  const intervalRef = useRef<NodeJS.Timeout>();
+  const [localSearch, setLocalSearch] = useState("");
 
   const copyOptions: { label: string; value: CopyOption }[] = [
     { label: tp("Latest"), value: "latest" },
@@ -37,6 +42,12 @@ export default function Header() {
     { label: tp("Production"), value: "prod" },
     { label: tp("Development"), value: "dev" }
   ];
+
+  function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
+    setLocalSearch(event.target.value);
+    if (intervalRef.current) clearTimeout(intervalRef.current);
+    intervalRef.current = setTimeout(() => setSearch(event.target.value), 500);
+  }
 
   function handleUpload(event: React.ChangeEvent<HTMLInputElement>) {
     if (!fileInputRef.current) return;
@@ -82,16 +93,20 @@ export default function Header() {
     } else toast.error(translate(res.message, "api"));
   }
 
-  useEffect(() => {
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key.toLocaleLowerCase() === "c" && event.ctrlKey) {
+  useListenKeyDown(
+    (event) => {
+      if (event.ctrlKey && event.key.toLocaleLowerCase() === "c") {
         event.preventDefault();
         handleCopy("latest");
+      } else if (event.ctrlKey && event.key.toLocaleLowerCase() === "l") {
+        event.preventDefault();
+        inputRef.current?.focus();
       }
-    }
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [pkg]);
+    },
+    [pkg]
+  );
+
+  useEffect(() => setSearch(""), []);
 
   return (
     <header className={style.wrapper}>
@@ -100,6 +115,16 @@ export default function Header() {
       </h1>
 
       <div className={style.btns}>
+        <input
+          ref={inputRef}
+          size={8}
+          type="text"
+          placeholder={`${tp("Search")}...`}
+          className={style.searchbox}
+          value={localSearch}
+          onChange={handleSearch}
+        />
+
         <label className={style.btn}>
           {tp("Upload")}
           <input

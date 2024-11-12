@@ -5,6 +5,7 @@ import { FaSortAmountDownAlt, FaSortAmountUpAlt } from "react-icons/fa";
 
 import style from "./index.module.css";
 import Select from "@/components/Select";
+import useListenKeyDown from "@/hooks/useListenKeyDown";
 import startViewTransition from "@/lib/utils/startViewTransition";
 
 import { packagesOrderBys } from "@/data/app";
@@ -15,6 +16,7 @@ export default function Header() {
   const { translate } = useLocaleContext();
   const tps = (label: string) => translate(label, "packages");
 
+  const inputRef = useRef<HTMLInputElement>(null);
   const { search, setSearch, order, setOrder, orderBy, setOrderBy } = usePackagesContext();
 
   const intervalRef = useRef<NodeJS.Timeout>();
@@ -30,12 +32,20 @@ export default function Header() {
     startViewTransition(() => setOrder((prev) => (prev === "asc" ? "desc" : "asc")));
   }
 
+  useListenKeyDown((event) => {
+    if (event.ctrlKey && event.key.toLocaleLowerCase() === "l") {
+      event.preventDefault();
+      inputRef.current?.focus();
+    }
+  }, []);
+
   return (
     <header className={style.wrapper}>
       <h1 className="text-lg font-semibold">{translate("Packages", "app")}</h1>
 
       <div className={style.btns}>
         <input
+          ref={inputRef}
           size={8}
           type="text"
           placeholder={`${tps("Search")}...`}

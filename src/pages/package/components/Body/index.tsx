@@ -45,7 +45,7 @@ function DependencyRow({ dep }: { dep: DependencyType }) {
   }, [dep.name, dep.latest]);
 
   return (
-    <tr onClick={handleToggleSelect}>
+    <tr onClick={handleToggleSelect} style={{ viewTransitionName: "dep-" + dep.name }}>
       <td>
         <input type="checkbox" checked={dep.selected} onChange={() => {}} aria-label="select dependency" />
       </td>

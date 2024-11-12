@@ -9,3 +9,11 @@
 .btn {
   @apply cursor-pointer c-border dark:bg-neutral-800 px-3 py-1.5 text-xs font-semibold rounded-md;
 }
+
+.searchbox {
+  @apply border-b border-b-transparent c-bg-100 outline-none p-0.5 mr-1 rounded-none;
+
+  &:focus {
+    @apply c-border-b;
+  }
+}

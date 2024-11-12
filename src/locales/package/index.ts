@@ -2,6 +2,14 @@ import { TranslationType } from "@/types/locale";
 
 export const packageTranslations: TranslationType[] = [
   {
+    label: "Search",
+    data: {
+      en: "Search",
+      zh: "搜索依赖",
+      ja: "検索依存"
+    }
+  },
+  {
     label: "Upload",
     data: {
       en: "Upload",

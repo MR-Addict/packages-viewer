@@ -5,8 +5,8 @@ export const packagesTranslations: TranslationType[] = [
     label: "Search",
     data: {
       en: "Search",
-      zh: "搜索依赖",
-      ja: "検索依存"
+      zh: "搜索项目",
+      ja: "検索対象"
     }
   },
   {

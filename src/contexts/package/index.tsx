@@ -10,8 +10,8 @@ import { DependencyType, PackageType } from "@/types/package";
 interface PackageContextProps {
   pkg: PackageType;
 
-  openDialog: boolean;
-  setOpenDialog: Dispatch<SetStateAction<boolean>>;
+  search: string;
+  setSearch: Dispatch<SetStateAction<string>>;
 
   updateDependencies: (data: { name: string; data: Partial<DependencyType> }[]) => void;
 }
@@ -19,8 +19,8 @@ interface PackageContextProps {
 const PackageContext = createContext<PackageContextProps>({
   pkg: emptyPackage,
 
-  openDialog: false,
-  setOpenDialog: () => {},
+  search: "",
+  setSearch: () => {},
 
   updateDependencies: () => {}
 });
@@ -33,7 +33,7 @@ export const PackageContextProvider = ({ children }: PackageContextProviderProps
   const { id } = useParams();
   const db = useDatabaseContext();
 
-  const [openDialog, setOpenDialog] = useState(false);
+  const [search, setSearch] = useState<string>("");
   const [pkg, setPkg] = useState<PackageType>(emptyPackage);
 
   function updateDependencies(data: { name: string; data: Partial<DependencyType> }[]) {
@@ -52,17 +52,21 @@ export const PackageContextProvider = ({ children }: PackageContextProviderProps
     const pkg = db.packages.data.find((p) => p.id === id);
 
     // set package
-    if (pkg) setPkg(pkg);
-    else setPkg(emptyPackage);
-  }, [id, db.ready, db.packages.data]);
+    if (pkg) {
+      let dependencies = Array.from(pkg.dependencies);
+      dependencies = dependencies.filter((d) => d.name.toLowerCase().includes(search.toLowerCase()));
+      dependencies = dependencies.sort((a, b) => b.type.localeCompare(a.type) || a.name.localeCompare(b.name));
+      setPkg({ ...pkg, dependencies });
+    } else setPkg(emptyPackage);
+  }, [id, search, db.ready, db.packages.data]);
 
   return (
     <PackageContext.Provider
       value={{
         pkg,
 
-        openDialog,
-        setOpenDialog,
+        search,
+        setSearch,
 
         updateDependencies
       }}
