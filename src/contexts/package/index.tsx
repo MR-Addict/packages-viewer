@@ -36,11 +36,13 @@ export const PackageContextProvider = ({ children }: PackageContextProviderProps
   const [pkg, setPkg] = useState<PackageType>(emptyPackage);
 
   function updateDependencies(data: { name: string; data: Partial<DependencyType> }[]) {
+    const dbPkg = db.packages.data.find((p) => p.id === id);
+    if (!dbPkg) return;
     for (const d of data) {
-      const found = pkg.dependencies.find((dep) => dep.name === d.name);
+      const found = dbPkg.dependencies.find((dep) => dep.name === d.name);
       if (found) Object.assign(found, d.data);
     }
-    db.packages.update(pkg.id, pkg);
+    db.packages.update(dbPkg.id, dbPkg);
   }
 
   useEffect(() => {
@@ -48,14 +50,14 @@ export const PackageContextProvider = ({ children }: PackageContextProviderProps
     if (!db.ready) return;
 
     // database is ready, find package by id
-    const pkg = db.packages.data.find((p) => p.id === id);
+    const dbPkg = db.packages.data.find((p) => p.id === id);
 
     // set package
-    if (pkg) {
-      let dependencies = Array.from(pkg.dependencies);
+    if (dbPkg) {
+      let dependencies = Array.from(dbPkg.dependencies);
       dependencies = dependencies.filter((d) => d.name.toLowerCase().includes(search.toLowerCase()));
       dependencies = dependencies.sort((a, b) => b.type.localeCompare(a.type) || a.name.localeCompare(b.name));
-      setPkg({ ...pkg, dependencies });
+      setPkg({ ...dbPkg, dependencies });
     } else navigate("/packages");
   }, [id, search, db.ready, db.packages.data]);
 

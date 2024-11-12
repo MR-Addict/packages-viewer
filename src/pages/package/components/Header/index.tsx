@@ -95,7 +95,10 @@ export default function Header() {
 
   useListenKeyDown(
     (event) => {
-      if (event.ctrlKey && event.key.toLocaleLowerCase() === "c") {
+      if (event.ctrlKey && event.key.toLocaleLowerCase() === "a") {
+        event.preventDefault();
+        updateDependencies(selectDep(pkg.dependencies, () => true));
+      } else if (event.ctrlKey && event.key.toLocaleLowerCase() === "c") {
         event.preventDefault();
         handleCopy("latest");
       } else if (event.ctrlKey && event.key.toLocaleLowerCase() === "l") {
