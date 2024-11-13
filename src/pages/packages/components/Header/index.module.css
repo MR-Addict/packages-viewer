@@ -8,6 +8,7 @@
   & .searchbox {
     @apply border-b border-b-transparent c-bg-100 outline-none p-0.5 mr-1 rounded-none;
 
+    &:not([value=""]),
     &:focus {
       @apply c-border-b;
     }
