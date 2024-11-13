@@ -6,4 +6,9 @@ export const themes = ["dark", "system", "light"] as const;
 export const packageManagers = ["npm", "yarn", "pnpm"] as const;
 export const packagesOrderBys = ["name", "uploaded", "dependencies"] as const;
 export const emptyPackage: PackageType = { id: "", name: "", dependencies: [], uploaded: "" };
-export const appName = { id: "packages-viewer", name: "Packages Viewer" } as const;
+
+export const appName = {
+  id: "packages-viewer",
+  name: "Packages Viewer",
+  description: "A web app that for better viewing your npm registry package dependencies"
+} as const;

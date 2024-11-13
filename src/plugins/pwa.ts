@@ -1,7 +1,7 @@
-import { appName } from "../data/app";
+import colors from "tailwindcss/colors";
 import { VitePWA } from "vite-plugin-pwa";
 
-import colors from "tailwindcss/colors";
+import { appName } from "../data/app";
 
 const themeColor = colors.neutral[900];
 
@@ -13,6 +13,7 @@ const pwa = VitePWA({
     theme_color: themeColor,
     background_color: themeColor,
     display: "standalone",
+    description: appName.description,
     icons: [
       {
         src: "images/web-app-manifest-96x96.png",

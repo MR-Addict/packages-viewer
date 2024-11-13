@@ -78,9 +78,11 @@ export default function Header() {
     // Generate sub command
     let subCommand = "";
     const isUninstall = option === "uninstall";
-    if (packageManager === "npm") subCommand = isUninstall ? "uninstall" : "install";
-    else if (packageManager === "yarn") subCommand = isUninstall ? "remove" : "add";
-    else if (packageManager === "pnpm") subCommand = isUninstall ? "remove" : "add";
+    const isAllDevDeps = selected.every((d) => d.type === "dev") ? " -D" : "";
+
+    if (packageManager === "npm") subCommand = isUninstall ? "uninstall" : "install" + isAllDevDeps;
+    else if (packageManager === "yarn") subCommand = isUninstall ? "remove" : "add" + isAllDevDeps;
+    else if (packageManager === "pnpm") subCommand = isUninstall ? "remove" : "add" + isAllDevDeps;
 
     // Generate command
     const command = `${packageManager} ${subCommand} ${dependencies}`;
