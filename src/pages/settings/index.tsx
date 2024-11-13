@@ -8,9 +8,9 @@ export default function Settings() {
   return (
     <div className="space-y-6">
       <AppVersion />
-      <Language />
       <PackageManager />
       <Theme />
+      <Language />
       <ClearStorage />
     </div>
   );

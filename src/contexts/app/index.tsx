@@ -19,7 +19,7 @@ interface AppContextProps {
 }
 
 const AppContext = createContext<AppContextProps>({
-  theme: "dark",
+  theme: "system",
   setTheme: () => {},
 
   openSidebar: false,
@@ -39,7 +39,7 @@ interface AppContextProviderProps {
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [theme, _setTheme] = usePersistantState<ThemeType>("theme", "dark");
+  const [theme, _setTheme] = usePersistantState<ThemeType>("theme", "system");
   const [openSidebar, setOpenSidebar] = usePersistantState("open-sidebar", false);
   const [windowWidth, setWindowWidth] = usePersistantState("window-size", window.innerWidth);
   const [packageManager, setPackageManager] = usePersistantState<PackageManagerType>("package-manager", "npm");
