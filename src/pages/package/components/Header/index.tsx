@@ -13,7 +13,7 @@ import { useLocaleContext } from "@/contexts/locale";
 import { usePackageContext } from "@/contexts/package";
 
 type CopyOption = "latest" | "original" | "uninstall";
-type SelectOption = "clear" | "updatable" | "dev" | "prod";
+type SelectOption = "all" | "clear" | "updatable" | "dev" | "prod";
 
 function selectDep(deps: DependencyType[], selector: (d: DependencyType) => boolean) {
   return deps.map((d) => ({ name: d.name, data: { selected: selector(d) } }));
@@ -43,6 +43,11 @@ export default function Header() {
     { label: tp("Development"), value: "dev" }
   ];
 
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    handleSelect("all");
+  }
+
   function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
     setLocalSearch(event.target.value);
     if (intervalRef.current) clearTimeout(intervalRef.current);
@@ -59,7 +64,8 @@ export default function Header() {
 
   function handleSelect(option: SelectOption) {
     const deps = pkg.dependencies;
-    if (option === "clear") updateDependencies(selectDep(deps, () => false));
+    if (option === "all") updateDependencies(selectDep(deps, () => true));
+    else if (option === "clear") updateDependencies(selectDep(deps, () => false));
     else if (option === "updatable") updateDependencies(selectDep(deps, (d) => d.version !== d.latest));
     else if (option === "prod") updateDependencies(selectDep(deps, (d) => d.type === "prod"));
     else if (option === "dev") updateDependencies(selectDep(deps, (d) => d.type === "dev"));
@@ -100,7 +106,7 @@ export default function Header() {
       if (event.ctrlKey && event.key.toLocaleLowerCase() === "a") {
         if (document.activeElement === inputRef.current) return;
         event.preventDefault();
-        updateDependencies(selectDep(pkg.dependencies, () => true));
+        handleSelect("all");
       } else if (event.ctrlKey && event.key.toLocaleLowerCase() === "c") {
         event.preventDefault();
         handleCopy("latest");
@@ -119,15 +125,17 @@ export default function Header() {
       </h1>
 
       <div className={style.btns}>
-        <input
-          ref={inputRef}
-          size={8}
-          type="text"
-          placeholder={`${tp("Search")}...`}
-          className={style.searchbox}
-          value={localSearch}
-          onChange={handleSearch}
-        />
+        <form onSubmit={handleSubmit}>
+          <input
+            ref={inputRef}
+            size={8}
+            type="text"
+            placeholder={`${tp("Search")}...`}
+            className={style.searchbox}
+            value={localSearch}
+            onChange={handleSearch}
+          />
+        </form>
 
         <label className={style.btn}>
           {tp("Upload")}
