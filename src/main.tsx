@@ -1,14 +1,14 @@
-import { lazy, StrictMode } from "react";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Route, Navigate, createRoutesFromElements, createHashRouter, RouterProvider } from "react-router-dom";
 
 import "./main.css";
 
-const Layout = lazy(() => import("@/layout"));
-const Home = lazy(() => import("@/pages/home"));
-const Package = lazy(() => import("@/pages/package"));
-const Packages = lazy(() => import("@/pages/packages"));
-const Settings = lazy(() => import("@/pages/settings"));
+import Layout from "@/layout";
+import Home from "@/pages/home";
+import Package from "@/pages/package";
+import Packages from "@/pages/packages";
+import Settings from "@/pages/settings";
 
 const router = createHashRouter(
   createRoutesFromElements(
