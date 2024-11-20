@@ -38,7 +38,7 @@ export default function HiddenFileInput() {
 
       // Update or add the package
       if (pkgId) {
-        const res = db.packages.update(pkgId, parsed.data);
+        const res = db.packages.update(pkgId, parsed.data, true);
         if (res.success) {
           toast.success(ta("Package updated successfully"));
           navigate(`/packages/${pkgId}`);

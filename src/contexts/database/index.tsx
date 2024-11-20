@@ -17,7 +17,7 @@ interface DatabaseContextProps {
     data: PackageType[];
     get: (id: string) => PackageType | null;
     add: (pkg: RawPackageType) => PackageType;
-    update: (id: string, data: Partial<RawPackageType>) => ApiResultType<PackageType>;
+    update: (id: string, data: Partial<RawPackageType>, updateDate?: boolean) => ApiResultType<PackageType>;
     remove: (id: string) => ApiResultType;
   };
 }
@@ -64,11 +64,13 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
     return newPkg;
   }
 
-  function updatePackage(id: string, data: Partial<RawPackageType>): ApiResultType<PackageType> {
+  function updatePackage(id: string, data: Partial<RawPackageType>, updateDate = false): ApiResultType<PackageType> {
     const found = packages.find((p) => p.id === id);
     if (!found) return { success: false, message: "Package not exists" };
 
     let newPkg = { ...found, ...data };
+    if (updateDate) newPkg.uploaded = new Date().toISOString();
+
     // Merge dependencies
     if (data.dependencies) newPkg.dependencies = mergeDependencies(found.dependencies, data.dependencies);
 
