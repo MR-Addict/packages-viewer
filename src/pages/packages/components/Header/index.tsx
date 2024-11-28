@@ -33,6 +33,7 @@ export default function Header() {
   useListenKeyDown((event) => {
     if (event.ctrlKey && event.key.toLocaleLowerCase() === "l") {
       event.preventDefault();
+      inputRef.current?.select();
       inputRef.current?.focus();
     }
   }, []);

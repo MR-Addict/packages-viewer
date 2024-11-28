@@ -112,7 +112,9 @@ export default function Header() {
         handleCopy("latest");
       } else if (event.ctrlKey && event.key.toLocaleLowerCase() === "l") {
         event.preventDefault();
+        // select input text
         inputRef.current?.focus();
+        inputRef.current?.select();
       }
     },
     [pkg]
