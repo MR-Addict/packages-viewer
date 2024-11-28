@@ -1,4 +1,4 @@
-import { createContext, useContext, Dispatch, SetStateAction, useEffect, useRef } from "react";
+import { createContext, useContext, Dispatch, SetStateAction, useEffect, useRef, useMemo } from "react";
 
 import setTheme from "@/lib/theme/setTheme";
 import usePersistantState from "@/hooks/usePersistantState";
@@ -16,6 +16,7 @@ interface AppContextProps {
 
   fileInputRef: React.RefObject<HTMLInputElement>;
   windowWidth: number;
+  pwaInstalled: boolean;
 }
 
 const AppContext = createContext<AppContextProps>({
@@ -29,7 +30,8 @@ const AppContext = createContext<AppContextProps>({
   setPackageManager: () => {},
 
   fileInputRef: { current: null },
-  windowWidth: 1024
+  windowWidth: 1024,
+  pwaInstalled: false
 });
 
 interface AppContextProviderProps {
@@ -38,11 +40,29 @@ interface AppContextProviderProps {
 
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const pwaInstalled = useMemo(() => window.matchMedia("(display-mode: standalone)").matches, []);
 
   const [theme, _setTheme] = usePersistantState<ThemeType>("theme", "system");
   const [openSidebar, setOpenSidebar] = usePersistantState("open-sidebar", false);
   const [windowWidth, setWindowWidth] = usePersistantState("window-size", window.innerWidth);
   const [packageManager, setPackageManager] = usePersistantState<PackageManagerType>("package-manager", "npm");
+
+  useEffect(() => {
+    if (!pwaInstalled) return;
+
+    const disableContextMenu = (e: Event) => e.preventDefault();
+    const disableDevtools = (e: KeyboardEvent) => e.key === "F12" && e.preventDefault();
+
+    // disable context menu
+    document.addEventListener("contextmenu", disableContextMenu);
+    // prevent opening devtools
+    document.addEventListener("keydown", disableDevtools);
+
+    return () => {
+      document.removeEventListener("contextmenu", disableContextMenu);
+      document.removeEventListener("keydown", disableDevtools);
+    };
+  }, [pwaInstalled]);
 
   useEffect(() => {
     // listen manually local theme change
@@ -79,7 +99,8 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
         setPackageManager,
 
         fileInputRef,
-        windowWidth
+        windowWidth,
+        pwaInstalled
       }}
     >
       {children}
