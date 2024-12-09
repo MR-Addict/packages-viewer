@@ -83,8 +83,7 @@ export default function timeInterval(date: string | Date) {
     isNeedCheck = false;
   }
 
-  const { translate } = useLocaleContext();
-  const tt = (label: string | string[]) => translate(label, "time");
+  const { tt } = useLocaleContext();
 
   if (interval.key === intervalMap.second) return tt("just now");
 

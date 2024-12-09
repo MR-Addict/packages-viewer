@@ -2,7 +2,7 @@ import { TranslationType } from "@/types/locale";
 
 export const packageTranslations: TranslationType[] = [
   {
-    label: "Search",
+    label: "input.search",
     data: {
       en: "Search",
       zh: "搜索依赖",
@@ -10,7 +10,7 @@ export const packageTranslations: TranslationType[] = [
     }
   },
   {
-    label: "Upload",
+    label: "button.upload",
     data: {
       en: "Upload",
       zh: "上传",
@@ -18,7 +18,7 @@ export const packageTranslations: TranslationType[] = [
     }
   },
   {
-    label: "Select",
+    label: "button.select",
     data: {
       en: "Select",
       zh: "选择",
@@ -26,7 +26,7 @@ export const packageTranslations: TranslationType[] = [
     }
   },
   {
-    label: "Clear",
+    label: "button.select.clear",
     data: {
       en: "Clear",
       zh: "清除",
@@ -34,7 +34,7 @@ export const packageTranslations: TranslationType[] = [
     }
   },
   {
-    label: "Updatable",
+    label: "button.select.updatable",
     data: {
       en: "Updatable",
       zh: "可更新",
@@ -42,7 +42,7 @@ export const packageTranslations: TranslationType[] = [
     }
   },
   {
-    label: "Production",
+    label: "button.select.prod",
     data: {
       en: "Production",
       zh: "生产依赖",
@@ -50,15 +50,7 @@ export const packageTranslations: TranslationType[] = [
     }
   },
   {
-    label: "prod",
-    data: {
-      en: "prod",
-      zh: "生产依赖",
-      ja: "本番"
-    }
-  },
-  {
-    label: "Development",
+    label: "button.select.dev",
     data: {
       en: "Development",
       zh: "开发依赖",
@@ -66,15 +58,7 @@ export const packageTranslations: TranslationType[] = [
     }
   },
   {
-    label: "dev",
-    data: {
-      en: "dev",
-      zh: "开发依赖",
-      ja: "開発"
-    }
-  },
-  {
-    label: "Copy",
+    label: "button.copy",
     data: {
       en: "Copy",
       zh: "复制",
@@ -82,7 +66,7 @@ export const packageTranslations: TranslationType[] = [
     }
   },
   {
-    label: "Latest",
+    label: "button.copy.latest",
     data: {
       en: "Latest",
       zh: "最新版本",
@@ -90,7 +74,7 @@ export const packageTranslations: TranslationType[] = [
     }
   },
   {
-    label: "Original",
+    label: "button.copy.original",
     data: {
       en: "Original",
       zh: "当前版本",
@@ -98,7 +82,7 @@ export const packageTranslations: TranslationType[] = [
     }
   },
   {
-    label: "Uninstall",
+    label: "button.copy.uninstall",
     data: {
       en: "Uninstall",
       zh: "卸载依赖",
@@ -106,7 +90,23 @@ export const packageTranslations: TranslationType[] = [
     }
   },
   {
-    label: "Name",
+    label: "package.property.prod",
+    data: {
+      en: "prod",
+      zh: "生产依赖",
+      ja: "本番"
+    }
+  },
+  {
+    label: "package.property.dev",
+    data: {
+      en: "dev",
+      zh: "开发依赖",
+      ja: "開発"
+    }
+  },
+  {
+    label: "package.property.name",
     data: {
       en: "Name",
       zh: "名称",
@@ -114,7 +114,7 @@ export const packageTranslations: TranslationType[] = [
     }
   },
   {
-    label: "Type",
+    label: "package.property.type",
     data: {
       en: "Type",
       zh: "类型",
@@ -122,15 +122,7 @@ export const packageTranslations: TranslationType[] = [
     }
   },
   {
-    label: "Error",
-    data: {
-      en: "Error",
-      zh: "错误",
-      ja: "エラー"
-    }
-  },
-  {
-    label: "Version",
+    label: "package.property.version",
     data: {
       en: "Version",
       zh: "当前版本",
@@ -138,7 +130,23 @@ export const packageTranslations: TranslationType[] = [
     }
   },
   {
-    label: "No dependencies selected",
+    label: "package.property.latest",
+    data: {
+      en: "Latest",
+      zh: "最新版本",
+      ja: "最新"
+    }
+  },
+  {
+    label: "package.property.error",
+    data: {
+      en: "Error",
+      zh: "错误",
+      ja: "エラー"
+    }
+  },
+  {
+    label: "copy.dependencies.none",
     data: {
       en: "No dependencies selected",
       zh: "未选择任何依赖",
@@ -146,7 +154,7 @@ export const packageTranslations: TranslationType[] = [
     }
   },
   {
-    label: "Copied to clipboard",
+    label: "copy.success",
     data: {
       en: "Copied to clipboard",
       zh: "已复制到剪贴板",

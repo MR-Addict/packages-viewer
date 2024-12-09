@@ -13,8 +13,7 @@ export default function HiddenFileInput() {
   const navigate = useNavigate();
   const db = useDatabaseContext();
 
-  const { translate } = useLocaleContext();
-  const ta = (label: string) => translate(label, "api");
+  const { ta } = useLocaleContext();
 
   const { fileInputRef } = useAppContext();
 
@@ -33,20 +32,20 @@ export default function HiddenFileInput() {
       // Check if package already exists
       if (!pkgId) {
         const found = db.packages.data.find((pkg) => pkg.name === parsed.data.name);
-        if (found && confirm(ta("Package with same name already exists, do you want to replace it?"))) pkgId = found.id;
+        if (found && confirm(ta("db.package.exists"))) pkgId = found.id;
       }
 
       // Update or add the package
       if (pkgId) {
         const res = db.packages.update(pkgId, parsed.data, true);
         if (res.success) {
-          toast.success(ta("Package updated successfully"));
-          navigate(`/packages/${pkgId}`);
+          toast.success(ta("package.update.success"));
+          navigate(`/${pkgId}`);
         } else toast.error(ta(res.message));
       } else {
         const res = db.packages.add(parsed.data);
-        toast.success(ta("Package imported successfully"));
-        navigate(`/packages/${res.id}`);
+        toast.success(ta("package.import.success"));
+        navigate(`/${res.id}`);
       }
     }
 

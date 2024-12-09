@@ -12,8 +12,7 @@ import { usePackageContext } from "@/contexts/package";
 type FetchStatus = "loading" | "error" | "idle";
 
 function DependencyRow({ dep }: { dep: DependencyType }) {
-  const { translate } = useLocaleContext();
-  const tp = (label: string) => translate(label, "package");
+  const { tp } = useLocaleContext();
   const sessionState = useMemo(() => new SessionState<string>(`dep-${dep.name}`), []);
 
   const { updateDependencies } = usePackageContext();
@@ -73,8 +72,7 @@ function DependencyRow({ dep }: { dep: DependencyType }) {
 }
 
 export default function Body() {
-  const { translate } = useLocaleContext();
-  const tp = (label: string) => translate(label, "package");
+  const { tp } = useLocaleContext();
 
   const checkboxRef = useRef<HTMLInputElement>(null);
   const { pkg, updateDependencies } = usePackageContext();
@@ -108,10 +106,10 @@ export default function Body() {
             <th>
               <input ref={checkboxRef} type="checkbox" onClick={handleClickCheckbox} aria-label="toggle selections" />
             </th>
-            <th>{tp("Name")}</th>
-            <th>{tp("Type")}</th>
-            <th>{tp("Version")}</th>
-            <th>{tp("Latest")}</th>
+            <th>{tp("package.property.name")}</th>
+            <th>{tp("package.property.type")}</th>
+            <th>{tp("package.property.version")}</th>
+            <th>{tp("package.property.latest")}</th>
           </tr>
         </thead>
         <tbody>

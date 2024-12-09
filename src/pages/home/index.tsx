@@ -1,33 +1,19 @@
-import clsx from "clsx";
-import { useState } from "react";
+import Body from "./components/Body";
+import Header from "./components/Header";
 
-import style from "./index.module.css";
-import handleDrop from "@/lib/package/handleDrop";
-
-import { fileInputID } from "@/data/app";
-import { useAppContext } from "@/contexts/app";
-import { useLocaleContext } from "@/contexts/locale";
+import { useDatabaseContext } from "@/contexts/database";
+import { usePackagesContext } from "@/contexts/packages";
 
 export default function Home() {
-  const { translate } = useLocaleContext();
-  const th = (label: string) => translate(label, "home");
+  const db = useDatabaseContext();
+  const { search, packages } = usePackagesContext();
 
-  const { fileInputRef } = useAppContext();
-
-  const [isDragging, setIsDragging] = useState(false);
+  if (!db.ready) return null;
 
   return (
-    <label
-      htmlFor={fileInputID}
-      onDrop={(event) => handleDrop(event, fileInputRef)}
-      onDragOver={(event) => event.preventDefault()}
-      onDragEnter={() => setIsDragging(true)}
-      onDragLeave={() => setIsDragging(false)}
-      className={clsx(style.wrapper, { [style.dragging]: isDragging })}
-    >
-      <p>
-        {th("Click or drag your")} <strong>package.json</strong> {th("here")}
-      </p>
-    </label>
+    <div className="space-y-4">
+      <Header />
+      <Body packages={packages.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()))} />
+    </div>
   );
 }

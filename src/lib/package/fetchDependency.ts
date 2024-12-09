@@ -2,7 +2,7 @@ import { ApiResultType } from "@/types/app";
 import { RemoteDependency, RemoteDependencyType } from "@/types/package";
 
 export default async function fetchDependency(name: string): Promise<ApiResultType<RemoteDependencyType>> {
-  const fallbackMessage = "Failed to fetch package";
+  const fallbackMessage = "package.fetch.failed";
   const url = `https://registry.npmjs.org/${name}/latest`;
 
   try {

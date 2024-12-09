@@ -66,7 +66,7 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
 
   function updatePackage(id: string, data: Partial<RawPackageType>, updateDate = false): ApiResultType<PackageType> {
     const found = packages.find((p) => p.id === id);
-    if (!found) return { success: false, message: "Package not exists" };
+    if (!found) return { success: false, message: "db.package.none" };
 
     let newPkg = { ...found, ...data };
     if (updateDate) newPkg.uploaded = new Date().toISOString();
@@ -79,7 +79,7 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
   }
 
   function removePackage(id: string): ApiResultType {
-    if (!packages.find((p) => p.id === id)) return { success: false, message: "Package not exists" };
+    if (!packages.find((p) => p.id === id)) return { success: false, message: "db.package.none" };
     setPackages((prev) => prev.filter((p) => p.id !== id));
     return { success: true };
   }

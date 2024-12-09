@@ -58,7 +58,7 @@ export const PackageContextProvider = ({ children }: PackageContextProviderProps
       dependencies = dependencies.filter((d) => d.name.toLowerCase().includes(search.toLowerCase()));
       dependencies = dependencies.sort((a, b) => b.type.localeCompare(a.type) || a.name.localeCompare(b.name));
       setPkg({ ...dbPkg, dependencies });
-    } else navigate("/packages");
+    } else navigate("/");
   }, [id, search, db.ready, db.packages.data]);
 
   return (

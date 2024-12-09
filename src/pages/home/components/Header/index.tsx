@@ -11,14 +11,15 @@ import { useLocaleContext } from "@/contexts/locale";
 import { usePackagesContext } from "@/contexts/packages";
 
 export default function Header() {
-  const { translate } = useLocaleContext();
-  const tps = (label: string) => translate(label, "packages");
+  const { th, tr } = useLocaleContext();
 
   const inputRef = useRef<HTMLInputElement>(null);
   const { search, setSearch, order, setOrder, orderBy, setOrderBy } = usePackagesContext();
 
   const intervalRef = useRef<NodeJS.Timeout>();
   const [localSearch, setLocalSearch] = useState(search);
+
+  const orderByLabels = packagesOrderBys.map((item) => ({ label: th(`orderby.${item}`), value: item }));
 
   function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
     setLocalSearch(event.target.value);
@@ -40,26 +41,26 @@ export default function Header() {
 
   return (
     <header className={style.wrapper}>
-      <h1 className="text-lg font-semibold">{translate("Packages", "app")}</h1>
+      <h1 className="text-lg font-semibold">{tr("packages")}</h1>
 
       <div className={style.btns}>
         <input
           ref={inputRef}
           size={8}
           type="text"
-          placeholder={`${tps("Search")}...`}
-          className={style.searchbox}
           value={localSearch}
           onChange={handleSearch}
+          className={style.searchbox}
+          placeholder={`${th("input.search")}...`}
         />
 
         <Select
-          label={tps(orderBy)}
-          options={packagesOrderBys.map((o) => ({ label: tps(o), value: o }))}
+          options={orderByLabels}
           onChange={(value) => setOrderBy(value)}
+          label={orderByLabels.find((o) => o.value === orderBy)?.label!}
         />
 
-        <button type="button" className={style.btn} onClick={handleOrder} aria-label="order packages">
+        <button type="button" className={style.btn} onClick={handleOrder} aria-label={order}>
           {order === "asc" ? <FaSortAmountDownAlt /> : <FaSortAmountUpAlt />}
         </button>
       </div>

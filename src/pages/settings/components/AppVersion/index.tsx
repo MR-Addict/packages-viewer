@@ -2,14 +2,13 @@ import pageStyle from "../../index.module.css";
 import { useLocaleContext } from "@/contexts/locale";
 
 export default function AppVersion() {
-  const { translate } = useLocaleContext();
-  const ts = (label: string) => translate(label, "settings");
+  const { ts } = useLocaleContext();
 
   return (
     <section className={pageStyle.container}>
-      <h1>{ts("App Version")}</h1>
+      <h1>{ts("section.version.title")}</h1>
 
-      <p>{ts("Current app version")}</p>
+      <p>{ts("section.version.description")}</p>
 
       <div className={pageStyle.btn}>{APP_VERSION}</div>
     </section>

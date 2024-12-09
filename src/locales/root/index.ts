@@ -1,17 +1,17 @@
 import { appName } from "@/data/app";
 import { TranslationType } from "@/types/locale";
 
-export const appTranslations: TranslationType[] = [
+export const rootTranslations: TranslationType[] = [
   {
-    label: appName.name,
+    label: appName.id,
     data: {
-      en: appName.name,
+      en: appName.id,
       zh: "依赖查看器",
       ja: "パッケージビューアー"
     }
   },
   {
-    label: "Home",
+    label: "page.home",
     data: {
       en: "Home",
       zh: "首页",
@@ -19,19 +19,27 @@ export const appTranslations: TranslationType[] = [
     }
   },
   {
-    label: "Packages",
+    label: "page.settings",
     data: {
-      en: "Packages",
+      en: "Settings",
+      zh: "设置",
+      ja: "設定"
+    }
+  },
+  {
+    label: "package",
+    data: {
+      en: "Package",
       zh: "依赖",
       ja: "パッケージ"
     }
   },
   {
-    label: "Settings",
+    label: "packages",
     data: {
-      en: "Settings",
-      zh: "设置",
-      ja: "設定"
+      en: "Packages",
+      zh: "依赖",
+      ja: "パッケージ"
     }
   }
 ];

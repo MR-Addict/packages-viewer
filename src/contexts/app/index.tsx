@@ -20,7 +20,7 @@ interface AppContextProps {
 }
 
 const AppContext = createContext<AppContextProps>({
-  theme: "system",
+  theme: "dark",
   setTheme: () => {},
 
   openSidebar: false,
@@ -42,7 +42,7 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const pwaInstalled = useMemo(() => window.matchMedia("(display-mode: standalone)").matches, []);
 
-  const [theme, _setTheme] = usePersistantState<ThemeType>("theme", "system");
+  const [theme, _setTheme] = usePersistantState<ThemeType>("theme", "dark");
   const [openSidebar, setOpenSidebar] = usePersistantState("open-sidebar", false);
   const [windowWidth, setWindowWidth] = usePersistantState("window-size", window.innerWidth);
   const [packageManager, setPackageManager] = usePersistantState<PackageManagerType>("package-manager", "npm");

@@ -2,7 +2,7 @@ import { TranslationType } from "@/types/locale";
 
 export const apiTranslations: TranslationType[] = [
   {
-    label: "Package not exists",
+    label: "db.package.none",
     data: {
       en: "Package not exists",
       zh: "依赖不存在",
@@ -10,7 +10,7 @@ export const apiTranslations: TranslationType[] = [
     }
   },
   {
-    label: "Package with same name already exists, do you want to replace it?",
+    label: "db.package.exists",
     data: {
       en: "Package with same name already exists, do you want to replace it?",
       zh: "同名依赖已存在，是否替换？",
@@ -18,7 +18,7 @@ export const apiTranslations: TranslationType[] = [
     }
   },
   {
-    label: "Failed to fetch package",
+    label: "package.fetch.failed",
     data: {
       en: "Failed to fetch package",
       zh: "依赖获取失败",
@@ -26,7 +26,7 @@ export const apiTranslations: TranslationType[] = [
     }
   },
   {
-    label: "Unable to parse your package",
+    label: "package.parse.failed",
     data: {
       en: "Unable to parse your package",
       zh: "依赖解析失败",
@@ -34,7 +34,7 @@ export const apiTranslations: TranslationType[] = [
     }
   },
   {
-    label: "Package updated successfully",
+    label: "package.update.success",
     data: {
       en: "Package updated successfully",
       zh: "依赖更新成功",
@@ -42,7 +42,7 @@ export const apiTranslations: TranslationType[] = [
     }
   },
   {
-    label: "Package imported successfully",
+    label: "package.import.success",
     data: {
       en: "Package imported successfully",
       zh: "依赖导入成功",
@@ -50,7 +50,7 @@ export const apiTranslations: TranslationType[] = [
     }
   },
   {
-    label: "There is no dependencies in your package",
+    label: "package.dependency.none",
     data: {
       en: "There is no dependencies in your package",
       zh: "依赖为空",
@@ -58,7 +58,7 @@ export const apiTranslations: TranslationType[] = [
     }
   },
   {
-    label: "Clipboard API not available",
+    label: "clipboard.unavailable",
     data: {
       en: "Clipboard API not available",
       zh: "剪贴板 API 不可用",

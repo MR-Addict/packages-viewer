@@ -1,32 +1,46 @@
-import locales from "@/locales";
+import format from "string-template";
 import { createContext, useContext, Dispatch, SetStateAction, useEffect } from "react";
 
-import { Locale } from "@/types/app";
+import { Lang } from "@/types/locale";
 import { appName } from "@/data/app";
 import { LocaleScopeType } from "@/types/locale";
 
+import locales from "@/locales";
 import usePersistantState from "@/hooks/usePersistantState";
 
 interface Options {
-  truncate?: boolean;
+  omitNoLocale?: boolean;
+  template?: any;
 }
 
 const defaultOptions: Options = {
-  truncate: false
+  omitNoLocale: false
 };
 
 interface LocaleContextProps {
-  locale: Locale;
-  setLocale: Dispatch<SetStateAction<Locale>>;
+  lang: Lang;
+  setLang: Dispatch<SetStateAction<Lang>>;
 
   translate: (labels: string | string[], scope: LocaleScopeType, options?: Options) => string;
+  tr: (labels: string | string[], options?: Options) => string;
+  ta: (labels: string | string[], options?: Options) => string;
+  th: (labels: string | string[], options?: Options) => string;
+  ts: (labels: string | string[], options?: Options) => string;
+  tp: (labels: string | string[], options?: Options) => string;
+  tt: (labels: string | string[], options?: Options) => string;
 }
 
 const LocaleContext = createContext<LocaleContextProps>({
-  locale: "en",
-  setLocale: () => {},
+  lang: "en",
+  setLang: () => {},
 
-  translate: () => ""
+  translate: () => "",
+  tr: () => "",
+  ta: () => "",
+  th: () => "",
+  ts: () => "",
+  tp: () => "",
+  tt: () => ""
 });
 
 interface LocaleContextProviderProps {
@@ -34,36 +48,48 @@ interface LocaleContextProviderProps {
 }
 
 export const LocaleContextProvider = ({ children }: LocaleContextProviderProps) => {
-  const [locale, setLocale] = usePersistantState<Locale>("locale", "en");
+  const [lang, setLang] = usePersistantState<Lang>("lang", () => {
+    const lang = navigator.language.slice(0, 2);
+    return lang === "en" ? "en" : "zh";
+  });
 
   function translate(labels: string | string[], scope: LocaleScopeType, options = defaultOptions): string {
-    const join = locale === "en" ? " " : "";
+    const join = lang === "en" ? " " : "";
 
-    options = Object.assign(defaultOptions, options);
+    options = Object.assign({}, defaultOptions, options);
     labels = Array.isArray(labels) ? labels : [labels];
 
-    return labels
-      .map((label) => {
-        const translation = locales[scope].find((t) => t.label === label)?.data[locale];
-        if (translation) return translation;
-        else if (options.truncate) return "";
-        else return translation || label;
-      })
-      .join(join);
+    const translatedLabels = labels.map((label) => {
+      const translation = locales[scope].find((t) => t.label === label)?.data[lang];
+      if (!translation) return options.omitNoLocale ? "" : label;
+      return format(translation, options.template);
+    });
+
+    return translatedLabels.join(join);
   }
 
+  const macros = {
+    tr: (labels: string | string[], options = defaultOptions) => translate(labels, "root", options),
+    ta: (labels: string | string[], options = defaultOptions) => translate(labels, "api", options),
+    th: (labels: string | string[], options = defaultOptions) => translate(labels, "home", options),
+    ts: (labels: string | string[], options = defaultOptions) => translate(labels, "settings", options),
+    tp: (labels: string | string[], options = defaultOptions) => translate(labels, "package", options),
+    tt: (labels: string | string[], options = defaultOptions) => translate(labels, "time", options)
+  };
+
   useEffect(() => {
-    document.documentElement.lang = locale;
-    document.title = translate(appName.name, "app");
-  }, [locale]);
+    document.documentElement.lang = lang;
+    document.title = macros.tr(appName.id);
+  }, [lang]);
 
   return (
     <LocaleContext.Provider
       value={{
-        locale,
-        setLocale,
+        lang,
+        setLang,
 
-        translate
+        translate,
+        ...macros
       }}
     >
       {children}

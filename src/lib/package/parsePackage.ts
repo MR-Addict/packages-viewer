@@ -20,7 +20,7 @@ function parseVersion(version: string) {
 
 export default function parsePackage(file: string): ApiResultType<RawPackageType> {
   const parsed = RawPackage.safeParse(JSON.parse(file));
-  if (!parsed.success) return { success: false, message: "Unable to parse your package" };
+  if (!parsed.success) return { success: false, message: "package.parse.failed" };
 
   const dependencies: DependencyType[] = [];
   const commonOptions = { selected: false, latest: null };
@@ -39,7 +39,7 @@ export default function parsePackage(file: string): ApiResultType<RawPackageType
     });
   }
 
-  if (!dependencies.length) return { success: false, message: "There is no dependencies in your package" };
+  if (!dependencies.length) return { success: false, message: "package.dependency.none" };
 
   dependencies.sort((a, b) => b.type.localeCompare(a.type) || a.name.localeCompare(b.name));
 

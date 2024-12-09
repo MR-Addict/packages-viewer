@@ -4,10 +4,9 @@ import { Route, Navigate, createRoutesFromElements, createHashRouter, RouterProv
 
 import "./main.css";
 
-import Layout from "@/layout";
+import Layout from "./layout";
 import Home from "@/pages/home";
 import Package from "@/pages/package";
-import Packages from "@/pages/packages";
 import Settings from "@/pages/settings";
 
 const router = createHashRouter(
@@ -15,10 +14,7 @@ const router = createHashRouter(
     <>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="packages">
-          <Route index element={<Packages />} />
-          <Route path=":id" element={<Package />} />
-        </Route>
+        <Route path=":id" element={<Package />} />
         <Route path="settings" element={<Settings />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace={true} />} />

@@ -20,8 +20,7 @@ function selectDep(deps: DependencyType[], selector: (d: DependencyType) => bool
 }
 
 export default function Header() {
-  const { translate } = useLocaleContext();
-  const tp = (label: string) => translate(label, "package");
+  const { ta, tp } = useLocaleContext();
 
   const inputRef = useRef<HTMLInputElement>(null);
   const { packageManager, fileInputRef } = useAppContext();
@@ -30,18 +29,13 @@ export default function Header() {
   const intervalRef = useRef<NodeJS.Timeout>();
   const [localSearch, setLocalSearch] = useState("");
 
-  const copyOptions: { label: string; value: CopyOption }[] = [
-    { label: tp("Latest"), value: "latest" },
-    { label: tp("Original"), value: "original" },
-    { label: tp("Uninstall"), value: "uninstall" }
-  ];
+  const copyOptions: { label: string; value: CopyOption }[] = (["latest", "original", "uninstall"] as const).map(
+    (value) => ({ label: tp(`button.copy.${value}`), value })
+  );
 
-  const selectOptions: { label: string; value: SelectOption }[] = [
-    { label: tp("Clear"), value: "clear" },
-    { label: tp("Updatable"), value: "updatable" },
-    { label: tp("Production"), value: "prod" },
-    { label: tp("Development"), value: "dev" }
-  ];
+  const selectOptions: { label: string; value: SelectOption }[] = (["clear", "updatable", "prod", "dev"] as const).map(
+    (value) => ({ label: tp(`button.select.${value}`), value })
+  );
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -74,7 +68,7 @@ export default function Header() {
   function handleCopy(option: CopyOption) {
     // Filter selected dependencies
     const selected = pkg.dependencies.filter((d) => d.selected);
-    if (selected.length === 0) return toast.error(tp("No dependencies selected"));
+    if (selected.length === 0) return toast.error(tp("copy.dependencies.none"));
 
     // Generate dependencies string
     const mapVersion = (d: DependencyType) => (option === "latest" ? d.latest || d.version : d.version);
@@ -96,9 +90,9 @@ export default function Header() {
     // Copy to clipboard
     const res = copyToClipboard(command);
     if (res.success) {
-      toast.success(tp("Copied to clipboard"));
+      toast.success(tp("copy.success"));
       updateDependencies(selectDep(pkg.dependencies, () => false));
-    } else toast.error(translate(res.message, "api"));
+    } else toast.error(ta(res.message));
   }
 
   useListenKeyDown(
@@ -132,7 +126,7 @@ export default function Header() {
             ref={inputRef}
             size={8}
             type="text"
-            placeholder={`${tp("Search")}...`}
+            placeholder={`${tp("input.search")}...`}
             className={style.searchbox}
             value={localSearch}
             onChange={handleSearch}
@@ -140,19 +134,24 @@ export default function Header() {
         </form>
 
         <label className={style.btn}>
-          {tp("Upload")}
+          {tp("button.upload")}
           <input
             type="file"
+            className="hidden"
             accept="application/json"
             id="reupload-package-file"
-            className="hidden"
             onChange={handleUpload}
           />
         </label>
 
-        <Select label={tp("Select")} options={selectOptions} onChange={(value) => handleSelect(value)} />
+        <Select label={tp("button.select")} options={selectOptions} onChange={(value) => handleSelect(value)} />
 
-        <Select label={tp("Copy")} options={copyOptions} onChange={(value) => handleCopy(value)} inverseLabelStyle />
+        <Select
+          label={tp("button.copy")}
+          options={copyOptions}
+          onChange={(value) => handleCopy(value)}
+          inverseLabelStyle
+        />
       </div>
     </header>
   );

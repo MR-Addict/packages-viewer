@@ -1,7 +1,6 @@
-import { locales, packageManagers, packagesOrderBys, themes } from "@/data/app";
+import { packageManagers, packagesOrderBys, themes } from "@/data/app";
 
 export type OrderType = "asc" | "desc";
-export type Locale = (typeof locales)[number];
 export type ThemeType = (typeof themes)[number];
 export type PackageManagerType = (typeof packageManagers)[number];
 export type PackagesOrderByType = (typeof packagesOrderBys)[number];

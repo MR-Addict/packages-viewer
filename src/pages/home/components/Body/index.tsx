@@ -20,15 +20,14 @@ import { useDatabaseContext } from "@/contexts/database";
 
 export default function Body({ packages }: { packages: PackageType[] }) {
   const db = useDatabaseContext();
+
+  const { ta, th } = useLocaleContext();
   const { fileInputRef } = useAppContext();
-  const { translate } = useLocaleContext();
-  const ta = (label: string) => translate(label, "api");
-  const tps = (label: string) => translate(label, "packages");
 
   const [isDragging, setIsDragging] = useState(false);
 
   async function handleUpdate(pkg: PackageType) {
-    const newName = prompt(tps("Enter new name for this package"), pkg.name);
+    const newName = prompt(th("label.package.update"), pkg.name);
     if (newName && newName.trim() !== pkg.name) {
       const res = await startViewTransition(() => db.packages.update(pkg.id, { name: newName }));
       if (!res.success) toast.error(ta(res.message));
@@ -36,7 +35,7 @@ export default function Body({ packages }: { packages: PackageType[] }) {
   }
 
   async function handleDelete(id: string) {
-    if (confirm(tps("Are you sure you want to delete this package?"))) {
+    if (confirm(th("label.package.delete"))) {
       const res = await startViewTransition(() => db.packages.remove(id));
       if (!res.success) toast.error(ta(res.message));
     }
@@ -46,22 +45,25 @@ export default function Body({ packages }: { packages: PackageType[] }) {
     <ul className={style.wrapper}>
       {packages.map((pkg) => (
         <li key={pkg.id} className={style.container} style={{ "--card-id": "card-" + pkg.id } as React.CSSProperties}>
-          <Link viewTransition to={`/packages/${pkg.id}`} className={style.pkg}>
+          <Link viewTransition to={`/${pkg.id}`} className={style.pkg}>
             <h2 style={{ viewTransitionName: "pkg-" + pkg.id }}>{pkg.name}</h2>
             <p className="c-text-800">
-              <span>{tps("There're total")} </span>
-              <strong>{pkg.dependencies.length}</strong>
-              <span> {tps(" dependencies")}</span>
+              {th("label.dependencies.total", { template: { total: pkg.dependencies.length } })}
             </p>
             <p className="text-sm c-text-600">{timeInterval(pkg.uploaded)}</p>
           </Link>
 
           <div className={style.btns}>
-            <button type="button" className={style.btn} title={tps("edit")} onClick={() => handleUpdate(pkg)}>
+            <button type="button" className={style.btn} title={th("button.edit")} onClick={() => handleUpdate(pkg)}>
               <TbEdit />
             </button>
 
-            <button type="button" className={style.btn} title={tps("delete")} onClick={() => handleDelete(pkg.id)}>
+            <button
+              type="button"
+              className={style.btn}
+              title={th("button.delete")}
+              onClick={() => handleDelete(pkg.id)}
+            >
               <CgTrashEmpty />
             </button>
           </div>
@@ -78,7 +80,7 @@ export default function Body({ packages }: { packages: PackageType[] }) {
           onDrop={(event) => handleDrop(event, fileInputRef)}
         >
           <div className={style.plus}>
-            <PiPlusBold title={tps("add")} />
+            <PiPlusBold title={th("button.add")} />
           </div>
         </label>
       </li>

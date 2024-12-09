@@ -4,11 +4,10 @@ import pageStyle from "../../index.module.css";
 import { useLocaleContext } from "@/contexts/locale";
 
 export default function ClearStorage() {
-  const { translate } = useLocaleContext();
-  const ts = (label: string) => translate(label, "settings");
+  const { ts } = useLocaleContext();
 
   function handleClick() {
-    if (confirm(ts("Are you sure you want to clear all the data?"))) {
+    if (confirm(ts("section.clearStorage.confirm"))) {
       localStorage.clear();
       sessionStorage.clear();
       indexedDB.deleteDatabase(appName.id);
@@ -18,12 +17,12 @@ export default function ClearStorage() {
 
   return (
     <section className={pageStyle.container}>
-      <h1>{ts("Clear Storage")}</h1>
+      <h1>{ts("section.clearStorage.title")}</h1>
 
-      <p>{ts("Clear all the data stored in the app")}</p>
+      <p>{ts("section.clearStorage.description")}</p>
 
       <button data-type="inverse" className={pageStyle.btn} onClick={handleClick}>
-        {ts("Clear")}
+        {ts("section.clearStorage.button")}
       </button>
     </section>
   );
