@@ -52,7 +52,7 @@ function DependencyRow({ dep }: { dep: DependencyType }) {
         <input type="checkbox" checked={dep.selected} onChange={() => {}} aria-label="select dependency" />
       </td>
       <td>{dep.name}</td>
-      <td>{tp(dep.type)}</td>
+      <td>{tp(`package.property.${dep.type}`)}</td>
       <td>{dep.version}</td>
       <td>
         {fetchStatus === "loading" && <ImSpinner className="animate-spin" />}

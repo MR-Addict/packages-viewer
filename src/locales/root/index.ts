@@ -5,7 +5,7 @@ export const rootTranslations: TranslationType[] = [
   {
     label: appName.id,
     data: {
-      en: appName.id,
+      en: appName.name,
       zh: "依赖查看器",
       ja: "パッケージビューアー"
     }
@@ -24,14 +24,6 @@ export const rootTranslations: TranslationType[] = [
       en: "Settings",
       zh: "设置",
       ja: "設定"
-    }
-  },
-  {
-    label: "package",
-    data: {
-      en: "Package",
-      zh: "依赖",
-      ja: "パッケージ"
     }
   },
   {
