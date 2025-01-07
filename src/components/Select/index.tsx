@@ -18,7 +18,7 @@ export default function Select<T>(props: {
 
   function handleClick(value: T) {
     props.onChange(value);
-    setExpanded((prev) => !prev);
+    setExpanded(false);
   }
 
   return (

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaSortAmountDownAlt, FaSortAmountUpAlt } from "react-icons/fa";
 
 import style from "./index.module.css";
@@ -31,12 +31,20 @@ export default function Header() {
     startViewTransition(() => setOrder((prev) => (prev === "asc" ? "desc" : "asc")));
   }
 
+  function selectInput() {
+    inputRef.current?.select();
+    inputRef.current?.focus();
+  }
+
   useListenKeyDown((event) => {
     if (event.ctrlKey && event.key.toLocaleLowerCase() === "l") {
       event.preventDefault();
-      inputRef.current?.select();
-      inputRef.current?.focus();
+      selectInput();
     }
+  }, []);
+
+  useEffect(() => {
+    if (localSearch) setTimeout(() => selectInput());
   }, []);
 
   return (
