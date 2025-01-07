@@ -11,7 +11,7 @@
   @apply h-full block p-4 rounded-xl space-y-1 shadow-sm c-gradient-100 c-border;
 
   & h2 {
-    @apply w-fit text-lg font-semibold border-b-4 border-b-blue-600 rounded-bl-lg px-1;
+    @apply w-fit text-lg font-semibold;
   }
 
   &.new {

@@ -47,7 +47,7 @@ export default function Body({ packages }: { packages: PackageType[] }) {
         <li key={pkg.id} className={style.container} style={{ "--card-id": "card-" + pkg.id } as React.CSSProperties}>
           <Link viewTransition to={`/${pkg.id}`} className={style.pkg}>
             <h2 style={{ viewTransitionName: "pkg-" + pkg.id }}>{pkg.name}</h2>
-            <p className="c-text-800">
+            <p className="c-text-700">
               {th("label.dependencies.total", { template: { total: pkg.dependencies.length } })}
             </p>
             <p className="text-sm c-text-600">{timeInterval(pkg.uploaded)}</p>
