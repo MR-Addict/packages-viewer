@@ -11,7 +11,7 @@ export default function Home() {
   if (!db.ready) return null;
 
   return (
-    <div className="space-y-4">
+    <div className="flex-1 flex flex-col gap-4">
       <Header />
       <Body packages={packages.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()))} />
     </div>

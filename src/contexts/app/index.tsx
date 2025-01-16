@@ -14,7 +14,7 @@ interface AppContextProps {
   packageManager: PackageManagerType;
   setPackageManager: Dispatch<SetStateAction<PackageManagerType>>;
 
-  fileInputRef: React.RefObject<HTMLInputElement>;
+  fileInputRef: React.RefObject<HTMLInputElement | null>;
   windowWidth: number;
   pwaInstalled: boolean;
 }

@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { useRef, useState } from "react";
+import { LuChevronDown } from "react-icons/lu";
 
 import style from "./index.module.css";
 import useClickOutside from "@/hooks/useClickOutside";
@@ -25,11 +26,12 @@ export default function Select<T>(props: {
     <div ref={selectRef} className={style.select}>
       <button
         type="button"
-        className={style["label-btn"]}
+        className={clsx(style["label-btn"], { [style.expanded]: expanded })}
         data-type={props.inverseLabelStyle && "inverse"}
         onClick={() => setExpanded((prev) => !prev)}
       >
-        {props.label}
+        <span>{props.label}</span>
+        <LuChevronDown />
       </button>
 
       <ul className={clsx(style["select-menu"], { [style.expanded]: expanded })}>

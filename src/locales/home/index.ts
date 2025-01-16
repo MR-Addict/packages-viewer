@@ -34,11 +34,11 @@ export const homeTranslations: TranslationType[] = [
     }
   },
   {
-    label: "label.dependencies.total",
+    label: "orderby.actions",
     data: {
-      en: "There're total {total} dependencies",
-      zh: "共有{total}个依赖",
-      ja: "合計{total}の依存関係"
+      en: "actions",
+      zh: "操作",
+      ja: "アクション"
     }
   },
   {
@@ -58,11 +58,11 @@ export const homeTranslations: TranslationType[] = [
     }
   },
   {
-    label: "button.add",
+    label: "button.upload",
     data: {
-      en: "Add",
-      zh: "添加",
-      ja: "追加"
+      en: "Upload",
+      zh: "上传",
+      ja: "アップロード"
     }
   },
   {
@@ -79,6 +79,14 @@ export const homeTranslations: TranslationType[] = [
       en: "Are you sure you want to delete this package?",
       zh: "确认删除该依赖",
       ja: "このパッケージを削除してもよろしいですか？"
+    }
+  },
+  {
+    label: "label.package.empty",
+    data: {
+      en: "No packages found",
+      zh: "未找到任何依赖",
+      ja: "パッケージが見つかりません"
     }
   }
 ];

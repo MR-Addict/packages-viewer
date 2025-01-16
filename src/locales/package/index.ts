@@ -10,11 +10,11 @@ export const packageTranslations: TranslationType[] = [
     }
   },
   {
-    label: "button.upload",
+    label: "button.reupload",
     data: {
-      en: "Upload",
-      zh: "上传",
-      ja: "アップロード"
+      en: "Reupload",
+      zh: "重新上传",
+      ja: "再アップロード"
     }
   },
   {

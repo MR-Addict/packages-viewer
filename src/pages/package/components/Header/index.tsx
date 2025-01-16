@@ -1,5 +1,6 @@
 import toast from "react-hot-toast";
 import { useRef, useState } from "react";
+import { PiUploadSimple } from "react-icons/pi";
 
 import style from "./index.module.css";
 import Select from "@/components/Select";
@@ -26,7 +27,7 @@ export default function Header() {
   const { packageManager, fileInputRef } = useAppContext();
   const { pkg, setSearch, updateDependencies } = usePackageContext();
 
-  const intervalRef = useRef<NodeJS.Timeout>();
+  const intervalRef = useRef<NodeJS.Timeout>(null);
   const [localSearch, setLocalSearch] = useState("");
 
   const copyOptions: { label: string; value: CopyOption }[] = (["latest", "original", "uninstall"] as const).map(
@@ -116,7 +117,7 @@ export default function Header() {
 
   return (
     <header className={style.wrapper}>
-      <h1 style={{ viewTransitionName: "pkg-" + pkg.id }} className="text-lg font-semibold truncate">
+      <h1 style={{ viewTransitionName: `card-${pkg.id}` }} className="text-lg font-semibold truncate">
         {pkg.name}
       </h1>
 
@@ -134,7 +135,7 @@ export default function Header() {
         </form>
 
         <label className={style.btn}>
-          {tp("button.upload")}
+          <span>{tp("button.reupload")}</span>
           <input
             type="file"
             className="hidden"
@@ -142,6 +143,7 @@ export default function Header() {
             id="reupload-package-file"
             onChange={handleUpload}
           />
+          <PiUploadSimple size={14} />
         </label>
 
         <Select label={tp("button.select")} options={selectOptions} onChange={(value) => handleSelect(value)} />

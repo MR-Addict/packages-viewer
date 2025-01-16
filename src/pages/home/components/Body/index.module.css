@@ -1,54 +1,29 @@
 .wrapper {
-  @apply grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-7;
+  @apply w-full overflow-x-auto;
 }
 
-.container {
-  @apply relative;
-  view-transition-name: var(--card-id);
-}
+.table {
+  @apply w-full text-left;
 
-.pkg {
-  @apply h-full block p-4 rounded-xl space-y-1 shadow-sm c-gradient-100 c-border;
-
-  & h2 {
-    @apply w-fit text-lg font-semibold;
+  & :is(th, td) {
+    @apply py-1.5 px-2 truncate max-w-prose;
   }
 
-  &.new {
-    @apply min-h-28 cursor-pointer flex items-center justify-center;
-
-    &.dragging,
-    &:hover {
-      @apply c-gradient-200;
-
-      & .plus {
-        @apply c-bg-300;
-      }
-    }
-
-    & .plus {
-      --size: 2.5rem;
-      width: var(--size);
-      height: var(--size);
-
-      @apply text-lg rounded-full c-bg-200 flex items-center justify-center;
-    }
+  & thead {
+    @apply c-border-b capitalize;
   }
-}
 
-.container:hover .btns {
-  @apply flex visible opacity-100;
-}
+  & tbody tr:hover {
+    @apply c-bg-200;
+  }
 
-.btns {
-  @apply hidden opacity-0 invisible;
-  @apply absolute right-3 top-3 flex-row items-center gap-0.5;
+  & tbody td {
+    & a:hover {
+      @apply underline;
+    }
 
-  & .btn {
-    @apply p-1 rounded-full;
-
-    &:hover {
-      @apply c-bg-200;
+    & .btns {
+      @apply flex flex-row items-center gap-2;
     }
   }
 }

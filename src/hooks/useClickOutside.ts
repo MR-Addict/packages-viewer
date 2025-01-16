@@ -1,6 +1,6 @@
 import { DependencyList, useEffect } from "react";
 
-export default function useClickOutside<T extends Element = HTMLDivElement>(
+export default function useClickOutside<T extends Element | null = HTMLDivElement>(
   handler: (event: MouseEvent) => void,
   ref: React.RefObject<T>,
   deps?: DependencyList

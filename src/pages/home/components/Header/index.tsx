@@ -1,3 +1,4 @@
+import { PiUploadSimple } from "react-icons/pi";
 import { useEffect, useRef, useState } from "react";
 import { FaSortAmountDownAlt, FaSortAmountUpAlt } from "react-icons/fa";
 
@@ -6,9 +7,9 @@ import Select from "@/components/Select";
 import useListenKeyDown from "@/hooks/useListenKeyDown";
 import startViewTransition from "@/lib/utils/startViewTransition";
 
-import { packagesOrderBys } from "@/data/app";
 import { useLocaleContext } from "@/contexts/locale";
 import { usePackagesContext } from "@/contexts/packages";
+import { fileInputID, packagesOrderBys } from "@/data/app";
 
 export default function Header() {
   const { th, tr } = useLocaleContext();
@@ -16,7 +17,7 @@ export default function Header() {
   const inputRef = useRef<HTMLInputElement>(null);
   const { search, setSearch, order, setOrder, orderBy, setOrderBy } = usePackagesContext();
 
-  const intervalRef = useRef<NodeJS.Timeout>();
+  const intervalRef = useRef<NodeJS.Timeout>(null);
   const [localSearch, setLocalSearch] = useState(search);
 
   const orderByLabels = packagesOrderBys.map((item) => ({ label: th(`orderby.${item}`), value: item }));
@@ -68,7 +69,12 @@ export default function Header() {
           label={orderByLabels.find((o) => o.value === orderBy)?.label!}
         />
 
-        <button type="button" className={style.btn} onClick={handleOrder} aria-label={order}>
+        <label className={style.btn} htmlFor={fileInputID}>
+          <span>{th("button.upload")}</span>
+          <PiUploadSimple size={14} />
+        </label>
+
+        <button type="button" onClick={handleOrder} aria-label={order}>
           {order === "asc" ? <FaSortAmountDownAlt /> : <FaSortAmountUpAlt />}
         </button>
       </div>
